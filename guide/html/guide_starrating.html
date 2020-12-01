@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+</head>
+<style>
+.star_rating_box{ font-size: 0; display: inline-block; vertical-align: top; position: relative;}
+.star_rating_box .star{ display: inline-block; vertical-align: top; text-indent: -9999em; }
+.star_rating_box.float .star{background: url('images/star_off.png') no-repeat left top;background-size: 200%;width: 9px; height: 18px;}
+.star_rating_box.int .star{background: url('images/star_off.png') no-repeat left top;background-size: 100%;width: 18px; height: 18px;margin-left: 4px;}
+.star_rating_box.float .star.right{ background-position: right top; }
+.star_rating_box.float .star.left{ margin-left: 4px;}
+.star_rating_box.float .star.left:first-child{ margin-left: 0; }
+.star_rating_box .star.ui-active{ background-image: url('images/star_on.png');}
+.star_rating_box .num{ display: inline-block; font-size: 26px; line-height: 100%; font-weight: 700; color: #333; margin-left: 12px; }
+.star_rating_box .maximum{ display: inline-block; margin-left: 16px; font-size: 14px; line-height: 18px; color: #ccc; }
+
+</style>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">starRating</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-starRating]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).starRating()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>score</td>
+					<td>int</td>
+					<td>1</td>
+					<td>1점 단위로 증가</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		없음
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		없음
+	</div>
+
+	<div class="code_in">
+		<div>
+
+			<span class="star_rating_box float" data-modules-starRating="score:.5;">
+				<a href="#" class="star left ui-active">0.5</a>
+				<a href="#" class="star right ui-active">1.0</a>
+				<a href="#" class="star left ui-active">1.5</a>
+				<a href="#" class="star right ui-active fix">2.0</a>
+				<a href="#" class="star left">2.5</a>
+				<a href="#" class="star right">3.0</a>
+				<a href="#" class="star left">3.5</a>
+				<a href="#" class="star right">4.0</a>
+				<a href="#" class="star left">4.5</a>
+				<a href="#" class="star right">5.0</a>
+				<span class="num">1.0</span>
+				<span class="maximum"><i>/</i> 5</span>
+			</span>
+			<span class="star_rating_box int" data-modules-starRating>
+				<a href="#" class="star ui-active">1</a>
+				<a href="#" class="star ui-active fix">2</a>
+				<a href="#" class="star">3</a>
+				<a href="#" class="star">4</a>
+				<a href="#" class="star">5</a>
+				<span class="num">2</span>
+				<span class="maximum"><i>/</i> 5</span>
+			</span>
+		</div>
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+
+</div>
+<script>
+	$('#test').on('click', function(){
+		$('[data-modules-tab]').eq(1).tab('show')
+	})
+	$('[data-modules-tab]:eq(0)')
+	.on('show.hui.tab', function(){
+		console.log('show')
+	})
+	.on('hide.hui.tab', function(){
+		console.log('hide')
+	})
+	var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+</script>
+</body>
+</html>

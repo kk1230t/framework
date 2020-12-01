@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+	<style>
+		.ui-modal {position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1050; display: none; overflow: hidden; -webkit-overflow-scrolling: touch; outline: 0;	text-align: center;}
+		.ui-modal:before { display: inline-block; vertical-align: middle; content: ""; height: 100%;}
+		.ui-modal.fade .ui-modal-dialog { transition: opacity .3s ease-out;}
+		.ui-modal.in .ui-modal-dialog { opacity: 1;}
+		.ui-modal-open {overflow: hidden;}
+		.ui-modal-open .modal { overflow-x: hidden; overflow-y: auto;}
+		.ui-modal-dialog { display: inline-block; vertical-align: middle; text-align:left; width: 500px; margin: 10px; opacity: 0; position: relative;background: #fff;height: 200px;}
+		.ui-modal-backdrop { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1040; background-color: #000;}
+		.ui-modal-backdrop.fade.in { filter: alpha(opacity=50); opacity: .5;}
+		.ui-modal-backdrop.in { filter: alpha(opacity=50); opacity: .5;}
+		.ui-modal-scrollbar-measure {position: absolute;top: -9999px;width: 50px;height: 50px;overflow: scroll;}
+		.content{
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">Modal</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-modal]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).modal()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>backdrop</td>
+					<td>Boolean</td>
+					<td>true</td>
+					<td>딤 클릭 시 닫힘 여부</td>
+				</tr>
+				<tr>
+					<td>keyboard</td>
+					<td>Boolean</td>
+					<td>true</td>
+					<td>ESC키로 모달 닫음</td>
+				</tr>
+				<tr>
+					<td>show</td>
+					<td>Boolean</td>
+					<td>true</td>
+					<td>모듈이 적용되면 모달을 보여줌</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).modal().show()</td>
+					<td>모달 호출</td>
+				</tr>
+				<tr>
+					<td>$(element).modal().hide()</td>
+					<td>모달 닫음</td>
+				</tr>
+				<tr>
+					<td>$(element).modal().toggle()</td>
+					<td>모달 토글</td>
+				</tr>
+				<tr>
+					<td>[data-dismiss="modal"]</td>
+					<td>모달 컨텐츠 내의 버튼에서 이속성이 들어가면 기본으로 닫힘 기능을 합니다.<br>예)&lt;button data-dismiss="modal">닫기&lt;/button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>type</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>show.hui.modal</td>
+					<td>show 메서드 호출시 즉시 발생</td>
+				</tr>
+				<tr>
+					<td>shown.hui.modal</td>
+					<td>모달이 사용자 화면에 표시될때 발생(애니메이션 효과 모달의 경우 애니메이션 전환 완료 후 발생)</td>
+				</tr>
+				<tr>
+					<td>hide.hui.modal</td>
+					<td>hide 메서드 호출시 즉시 발생</td>
+				</tr>
+				<tr>
+					<td>hidden.hui.modal</td>
+					<td>모달이 사용자화면에서 없어질때 발생 (애니메이션 효과 모달의 경우 애니메이션 전환 완료 후 발생)</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="code_in">
+		<!-- Button trigger modal -->
+		<!-- <button type="button" class="btn btn-primary btn-lg" data-modules-modal="target:#myModal;">
+			Launch demo modal
+		</button> -->
+		<a href="#myModal" class="btn btn-primary btn-lg" data-modules-modal>
+			Launch demo modal
+		</a>
+
+
+		<button type="button" class="btn btn-primary btn-lg" id="callCustomAlert">
+			커스텀 얼럿 호출
+		</button>
+		
+		<!-- Modal -->
+		<div class="ui-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="ui-modal-dialog" role="document">
+				<div class="content">
+					modal....
+					
+					<button data-dismiss="modal">modal close</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="ui-modal" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="ui-modal-dialog" role="document">
+				<div class="content">
+					modal....
+				</div>
+			</div>
+		</div>
+		<button id="test" style="position: relative;z-index: 999999999999;">modal Toggle</button>
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+	<script>
+		var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+		// $('#myModal').modal().show();
+		$('#test').on('click', function(e){
+			$('#myModal').modal().toggle();
+		})
+		$('#myModal').on('show.hui.modal', function(){
+			console.log('모달 열림')
+		})
+		.on('hide.hui.modal', function(){
+			console.log('모달 닫힘')
+		})
+		// console.log(code)
+
+
+		$('#callCustomAlert').on('click', function(e){
+			UI.customAlert({
+				//  <!-- type : alert, confirm -->
+				type : 'confirm',
+				//  <!-- 레이어팝업 타이틀 -->     
+				title : "임시 비밀 번호 발송",
+				//  <!-- 기본 구조는 <p></p> 이나 커스텀 가능 -->
+				message : "<p>커스텀 얼럿을 호출 했습니다.</p>",
+				//  <!-- 기본 버튼 [ 기본 적용 시 생략, 전달 타입 : 태그 or 텍스트] -->
+				defaultBtn : '<button type="button" id="customMsgSubmit" class="btn btn-info"><span>확인</span></button>',
+				//  <!-- 기본 창 사이즈 [ 기본 적용 시 생략]  -->   
+				size : "modal-sm",
+				//  <!-- 기본 취소 버튼 [ 기본 적용 시 생략, 전달 타입 : 태그 or 텍스트] -->
+				cancelBtn : '<button type="button" id="customMsgCancel" class="btn btn-info"><span>취소</span></button>',
+				//  <!-- 기본 콜백  return 값으로 false 전달 시 레이어 닫힘 기능 차단-->
+				defaultCallback : function(){
+					alert('확인 누름')
+				},
+				//  <!-- 취소 버튼 클릭 시 콜백 return 값으로 false 전달 시 레이어 닫힘 기능 차단 (type이 confirm 인 경우에만 유효함)-->
+				cancelCallback : function(){
+					alert('취소 누름')
+				},
+				dismissCallback : function(){
+					alert('그냥 닫음')
+				}
+			});
+    	});
+	</script>
+</div>
+<div class="modal-scrollbar-measure"></div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+</head>
+<style>
+
+	.ui-tooltip{position: relative;text-align: left;display: inline-block;margin: 0 20px;}
+	.ui-tooltip .nav{border:1px solid #000;display: inline-block;padding: 20px;}
+	.ui-tooltip .tooltip-conts{display: none;width: 300px;text-align: center;font-size: 80px;border: 1px solid #000;position: absolute;top: 100%;left: 0;background: #fff;z-index: 999;}
+	.ui-tooltip .tooltip-conts button{font-size: 16px;line-height: 100%;position: absolute;top: 0;right: 0;}
+	.ui-tooltip .tooltip-conts.ui-active{display: block;}
+
+</style>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">Tooltip</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-tooltip]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).tooltip()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>type</td>
+					<td>string</td>
+					<td>click</td>
+					<td>click, hover 툴팁 오픈타입 지정</td>
+				</tr>
+				<tr>
+					<td>href</td>
+					<td>selector</td>
+					<td>null</td>
+					<td>기본은 a링크의 해시값으로 지정 하나, a링크가 아닌 태그 사용시 옵션값으로 지정 가능</td>
+				</tr>
+				<tr>
+					<td>closeBtn</td>
+					<td>Boolean</td>
+					<td>true</td>
+					<td>닫기버튼 삽입 여부</td>
+				</tr>
+				<tr>
+					<td>toggle</td>
+					<td>Boolean</td>
+					<td>false</td>
+					<td>튤팁 토글 여부 선택</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc">
+		<ul>
+			<li>없음</li>
+		</ul>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc">
+		<ul>
+			<li>없음</li>
+		</ul>
+	</div>
+
+	<div class="code_in">
+		<div class="ui-tooltip">
+			<span class="nav" data-modules-tooltip="href:#tooltip1;">tooltip click type</span>
+			<div id="tooltip1" class="tooltip-conts">tooltip contents</div>
+		</div>
+		<div class="ui-tooltip">
+			<a href="#tooltip2" class="nav" data-modules-tooltip="type:hover;">tooltip hover type</a>
+			<div id="tooltip2" class="tooltip-conts">tooltip contents</div>
+		</div>
+		<div class="ui-tooltip">
+			<a href="#tooltip3" class="nav" data-modules-tooltip="toggle:true;">tooltip toggle type</a>
+			<div id="tooltip3" class="tooltip-conts">tooltip contents</div>
+		</div>
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+
+</div>
+<script>
+	var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+</script>
+</body>
+</html>

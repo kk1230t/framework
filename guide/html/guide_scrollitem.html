@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>scrollitems 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+	<style>
+		.scroll-items{width: 400px;overflow-x: auto;white-space: nowrap;position: relative;font-size: 0;}
+		.ui-nav{display: inline-block;width: 100px;height: 30px;border: 1px solid #000;font-size: 12px;}
+		.ui-nav.ui-active{background:#f00;}
+		.scroll-items.btn-type{width: 450px;overflow: hidden;}
+		.scroll-items.btn-type .ui-nav{width: 50px;}
+	</style>
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">scrollItems</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-scrollItems]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).scrollItems()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>activeClass</td>
+					<td>string</td>
+					<td>ui-active</td>
+					<td>아이템 활성화 클래스 명</td>
+				</tr>
+				<tr>
+					<td>align</td>
+					<td>int or string</td>
+					<td>0</td>
+					<td>숫자일 경우 클릭된 요소를 좌측 기준으로 n번째 정렬, 문자일 경우 "center" 사용 클릭된 요소 가운데 정렬</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).scrollItems('initActiveItem');</td>
+					<td>활성화 클래스가 붙은 요소를 찾아 정렬 시켜준다.</td>
+				</tr>
+				<tr>
+					<td>$(element).scrollItems().goActive(n)</td>
+					<td>n번째 요소 활성화 및 정렬</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>init.scrollItems</td>
+					<td>scrollItems 모듈 초기화시 발생</td>
+				</tr>
+				<tr>
+					<td>active.scrollItems</td>
+					<td>아이템 선택 시 발생</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="code_in">
+		<div data-modules-scrollItems="align:center;" class="scroll-items">
+			<span class="ui-nav">1</span>
+			<span class="ui-nav">2</span>
+			<span class="ui-nav">3</span>
+			<span class="ui-nav">4</span>
+			<span class="ui-nav">5</span>
+			<span class="ui-nav">6</span>
+			<span class="ui-nav">7</span>
+			<span class="ui-nav">8</span>
+			<span class="ui-nav">9</span>
+			<span class="ui-nav">10</span>
+			<span class="ui-nav">11</span>
+			<span class="ui-nav">12</span>
+			<span class="ui-nav">13</span>
+			<span class="ui-nav">14</span>
+			<span class="ui-nav">15</span>
+		</div>
+
+		<div data-modules-scrollItems="btnControl:true;scrollToShow:9;" class="scroll-items btn-type">
+			<span class="ui-nav">1</span>
+			<span class="ui-nav">2</span>
+			<span class="ui-nav">3</span>
+			<span class="ui-nav">4</span>
+			<span class="ui-nav">5</span>
+			<span class="ui-nav">6</span>
+			<span class="ui-nav">7</span>
+			<span class="ui-nav">8</span>
+			<span class="ui-nav">9</span>
+			<span class="ui-nav">10</span>
+			<span class="ui-nav">11</span>
+			<span class="ui-nav">12</span>
+			<span class="ui-nav">13</span>
+			<span class="ui-nav">14</span>
+			<span class="ui-nav ui-active">15</span>
+			<span class="ui-nav">16</span>
+			<span class="ui-nav">17</span>
+			<span class="ui-nav">18</span>
+			<span class="ui-nav">19</span>
+			<span class="ui-nav">20</span>
+			<span class="ui-nav">21</span>
+			<span class="ui-nav">22</span>
+			<span class="ui-nav">23</span>
+			<span class="ui-nav">24</span>
+			<span class="ui-nav">25</span>
+			<span class="ui-nav">26</span>
+			<span class="ui-nav">27</span>
+			<span class="ui-nav">28</span>
+			<span class="ui-nav">29</span>
+			<span class="ui-nav">30</span>
+		</div>
+
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+	<script>
+		var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+		// console.log(code)
+		$('.scroll-items.btn-type').on('active.scrollItems', function(){
+			console.log('ddd');
+		})
+	</script>
+</div>
+</body>
+</html>

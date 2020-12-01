@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+	<style>
+		.scrollspy-tab{height: 100px;padding: 0 20px;}
+        .scrollspy-tab.fixed .inner{position: fixed;top: 0;left: 40px;right: 40px;}
+        .nav-tabs{border: 1px solid red;display: flex;}
+        .nav-tabs li{flex:1;}
+        .nav-tabs li a{display: block;text-align: center;text-indent: -9999em;height: 100px;position: relative;}
+        .nav-tabs li:nth-child(1){background: #333;}
+        .nav-tabs li:nth-child(2){background: #666;}
+        .nav-tabs li:nth-child(3){background: #999;}
+        .nav-tabs li:nth-child(4){background: #aaa;}
+        .nav-tabs li.ui-active a::after{content: '';display: block;overflow: hidden;width: 30px;height: 30px;background: #900;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);border-radius: 50%;}
+        .pages{height: 800px;border:1px solid red;margin-top: 100px;line-height: 1000px;font-size:200px;text-align: center;}
+	</style>
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">scrollspy</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-scrollspy]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).scrollspy()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>durration</td>
+					<td>int</td>
+					<td>200</td>
+					<td>스크롤 애니메이션 속도</td>
+				</tr>
+				<tr>
+					<td>margin</td>
+					<td>int</td>
+					<td>0</td>
+					<td>네비게이션이 브라우저 상단으로 부터 {margin}값 미만으로 접근시 상단에 고정된다.</td>
+				</tr>
+				<tr>
+					<td>padding</td>
+					<td>int</td>
+					<td>0</td>
+					<td>컨텐츠가 브라우저 상단으로부터 {padding} 값 미만으로 접근시 해당 네비게이션이 활성화 된다. </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc">
+		없음
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		없음
+	</div>
+	<div class="code_in">
+		<div class="scrollspy-tab" data-modules-scrollspy="padding:102;">
+            <div class="inner">
+                <!-- Nav tabs -->
+                <ul class="nav-tabs ui-spynav" role="tablist">
+                    <li role="presentation" class="ui-active"><a href="#viewpage1"><span>상세설명</span></a></li>
+                    <li role="presentation"><a href="#viewpage2"><span>상품평</span></a></li>
+                    <li role="presentation"><a href="#viewpage3"><span>Q&A</span></a></li>
+                    <li role="presentation"><a href="#viewpage4"><span>기본정보</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pages page1" id="viewpage1">1</div>
+        <div class="pages page2" id="viewpage2">2</div>
+        <div class="pages page3" id="viewpage3">3</div>
+        <div class="pages page4" id="viewpage4">4</div>
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+	<script>
+		var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+		// $('#myModal').modal().show();
+		$('#test').on('click', function(e){
+			$('#myModal').modal().toggle();
+		})
+		$('#myModal').on('show.hui.modal', function(){
+			console.log('모달 열림')
+		})
+		.on('hide.hui.modal', function(){
+			console.log('모달 닫힘')
+		})
+		// console.log(code)
+
+
+		$('#callCustomAlert').on('click', function(e){
+			UI.customAlert({
+				//  <!-- type : alert, confirm -->
+				type : 'confirm',
+				//  <!-- 레이어팝업 타이틀 -->     
+				title : "임시 비밀 번호 발송",
+				//  <!-- 기본 구조는 <p></p> 이나 커스텀 가능 -->
+				message : "<p>커스텀 얼럿을 호출 했습니다.</p>",
+				//  <!-- 기본 버튼 [ 기본 적용 시 생략, 전달 타입 : 태그 or 텍스트] -->
+				defaultBtn : '<button type="button" id="customMsgSubmit" class="btn btn-info"><span>확인</span></button>',
+				//  <!-- 기본 창 사이즈 [ 기본 적용 시 생략]  -->   
+				size : "modal-sm",
+				//  <!-- 기본 취소 버튼 [ 기본 적용 시 생략, 전달 타입 : 태그 or 텍스트] -->
+				cancelBtn : '<button type="button" id="customMsgCancel" class="btn btn-info"><span>취소</span></button>',
+				//  <!-- 기본 콜백  return 값으로 false 전달 시 레이어 닫힘 기능 차단-->
+				defaultCallback : function(){
+					alert('확인 누름')
+				},
+				//  <!-- 취소 버튼 클릭 시 콜백 return 값으로 false 전달 시 레이어 닫힘 기능 차단 (type이 confirm 인 경우에만 유효함)-->
+				cancelCallback : function(){
+					alert('취소 누름')
+				},
+				dismissCallback : function(){
+					alert('그냥 닫음')
+				}
+			});
+    	});
+	</script>
+</div>
+<div class="modal-scrollbar-measure"></div>
+</body>
+</html>

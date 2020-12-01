@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+</head>
+<style>
+.tab-content > .tab-pane.ui-active{
+	display: block;
+
+}
+.ui-tab{text-align: left;font-size: 0;white-space: nowrap;}
+.ui-tab li{display: inline-block;height: 25px;padding: 0 20px;border:1px solid #000;font-size: 16px;line-height: 25px;width: 100px;}
+.ui-tab li.ui-active{border:1px solid red}
+.tab-pane{display: none;text-align: left;height: 100px;border: 1px solid red;}
+.tab-pane.ui-active{display: block;}
+
+.scroll-tab{position: relative;width: 464px;}
+.scroll-tab .inner-scroll{overflow:hidden}
+.scroll-tab .ui-tab{margin: 0 auto;}
+.scroll-tab .scrolltab-btns .prev-tab{position: absolute;top: 0;left: 0;}
+.scroll-tab .scrolltab-btns .next-tab{position: absolute;top: 0;right: 0;}
+.scroll-tab.next-disabled .next-tab{display: none;}
+.scroll-tab.prev-disabled .prev-tab{display: none;}
+.scroll-tab .scrolltab-btns{display: none;}
+.scroll-tab.ui-active .scrolltab-btns{display: block;}
+</style>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">ScrollTab</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-scrollTab]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).scrollTab()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>class</td>
+					<td>string</td>
+					<td>null</td>
+					<td>커스텀 추가 클래스</td>
+				</tr>
+				<tr>
+					<td>innerPadding</td>
+					<td>int</td>
+					<td>0</td>
+					<td>탭 안쪽 dim 영역 px값</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).scrollTab('refresh')</td>
+					<td>모듈새로고침</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		없음
+	</div>
+
+	<div class="code_in" style="text-align:center;">
+		<div>
+
+			<!-- Nav tabs -->
+			<ul class="ui-tab" role="tablist" data-modules-scrollTab="innerPadding:31;">
+			  <li role="presentation" class="ui-active"><a href="#home" aria-controls="home" role="tab" data-modules-tab>Tab1</a></li>
+			  <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-modules-tab>Tab2</a></li>
+			  <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-modules-tab>Tab3</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab4</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab5</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab6</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab7</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab8</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab9</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab10</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab11</a></li>
+			</ul>
+		  
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div role="tabpanel" class="tab-pane ui-active" id="home">tabContent1</div>
+			  <div role="tabpanel" class="tab-pane" id="profile">tabContent2</div>
+			  <div role="tabpanel" class="tab-pane" id="messages">tabContent3</div>
+			  <div role="tabpanel" class="tab-pane" id="settings">tabContent4</div>
+			</div>
+		  <!-- <button id="test">메서드 테스트</button> -->
+		</div>
+		<div>
+			<ul class="ui-tab" role="tablist" data-modules-scrollTab="innerPadding:31;">
+				<li role="presentation"><a href="#home" >Tab1</a></li>
+				<li role="presentation"><a href="#profile" >Tab2</a></li>
+				<li role="presentation"><a href="#messages" >Tab3</a></li>
+				<li role="presentation"><a href="#settings" >Tab4</a></li>
+				<li role="presentation"><a href="#settings" >Tab5</a></li>
+				<li role="presentation"><a href="#settings" >Tab6</a></li>
+				<li role="presentation"><a href="#settings" >Tab7</a></li>
+				<li role="presentation"><a href="#settings" >Tab8</a></li>
+				<li role="presentation"><a href="#settings" >Tab9</a></li>
+				<li role="presentation"><a href="#settings" >Tab10</a></li>
+				<li role="presentation"><a href="#settings" >Tab11</a></li>
+			  </ul>
+		</div>
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+
+</div>
+<script>
+	$('#test').on('click', function(){
+		$('[data-modules-tab]').eq(1).tab('show')
+	})
+	$('[data-modules-tab]:eq(0)')
+	.on('show.hui.tab', function(){
+		console.log('show')
+	})
+	.on('hide.hui.tab', function(){
+		console.log('hide')
+	})
+	var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+</script>
+</body>
+</html>

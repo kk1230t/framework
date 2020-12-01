@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+	<style>
+		.accordion-panel{
+			display: none;
+		}
+		.accordion-panel.selected{
+			display: block;
+		}
+		.solo a.ui-active{
+			font-size: 20px;
+		}
+		.multi a + div{
+			display: none;
+		}
+		.multi.ui-active a{
+			font-size: 20px;
+		}
+		.multi.ui-active a + div{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	<div class="header_wrap">
+		<h1 class="h1_guide">소개</h1>
+		<div class="d_desc">
+			<p class="decs">웹 인터페이스 개발을 위한 UI Framework입니다. 보편적인 웹 개발에서 필요한 UI 모듈 대부분을 포함하고 있습니다.</p>
+		</div>
+	</div>
+	<br><br>
+	<h2 class="h2_guide">모듈 리스트</h2>
+	<div class="d_desc">
+		<p class="decs">sticky, dropdown, grid, collapse, customToggle, slick, tab, scrolltab, selectbox, modal, window popup, scrollspy, scrollItem, moreview, starRating, tooltip, video</p>
+	</div>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">ui스크립트 모듈에 사용되는 셀렉터는 모두 data-modules-[모듈이름]을 사용합니다.</p>
+	</div>
+
+	<h2 class="h2_guide">셀렉터 및 옵션 값 작성 요령 - data-modules-[모듈이름] 속성을 이용한 호출</h2>
+	<div class="d_desc">
+		<div class="code_in" style="text-align:center;">
+			<div data-modules-moduleName="property:value;property:value;property:value;......">
+				
+			</div>
+		</div>
+		<pre class="brush: xml;" data-hilight="code"></pre>
+	</div>
+	
+	<div class="d_desc table">
+		<div class="d_desc">
+			<br>
+			<p class="decs" style="font-size: 17px;">&lt;div data-modules-moduleName="property:value;property:value;property:value;......"&gt;&lt;/div&gt;</p><br>
+			<p class="decs" style="font-size: 17px;">옵션값 지정은 css style 작성 방식과 동일하게 값을 넣어주시면 됩니다. 전달 할 옵션 값이 없을 경우 &lt;div data-modules-moduleName&gt;&lt;/div&gt; 까지만 선언</p><br>
+			
+			<table class="table table-bordered table-striped js-options-table">
+				<colgroup>
+					<col style="width: 200px;">
+					<col style="width: 200px;">
+					<col style="width: auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>Value Type</th>
+						<th>example</th>
+						<th>description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Boolean</td>
+						<td>true, false</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>String</td>
+						<td>string...</td>
+						<td>따옴표 없이 전달.</td>
+					</tr>
+					<tr>
+						<td>Number</td>
+						<td>1, 2, 33, 100, -10</td>
+						<td>따옴표 없이 전달.</td>
+					</tr>
+					<tr>
+						<td>selector</td>
+						<td>'.classname', '#idname'</td>
+						<td>홀따옴표 주의.</td>
+					</tr>
+					<tr>
+						<td>json data</td>
+						<td>{'el1':'value', 'el2':'value',....}</td>
+						<td>속성 명과 값 모두 홀따옴표 지정 주의</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<h2 class="h2_guide">셀렉터 및 옵션 값 작성 요령 - 함수 직접호출</h2>
+	<div class="d_desc table">
+		<div class="d_desc">
+			<p class="decs">직접 호출시에는 셀레겉로 어떤 요소를 이용해도 무방함.</p>
+			<p class="decs">
+				$(element).moduleName({<br>
+					&nbsp; &nbsp;&nbsp; &nbsp;el:value,<br>
+					&nbsp; &nbsp;&nbsp; &nbsp;el1:value,<br>
+				})
+			</p>
+		</div>
+	</div>
+
+	<pre class="brush: xml;" data-hilight="code"></pre>
+	<script>
+		var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+		// console.log(code)
+	</script>
+</div>
+</body>
+</html>

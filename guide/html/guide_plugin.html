@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	
+	<h1 class="h1_guide">사용중인 외부 플러그인 리스트</h1>
+	<!-- <div class="d_desc">
+		<p class="decs">공통 부분 전반적인 기능 모음(Header, Footer 등 공통 UI) -- 화면 로딩 후 자동 실행</p>
+	</div> -->
+	<h2 class="h2_guide">[data-modules="customScroll"]</h2>
+	<div class="d_desc">
+		<p class="decs">jQuery custom content scroller</p>
+		<p class="decs">URL : <a href="http://manos.malihu.gr/jquery-custom-content-scroller/" target="_blank">http://manos.malihu.gr/jquery-custom-content-scroller/</a></p>
+		<br>
+		<br><br>
+		<h3>추가 요소</h3>
+		<p class="decs">
+		// this – 스크롤바를 포함하는 원본 요소<br>
+		// this.mcs.content – jquery 객체로서의 원래 내용 래퍼<br>
+		// this.mcs.top – 콘텐츠의 최상위 위치 (픽셀)<br>
+		// this.mcs.left – 컨텐츠의 왼쪽 위치 (픽셀)<br>
+		// this.mcs.draggerTop – 스크롤바 드래 거의 상단 위치 (픽셀)<br>
+		// this.mcs.draggerLeft – 스크롤바 드래 거의 왼쪽 위치 (픽셀)<br>
+		// this.mcs.topPct – 컨텐츠 수직 스크롤 백분율<br>
+		// this.mcs.leftPct – 콘텐츠 가로 스크롤 비율<br>
+		// this.mcs.direction – 컨텐츠의 스크롤 방향 (y 또는 x)<br>
+		$('[data-modules="customScroll"]').on('scrollStart', function(e, el){<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;// 스크롤 시작시 이벤트
+		&nbsp;&nbsp;&nbsp;&nbsp;console.log('start')<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;console.log(this.mcs.topPct)<br>
+		}).on('scrolling', function(e, el){<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;// 스크롤 중...
+		&nbsp;&nbsp;&nbsp;&nbsp;console.log(this.mcs.topPct)<br>
+		}).on('scrollEnd', function(e, el){<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;// 스크롤 종료시 이벤트
+		&nbsp;&nbsp;&nbsp;&nbsp;console.log('end');<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;console.log(this.mcs)<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;console.log(this.mcs.topPct)<br>
+		})
+		</p>
+
+	</div>
+	
+	<h2 class="h2_guide">[data-modules="slick"]</h2>
+	<div class="d_desc">
+		<p class="decs">slick slider</p>
+		<p class="decs">URL : <a href="https://kenwheeler.github.io/slick/" target="_blank">https://kenwheeler.github.io/slick/</a></p>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<script>
+	</script>
+
+</div>
+</body>
+</html>

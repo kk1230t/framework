@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+	<style>
+		.accordion-panel{
+			display: none;
+		}
+		.accordion-panel.selected{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">Collapse</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-collapse]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).collapse()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>parent</td>
+					<td>selector</td>
+					<td>null</td>
+					<td>그룹핑 할 부모 요소의 클래스 명을 기입합니다. 값이 없을 경우 셀렉트된 요소만 토글되며 드롭다운과 기능이 동일합니다.</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc">
+		<ul>
+			<li>없음</li>
+		</ul>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc">
+		<ul>
+			<li>없음, show, hide 구현 예정</li>
+		</ul>
+	</div>
+	<div class="code_in">
+		<div class="accparent">
+			<h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger" aria-expanded="false"><span>그룹핑된 아코디언</span><i class="icon"></i></button></h3>
+			<div class="accordion-panel" role="region" aria-label="배송/교환/환불/AS/유의사항">
+				<ul class="dotlist">
+					<li>상품확인 후 환불/반품 관련 배송비:2500원</li>
+					<li>교환 관련 배송비 : 2500원</li>
+				</ul>
+			</div>
+			<h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger" aria-expanded="false"><span>그룹핑된 아코디언</span><i class="icon"></i></button></h3>
+			<div class="accordion-panel" role="region" aria-label="배송/교환/환불/AS/유의사항">
+				<ul class="dotlist">
+					<li>상품확인 후 환불/반품 관련 배송비:2500원</li>
+					<li>교환 관련 배송비 : 2500원</li>
+				</ul>
+			</div>
+			<h3><button data-modules-collapse class="accordion-trigger" aria-expanded="false"><span>그룹핑 되지 않은 아코디언</span><i class="icon"></i></button></h3>
+			<div class="accordion-panel" role="region" aria-label="배송/교환/환불/AS/유의사항">
+				<ul class="dotlist">
+					<li>상품확인 후 환불/반품 관련 배송비:2500원</li>
+					<li>교환 관련 배송비 : 2500원</li>
+				</ul>
+			</div>
+		</div>
+		<br>
+		<div>
+			<h3><button data-modules-collapse class="accordion-trigger" aria-expanded="false"><span>그룹핑 되지 않은 아코디언</span><i class="icon"></i></button></h3>
+			<div class="accordion-panel" role="region" aria-label="배송/교환/환불/AS/유의사항">
+				<ul class="dotlist">
+					<li>상품확인 후 환불/반품 관련 배송비:2500원</li>
+					<li>교환 관련 배송비 : 2500원</li>
+				</ul>
+			</div>
+			<h3><button data-modules-collapse class="accordion-trigger" aria-expanded="false"><span>그룹핑 되지 않은 아코디언</span><i class="icon"></i></button></h3>
+			<div class="accordion-panel" role="region" aria-label="배송/교환/환불/AS/유의사항">
+				<ul class="dotlist">
+					<li>상품확인 후 환불/반품 관련 배송비:2500원</li>
+					<li>교환 관련 배송비 : 2500원</li>
+				</ul>
+			</div>
+		</div>
+		
+
+
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+	<script>
+		var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+		// console.log(code)
+	</script>
+</div>
+</body>
+</html>

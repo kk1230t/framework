@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+</head>
+<style>
+
+	.ui-dropdown{position: relative;text-align: left;}
+	.ui-dropdown .dropdown-menu{display: none;}
+	.ui-dropdown.ui-active .dropdown-menu{display: block;}
+
+</style>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">Dropdown</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-dropdown]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).dropdown()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc">
+		- 없음
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).dropdown('toggle')</td>
+					<td>드롭다운박스 토글</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>show.hui.dropdown</td>
+					<td>show instance 메소드가 호출 될 때 즉시 발생</td>
+				</tr>
+				<tr>
+					<td>shown.hui.dropdown</td>
+					<td>노출 처리 css 전환이 완료 된 후 발생</td>
+				</tr>
+				<tr>
+					<td>hide.hui.dropdown</td>
+					<td>hide 메소드가 호출시 발생</td>
+				</tr>
+				<tr>
+					<td>hidden.hui.dropdown</td>
+					<td>숨김처리 css 전환이 완료된 후 발생</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="code_in" style="text-align:center;">
+		<div class="ui-dropdown">
+			<a id="drop1" href="#" data-modules-dropdown aria-expanded="false"><span>Dropdown Toggle Click</span></a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+				<li><a href="#">menu1</a></li>
+				<li><a href="#">menu2</a></li>
+			</ul>
+		</div>
+
+		<div class="ui-dropdown">
+			<a id="drop1" class="readonly" href="#" data-modules-dropdown aria-expanded="false"><span>readonly example</span></a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+				<li><a href="#">menu1</a></li>
+				<li><a href="#">menu2</a></li>
+			</ul>
+		</div>
+
+		<div class="ui-dropdown">
+			<a id="drop1" class="disabled" href="#" data-modules-dropdown aria-expanded="false"><span>disabled example</span></a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+				<li><a href="#">menu1</a></li>
+				<li><a href="#">menu2</a></li>
+			</ul>
+		</div>
+		<a href="" data-modules-classesToggle="classLists : aaa|bb|bcc|dfe|dfd;">sdfsdfsdfsdfsdfsdfsdfdsfsdf</a>
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+
+</div>
+<script>
+	$('.ui-dropdown').on('show.hui.dropdown', function(){
+		console.log('show')
+	})
+	$('.ui-dropdown').on('hide.hui.dropdown', function(){
+		console.log('hide')
+	})
+
+	$('[aria-labelledby="drop1"] a').on('click', function(e){
+		e.preventDefault();
+		$('#drop1').dropdown('toggle')
+	})
+
+	var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+</head>
+<style>
+.tab-content > .tab-pane.ui-active{
+	display: block;
+
+}
+.ui-tab{text-align: left;}
+.ui-tab li{display: inline-block;height: 25px;padding: 0 20px;}
+.ui-tab li.ui-active{border:1px solid red}
+
+</style>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">Tab</h1>
+	<h2 class="h2_guide">selector</h2>
+	<div class="d_desc">
+		<p class="decs">[data-modules-tab]</p>
+	</div>
+	<h2 class="h2_guide">function</h2>
+	<div class="d_desc">
+		<p class="decs">$(element).tab()</p>
+	</div>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc">
+		- 없음
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).tab('show')</td>
+					<td>해당하는 텝 컨텐츠 활성화</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>show.hui.tab</td>
+					<td>show instance 메소드가 호출 될 때 즉시 발생</td>
+				</tr>
+				<tr>
+					<td>shown.hui.tab</td>
+					<td>노출 처리 css 전환이 완료 된 후 발생</td>
+				</tr>
+				<tr>
+					<td>hide.hui.tab</td>
+					<td>hide 메소드가 호출시 발생</td>
+				</tr>
+				<tr>
+					<td>hidden.hui.tab</td>
+					<td>숨김처리 css 전환이 완료된 후 발생</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="code_in" style="text-align:center;">
+		<div>
+
+			<!-- Nav tabs -->
+			<ul class="ui-tab" role="tablist">
+			  <li role="presentation" class="ui-active"><a href="#home" aria-controls="home" role="tab" data-modules-tab>Tab1</a></li>
+			  <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-modules-tab>Tab2</a></li>
+			  <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-modules-tab>Tab3</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab4</a></li>
+			</ul>
+		  
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div role="tabpanel" class="tab-pane ui-active" id="home">tabContent1</div>
+			  <div role="tabpanel" class="tab-pane" id="profile">tabContent2</div>
+			  <div role="tabpanel" class="tab-pane" id="messages">tabContent3</div>
+			  <div role="tabpanel" class="tab-pane" id="settings">tabContent4</div>
+			</div>
+		  <button id="test">메서드 테스트</button>
+		</div>
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+
+</div>
+<script>
+	$('#test').on('click', function(){
+		$('[data-modules-tab]').eq(1).tab('show')
+	})
+	$('[data-modules-tab]:eq(0)')
+	.on('show.hui.tab', function(){
+		console.log('show')
+	})
+	.on('hide.hui.tab', function(){
+		console.log('hide')
+	})
+	var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+</script>
+</body>
+</html>

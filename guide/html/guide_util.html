@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>hmall 스크립트가이드</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	
+	<script src="../shCore.js"></script>
+	<script src="../shBrushXml.js"></script>
+	<script src="../shBrushCss.js"></script>
+	<script src="../shBrushJScript.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	<h1 class="h1_guide">commonUi util</h1>
+	<h2 class="h2_guide">countDownTimer</h2>
+	<div class="d_desc">
+		<ul>
+			<li>UI.util.countDownTimer(el, time, format );</li>
+			<li id="testTime">00:00:00:00</li>
+		</ul>
+	</div>
+	<div class="code_in" style="text-align:center;">
+		<script>
+			$(function(){
+				var date = new Date();
+				date.setDate(date.getDate()+1);
+
+				// 임의의 날짜 생성
+				var time ='';
+				time += date.getFullYear();
+				time += (date.getMonth()+1).zf(2);
+				time += date.getDate().zf(2);
+				time += date.getHours().zf(2);
+				time += date.getMinutes().zf(2);
+				time += date.getSeconds().zf(2);
+
+				/**
+				 * @param {element} 적용될 엘리먼트
+				 * @param {string} '20201010125900' 형식의 남은 시간 문자열
+				 * @param {format} 'dd, hh, mm, ss' 일, 시, 분, 초 의 포멧
+				 */
+				UI.util.countDownTimer($('#testTime'), time, 'dd:hh:mm:ss' );
+			})
+		</script>
+	</div>
+	<pre class="brush: xml;" data-hilight="code"></pre>
+	<script>
+		var code = $('.code_in')
+		code.each(function(n){
+			var $this = $(this);
+			$this.siblings('[data-hilight="code"]').html($this.html());
+		})
+		// console.log(code)
+	</script>
+</div>
+</body>
+</html>
