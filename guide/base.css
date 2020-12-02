@@ -66,7 +66,8 @@ xmp {margin:0; padding:0; white-space:pre-wrap;}
 .coding_guide .d_desc .num_list {padding-left:20px; list-style-type:decimal;}
 .coding_guide .d_desc .num_list li {padding:0 0 5px 0;}
 .coding_guide .d_desc strong{color:#000}
-.coding_guide .d_desc.table{background: #fff;}
+.coding_guide .d_desc.table{background: #fff;padding: 0;}
+.coding_guide .d_desc.table .d_desc{border:0 none;margin-bottom: 0;}
 .coding_guide .t_point {margin:0 0 7px; padding-bottom:5px; border-bottom:1px solid #E5E5E5}
 
 .guide_table {width:100%; border:0 none; border-collapse:collapse;}
@@ -80,7 +81,8 @@ xmp {margin:0; padding:0; white-space:pre-wrap;}
 .blue{color:#00f;}
 .d_desc *{font-size:14px;}
 .d_desc li{margin-top:10px;}
-h2.h2_guide {font-size:18px; margin:40px 0 5px; font-weight:bold;color:#666;}
+h2.h2_guide {font-size:20px; margin:40px 0 5px; font-weight:bold;color:#333;}
+.h22_guide{font-size: 16px;}
 h3.h3_guide {position:relative;border-bottom:1px solid #ddd; padding:0 0 8px 0; font-size:16px; color:#313131;}
 h3.h3_guide:before{content:'■';display:inline-block;margin-right:5px;font-size:10px;}
 .lstDsc + .h3_guide{margin-top:20px;}
@@ -100,7 +102,9 @@ h3.h3_guide:before{content:'■';display:inline-block;margin-right:5px;font-size
 .line{margin: 50px 0;border:1px solid #eee;}
 .bx-tabs + .bx-tabs{margin-top:20px !important;}
 .ui-code{font-size: 16px;border-radius: 10px;}
-
+.h_wrap{
+    padding-left: 20px;
+}
 
 
 
