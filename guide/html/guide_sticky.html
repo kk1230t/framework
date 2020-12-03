@@ -7,17 +7,15 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<meta http-equiv="Pragma" content="no-cache">
-	<title>hmall 스크립트가이드</title>
+	<title>Framework Guide</title>
 	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="../base.css">
-	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
-	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
-	
-	<script src="../shCore.js"></script>
-	<script src="../shBrushXml.js"></script>
-	<script src="../shBrushCss.js"></script>
-	<script src="../shBrushJScript.js"></script>
-	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+
+	<link rel="stylesheet" href="../styles/default.css">
+	<link rel="stylesheet" href="../styles/railscasts.css">
+	<script src="../highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
 	
 	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
 	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
@@ -25,38 +23,65 @@
 	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
 	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
 	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
-	<script src="//imagedev.hmall.com/p/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
 </head>
 <style>
-	.sticky{
-		
-		/* position: absolute;
-		top:400px;
-		left:0; */
+	[data-modules-sticky] .sticky-inner{
+		display: inline-block;
+		background: #333;
+		color: #fff;
+		position: relative;
+		padding: 10px;
+		border-radius: 10px;
 	}
-	.sticky-inner{
-		border:1px solid red;
-	}
-	.sticky.fixed{
+	[data-modules-sticky].fixed{
 		position: fixed;
-		top:400px;left:0;
 	}
 	#break{
-		border:1px solid red;
+		border:1px solid #aaa;
+		border-radius: 4px;
 	}
 </style>
 <body>
 <div id="wrap" class="coding_guide">
-	<h1 class="h1_guide">Sticky</h1>
-	<h2 class="h2_guide">selector</h2>
+	<h1 class="h1_guide">Intro</h1>
 	<div class="d_desc">
-		<p class="decs">[data-modules-sticky]</p>
-	</div>
-	<h2 class="h2_guide">function</h2>
-	<div class="d_desc">
-		<p class="decs">$(element).sticky()</p>
 		<p class="decs">페이지 스크롤 시 화면에 선택된 요소를 고정 시켜주는 기능</p>
 	</div>
+	<h2 class="h2_guide">html문서 내 호출</h2>
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본 -->
+	&lt;div data-modules-sticky>
+		마크업 내용...
+	&lt;/div>
+
+	&lt;!-- 커스텀 옵션 사용 -->
+	&lt;div data-modules-sticky="padding:0;relativeTarget:#wrap;">
+		마크업 내용...
+	&lt;/div>
+	</code></pre>
+
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	// 기본 옵션없이 호출
+	$('SelectorName').sticky();
+
+
+	// 커스텀 옵션 사용
+	$('SelectorName').sticky({
+		padding:0,
+		relativeTarget : '#wrap'
+	});
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+[data-modules-sticky] .sticky-inner{
+
+}
+[data-modules-sticky].fixed{
+	position: fixed;
+}
+	</code></pre>
 	<h2 class="h2_guide">options</h2>
 	<div class="d_desc table">
 		<table class="table table-bordered table-striped js-options-table">
@@ -87,22 +112,71 @@
 					<td>null</td>
 					<td>전달된 셀렉터의 위치 밑으로는 내려가지 않음.</td>
 				</tr>
+				<tr>
+					<td>className</td>
+					<td>String</td>
+					<td>null</td>
+					<td>초기화 시 sticky 셀렉터를 &lt;div class="sticky-ui-wrapper">&lt;/div>로 랩핑하는데 이때 랩핑되는 부모요소에 삽입될 클래스 명</td>
+				</tr>
 			</tbody>
+			
 		</table>
 	</div>
 	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).sticky('posRefresh')</td>
+					<td>sticky 엘리먼트 위치 재정렬</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
 	<div class="d_desc">
 		<ul>
 			<li>없음</li>
 		</ul>
 	</div>
 	<div id="break">
-		이 박스 밑으로는 내려가지 않습니다.
-		<div class="sticky" data-modules-sticky="padding:0;breakPoint:#break;">
+		<div style="margin-left: 100px;" data-modules-sticky="padding:0;breakPoint:#break;">
 			<div class="sticky-inner">
-				스크롤을 내리면 이 요소가 화면에 고정됩니다.<br><br><br><br><br><br><br><br><br><br>
+				Sticky 요소
 			</div>
 		</div>
+		<div id="break2">
+			<div style="margin-left: 200px;" data-modules-sticky="padding:-200;breakPoint:#break2;">
+				<div class="sticky-inner">
+					Sticky 요소
+				</div>
+			</div>
+			<div id="break3">
+				<div style="margin-left: 300px;" data-modules-sticky="padding:-300;breakPoint:#break3;">
+					<div class="sticky-inner">
+						Sticky 요소
+					</div>
+				</div>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			</div>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				
+		</div>
+
+		
 		<br>
 		<br>
 		<br>
@@ -110,22 +184,7 @@
 		<br>
 		<br>
 		<br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br>
 	</div>
 
 
@@ -133,13 +192,5 @@
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 </div>
-<script>
-	$(function(){
-		$('.sticky').sticky({
-			"padding":-400,
-			"breakPoint" : "#break"
-		});
-	})
-</script>
 </body>
 </html>

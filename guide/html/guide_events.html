@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>Framework Guide</title>
+	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../base.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+	<link rel="stylesheet" href="../styles/default.css">
+	<link rel="stylesheet" href="../styles/railscasts.css">
+	<script src="../highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
+	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
+	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	<div class="header_wrap">
+		<h1 class="h1_guide">Intro</h1>
+		<div class="d_desc">
+			<p class="decs">
+				Custom $(window) event 에 대한 내용입니다.
+			</p>
+		</div>
+	</div>
+	<h2 class="h2_guide">"changeSize" Event</h2>
+	<div class="d_desc">
+		<p class="decs">
+			UI.DEFAULT_SCREEN_SIZE 에서 지정한 해상도별 mode가 변경시 발생
+		</p>
+	</div>
+	<pre class="ui-code"><code class="javascript">
+	// 기본 해상도 분기
+	var DEFAULT_SCREEN_SIZE = [
+		{
+			mode: 'mobile',
+			min: 0,
+			max: 767
+		},
+		{
+			mode: 'tablet',
+			min: 768,
+			max: 1024
+		},
+		{
+			mode: 'web',
+			min: 1025,
+			max: 3840
+		}
+	];
+
+
+	/**
+	* @event 	이벤트 객체
+	* @mode 	현재 mode
+	*/
+	$(window).on('changeSize', function(event, mode){
+		console.log(mode);
+	})
+		</code></pre>
+	<h2 class="h2_guide">scrollstart, scrollend (mobile에서 주로사용)</h2>
+	<div class="d_desc">
+		<p class="decs">
+			UI.DEFAULT_SCREEN_SIZE 에서 지정한 해상도별 mode가 변경시 발생
+		</p>
+	</div>
+	<pre class="ui-code"><code class="javascript">
+	/**
+	* @event 	이벤트 객체
+	*/
+	$(window).on("scrollstart",function(event){
+
+	})
+
+	$(window).on("scrollend",function(event){
+
+	})
+		</code></pre>
+	<br><br><br>
+</div>
+</body>
+</html>
+

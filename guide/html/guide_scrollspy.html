@@ -91,8 +91,25 @@
 		</table>
 	</div>
 	<h2 class="h2_guide">Method</h2>
-	<div class="d_desc">
-		없음
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).scrollspy('reposition')</td>
+					<td>스크롤스파이 위치 재 조정</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<h2 class="h2_guide">Event</h2>
 	<div class="d_desc table">
@@ -122,46 +139,6 @@
 			var $this = $(this);
 			$this.siblings('[data-hilight="code"]').html($this.html());
 		})
-		// $('#myModal').modal().show();
-		$('#test').on('click', function(e){
-			$('#myModal').modal().toggle();
-		})
-		$('#myModal').on('show.hui.modal', function(){
-			console.log('모달 열림')
-		})
-		.on('hide.hui.modal', function(){
-			console.log('모달 닫힘')
-		})
-		// console.log(code)
-
-
-		$('#callCustomAlert').on('click', function(e){
-			UI.customAlert({
-				//  <!-- type : alert, confirm -->
-				type : 'confirm',
-				//  <!-- 레이어팝업 타이틀 -->     
-				title : "임시 비밀 번호 발송",
-				//  <!-- 기본 구조는 <p></p> 이나 커스텀 가능 -->
-				message : "<p>커스텀 얼럿을 호출 했습니다.</p>",
-				//  <!-- 기본 버튼 [ 기본 적용 시 생략, 전달 타입 : 태그 or 텍스트] -->
-				defaultBtn : '<button type="button" id="customMsgSubmit" class="btn btn-info"><span>확인</span></button>',
-				//  <!-- 기본 창 사이즈 [ 기본 적용 시 생략]  -->   
-				size : "modal-sm",
-				//  <!-- 기본 취소 버튼 [ 기본 적용 시 생략, 전달 타입 : 태그 or 텍스트] -->
-				cancelBtn : '<button type="button" id="customMsgCancel" class="btn btn-info"><span>취소</span></button>',
-				//  <!-- 기본 콜백  return 값으로 false 전달 시 레이어 닫힘 기능 차단-->
-				defaultCallback : function(){
-					alert('확인 누름')
-				},
-				//  <!-- 취소 버튼 클릭 시 콜백 return 값으로 false 전달 시 레이어 닫힘 기능 차단 (type이 confirm 인 경우에만 유효함)-->
-				cancelCallback : function(){
-					alert('취소 누름')
-				},
-				dismissCallback : function(){
-					alert('그냥 닫음')
-				}
-			});
-    	});
 	</script>
 </div>
 <div class="modal-scrollbar-measure"></div>
