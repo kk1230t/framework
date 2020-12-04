@@ -1,0 +1,155 @@
+/* common */
+.ctr-btn{
+    margin: 10px 0 20px;
+    .decs{
+        display: inline-block;
+        margin-top: 6px;
+        margin-left: 20px;
+    }
+    .style-toggle-btn{
+        padding: 10px;
+        border:0 none;
+        background: #837466;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 6px;
+        margin:0;
+        outline: none;
+        &.ui-active{
+            background: #d1c3b6;
+            color: #333;
+        }
+    }
+}
+
+.custom-style{
+    a{
+        text-decoration: none;
+    }
+    /* Sticky Custom Style*/
+    [data-modules-sticky] .sticky-inner{
+        display: inline-block;
+        background: #333;
+        color: #fff;
+        position: relative;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    [data-modules-sticky].fixed{
+        position: fixed;
+    }
+    #break{
+        border:1px solid #aaa;
+        border-radius: 4px;
+        position: relative;
+    }
+    #break5{
+        position: absolute;
+        top: 800px;
+        left: 0;
+        right: 0;
+        border-top: 1px solid red;
+    }
+
+
+    /* Dropdown */
+    .ui-dropdown{
+		display: inline-block;
+		border:1px solid #ccc;
+		padding: 10px;
+        color: #333;
+        text-align: left;
+        .dropdown-menu{
+            right: 0;
+            border:1px solid #ccc;
+            padding: 10px;
+            a{
+                display: block;
+                padding: 5px 0;
+            }
+        }
+        a.readonly, a.disabled {
+            cursor: default;
+            color: #ccc;
+            &:hover{
+                text-decoration: none;
+            }
+        }
+    }
+    
+
+
+
+
+
+    /* cascading grid */
+    [data-modules-cascadingGrid]{
+    
+    }
+    [data-items]{
+        padding: 20px;
+        background: #b2cef5;
+        color: #333;
+    }
+
+
+    /* Collapse */
+    [data-modules-collapse]{
+        border:1px solid #999;
+        display: block;
+        width: 600px;
+        padding: 10px 20px;
+        position: relative;
+        font-size: 16px;
+        color: #333;
+        &:after{
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid #333;
+            border-bottom: 2px solid #333;
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translate(0, -80%) rotate(45deg);
+        }
+        &.selected{
+            &:after{
+                transform: translate(0, -30%) rotate(-135deg);
+            }  
+        }
+    }
+    .accordion-panel{
+        border: 1px solid #999;
+        border-top: 0 none;
+        width: 600px;
+        margin-top: -1px;
+        padding: 10px 20px;
+        min-height: 100px;
+    }
+    .acc-parent{
+        border-top: 1px solid #999;
+        width: 600px;
+        [data-modules-collapse]{
+            border-top: 0 none;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
