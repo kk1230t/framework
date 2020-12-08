@@ -125,8 +125,16 @@
         border-top: 0 none;
         width: 600px;
         margin-top: -1px;
-        padding: 10px 20px;
-        min-height: 100px;
+        &.collapsani{
+            position: relative;
+            transition: height .3s;
+            height: 0;
+            overflow: hidden;
+        }
+        .inset{
+            padding: 10px 20px;
+            min-height: 100px;
+        }
     }
     .acc-parent{
         border-top: 1px solid #999;

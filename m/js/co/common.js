@@ -1246,6 +1246,7 @@
                 if(!_.element.is(':visible') || _._isResize ) return;
 				var $this = $(this);
                 var scrollPos = $this.scrollTop();
+                _.options.pos = _.placehiolder.offset().top + _.options.padding;
 				if(scrollPos > _.options.pos){
                     _.element.addClass(activeClass);
                     _.element.css(_.options.align, (Math.abs(_.options.padding)));
@@ -1270,14 +1271,12 @@
 		},
 		posRefresh : function(pos){
             var _ = this;
-            console.log('dfdsfsdfsdfds');
             if(!_.element.is(':visible')) return;
             _.element.removeClass('fixed');
             _.element.css('top', '');
             _._setRelativeTarget();
             if(pos) _.options.padding = pos;
             
-            _.options.pos = _.placehiolder.offset().top + _.options.padding;
             _._isResize = false;
             win.trigger('scroll');
             
@@ -1671,7 +1670,10 @@
             activeClass : "selected",
             DURATIONS : 350,
             selector : selector,
-            targetClass : 'accordion-panel'
+            targetClass : 'accordion-panel',
+            animate : false,
+            animationClass : 'collapsani',
+            parent : null
         },
         Collapse = Widget.extend({
             name : name,
@@ -1681,6 +1683,10 @@
                 Widget.fn.init.call(_, element, options);
                 _.transitioning = null;
                 _.element = $(element);
+                var target = ui.getNext(element, _.options.targetClass);
+                _.$element = $(target.el);
+                _.$trigger = $(target.trigger);
+                _.$parent = _.$element.closest(_.options.parent);
                 _._bindEvent();
             },
             _bindEvent : function(){
@@ -1690,14 +1696,10 @@
             _handler : function(e){
                 e.preventDefault();
                 var _ = this,
-                    el = e.target,
-                    target = ui.getNext(el, _.options.targetClass);
-                _.$element = $(target.el);
-                _.$trigger = $(target.trigger);
-                _.$parent = _.$element.closest(_.options.parent);
+                    el = e.currentTarget;
+                if(_.options.animate && $(el).hasClass(_.options.animationClass)) return;
                 _.toggle();
             },
-
             dimension : function () {
                 var hasWidth = this.$element.hasClass('width')
                 return hasWidth ? 'width' : 'height'
@@ -1706,20 +1708,56 @@
                 var _ = this;
                 var openTrigger = _.$parent.find('.'+_.options.activeClass+'.'+_.options.targetClass)
                 if(_.$parent && openTrigger){
-                    openTrigger.removeClass(_.options.activeClass)
-                    openTrigger.prev().removeClass(_.options.activeClass)
+                    // .removeClass(_.options.activeClass)
+                    // .removeClass(_.options.activeClass)
+                    // _.hide(openTrigger.prev(), openTrigger)
+                    openTrigger.prev().collapse('toggle')
                 }
-                _.$element.addClass(_.options.activeClass);
-                _.$trigger.addClass(_.options.activeClass);
+                if(_.options.animate){
+                    _.$element
+                        .addClass(_.options.activeClass)
+                        .addClass(_.options.animationClass);
+                    _.$trigger
+                        .addClass(_.options.animationClass)
+                        .addClass(_.options.activeClass)
+                        .height(_.$trigger[0].scrollHeight)
+                        .one('bsTransitionEnd', function(e){
+                            _.$trigger.height('auto');
+                            _.$trigger.removeClass(_.options.animationClass);
+                            _.$element.removeClass(_.options.animationClass);
+                        })
+                }else{
+                    _.$element.addClass(_.options.activeClass);
+                    _.$trigger.addClass(_.options.activeClass);
+                }
+                
             },
-            hide : function () {
+            hide : function (el, tigr) {
                 var _ = this;
-                _.$element.removeClass(_.options.activeClass);
-                _.$trigger.removeClass(_.options.activeClass);
+                var nav = el !== undefined ? el : _.$element
+                var cont = tigr !== undefined ? tigr : _.$trigger
+                if(_.options.animate){
+                    _.$element.removeClass(_.options.activeClass);
+                    _.$element.addClass(_.options.animationClass);
+                    _.$trigger
+                        .height(_.$trigger[0].offsetHeight)    
+                        .addClass(_.options.animationClass)
+                        .height(0)                        
+                        .one('bsTransitionEnd', function(e){
+                            _.$trigger
+                                .height('')
+                                .removeClass(_.options.animationClass)
+                                .removeClass(_.options.activeClass)
+                            _.$element.removeClass(_.options.animationClass);
+                        })
+                }else{
+                    _.$element.removeClass(_.options.activeClass);
+                    _.$trigger.removeClass(_.options.activeClass);
+                }
             },            
             toggle : function () {
                 var _ = this;
-                _[this.$element.hasClass(_.options.activeClass) ? 'hide' : 'show']()
+                _[_.$element.hasClass(_.options.activeClass) ? 'hide' : 'show']()
             }
         })
     ui.plugin(Collapse);
@@ -2563,6 +2601,7 @@
             })
 			$(window).on('load scroll', function(e){
                 _._scrollCheck(wrap.scrollTop());
+                _.options.maxHeight = $('body').prop('scrollHeight') - $(window).height();
                 _._getContPos();
             })
             
@@ -3442,6 +3481,144 @@
 })(window[LIB_NAME], jQuery);
 
 
+/**
+ * @name imageViewer
+ * @selector [data-modules-imageViewer]'
+ */
+
+;(function(core, $, undefined){
+    "use strict";
+    var win = $(window),
+    forEach = Array.prototype.forEach,
+    Default = {
+        zoom: .5,
+        magnification : .03,
+        activeClass : 'ui-active',
+        minimumZoom : .3,
+        maximumZoom : 1
+    },
+    name = "imageViewer",
+    namespace = ".imageViewer",
+    activeClass = 'ui-active',
+    isApp = core.detect.isApp,
+    ui = core.ui,
+    Widget = ui.Widget,
+    ImageViewer = Widget.extend({
+		name : name,
+		init : function(element, config){
+			var _ = this;
+			var options = _.options = $.extend({}, Default, config);
+			Widget.fn.init.call(_, element, options);
+            _.element = $(element);
+            _.width = _.element.outerWidth();
+            _.height = _.element.outerHeight();
+            _.zoom =  _.options.zoom
+            _.angleWidth = _.width * _.zoom;
+            _.angleHeight = _.height * _.zoom;
+            _.rectAngle = $('<div class="ui-angle">');
+            _.element.append(_.rectAngle);
+            _.isOver = null;
+            _.viewercontent = $(document).find('[data-viewercontent]')
+            _._bindEvents();
+		},
+		_bindEvents : function(){
+            var _ = this;
+            _.element
+            .on('mouseenter', function(e){
+                _.isOver = true;
+                var w = _.angleWidth =_.width * _.zoom;
+                var h = _.angleHeight = _.height * _.zoom;
+                _._showRectAngle();
+                _._setAngleSize(w, h);
+            })
+            .on('mouseleave', function(e){
+                _.isOver = false;
+                _._hideRectAngle();
+                _.zoom = _.options.zoom
+            })
+            .on('mousewheel DOMMouseScroll', function(e){
+                var wheelPos = e.originalEvent.wheelDelta ? e.originalEvent.wheelDelta / 10 : (e.originalEvent.detail || e.originalEvent.deltaY)/3,
+                    x, y;
+                if(wheelPos < 0){
+                    _.zoom-=_.options.magnification;
+                }else{
+                    _.zoom+=_.options.magnification;
+                }
+                if(_.zoom <= _.options.minimumZoom) _.zoom = _.options.minimumZoom;
+                if(_.zoom >= _.options.maximumZoom) _.zoom = _.options.maximumZoom;
+                var w = _.angleWidth =_.width * _.zoom;
+                var h = _.angleHeight = _.height * _.zoom;
+                x = _._getPageX(e.pageX);
+                y = _._getPageY(e.pageY);
+                _._setAngleSize(w, h);
+                _._changeAnglePosition(x, y);
+                if(_.isOver) return false;
+            })
+
+            $(document).on('mousemove', function(e){
+                if(!_.isOver) return;
+                var x = _._getPageX(e.pageX)
+                var y = _._getPageY(e.pageY)
+                _._changeAnglePosition(x, y);
+            })
+        },
+        _changeAnglePosition : function(x, y){
+            var _ = this;
+            _.rectAngle.css({"top":y+"px", "left":x+"px"})
+            $('.viewer-image').css({"transform":"translate(-"+x/_.zoom+"px, -"+y/_.zoom+"px)"})
+        },
+        _showRectAngle : function(){
+            var _ = this;
+            var src = _.element.find('.slick-active [data-item]').attr('data-outputsrc')
+            _.rectAngle.show();
+            _.viewercontent.addClass(activeClass);
+            _.viewercontent.append('<div class="viewer-image"><img src="'+src+'"></div>');
+        },
+        _hideRectAngle : function(){
+            var _ = this;
+            _.rectAngle.hide()
+            _.viewercontent.removeClass(activeClass);
+            _.viewercontent.find('.viewer-image').remove();
+        },
+        _setAngleSize : function(w, h){
+            var _ = this;
+            _.rectAngle.css({"width":w+"px", "height":h+"px"})
+            $('.viewer-image').css({"width":(_.width /_.zoom)+"px", "height":(_.height /_.zoom)+"px"})
+        },
+        _getPageX : function(n){
+            var _ = this,
+                x = n - _.element.offset().left-4 - (_.angleWidth/2),
+                maximun = x + _.angleWidth,
+                pos = 0;
+            if(x >= 0){
+                if(maximun >=_.width){
+                    pos = _.width - _.angleWidth;
+                }else{
+                    pos = n - _.element.offset().left-4 - (_.angleWidth/2)
+                }
+            }
+            return pos;
+        },
+        _getPageY : function(n){
+            var _ = this,
+                y = n - _.element.offset().top-4 - (_.angleHeight/2),
+                maximun = y + _.angleHeight,
+                pos = 0;
+            if(y >= 0){
+                if(maximun >=_.height){
+                    pos = _.height - _.angleHeight;
+                }else{
+                    pos = n - _.element.offset().top-4 - (_.angleHeight/2)
+                }
+            }
+            return pos;
+        }
+    })
+    ui.plugin(ImageViewer);
+})(window[LIB_NAME], jQuery);
+
+
+
 
 
 /**
@@ -3560,6 +3737,10 @@
         scrollItems : {
             el : '[data-modules-scrollItems]',
             name : "scrollItems"
+        },
+        imageViewer : {
+            el : '[data-modules-imageViewer]',
+            name : "imageViewer"
         }
         
         // overflowText : {

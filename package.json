@@ -1,5 +1,5 @@
 {
-  "name": "gilchae.kim ui framework",
+  "name": "gilchae.kim-ui-framework",
   "version": "1.0.0",
   "description": "ui framework 입니다.",
   "keywords": [
@@ -20,7 +20,7 @@
     "es6-modules"
   ],
   "scripts": {
-    "start": "gulp",
+    "start": "gulp"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
