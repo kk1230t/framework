@@ -1,0 +1,380 @@
+
+@mixin clearfix() {
+    &:after {
+        content: "";
+        display: block;
+        clear: both;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+}
+
+
+
+@mixin respondTo($media) {
+    @if $media == mobile {
+        @media (max-width:$breakpoints-mobile+"px") { @content; }
+    }
+    @else if $media == tablet {
+        @media (max-width:$breakpoints-tablet+"px") { @content; }
+    }
+    @else {
+        @media (max-width:$media+"px") { @content; }
+    }
+}
+@mixin respondToMinMax($minSize, $maxSize) {
+    @media (min-width: $minSize+"px") and (max-width: $maxSize +"px") { @content; }
+}
+
+
+
+@mixin cssIcon($icon, $txt_position: 'none', $direction:'up', $padding:0, $width:0, $height:0) {
+    @if $icon == delete {
+        &:before, &:after{
+            content:'';
+            display:block;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            position: absolute;
+            left:50%;
+            top:50%;
+            @content;
+        }
+        &:after{
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        @if ($txt_position == 'left' or $txt_position == 'right') {
+            &:before{
+                width:$width;
+                transform: translate(0, -50%) rotate(-45deg);
+            }
+            &:after{
+                width:$width;
+                transform: translate(0, -50%) rotate(45deg);
+            }
+        }
+    }
+    @else if $icon == plus {
+        &:before, &:after{
+            content:'';
+            display:block;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            left:50%;
+            top:50%;
+            @content;
+        }
+        &:after{
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+        @if ($txt_position == 'left' or $txt_position == 'right') {
+            &:before{
+                width:$width;
+                transform: translate(0, -50%);
+            }
+            &:after{
+                width:$width;
+                transform: translate(0, -50%) rotate(90deg);
+            }
+        }
+    }
+    @else if $icon == minus {
+        &:before{
+            content:'';
+            display:block;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            left:50%;
+            top:50%;
+            @content;
+        }
+    }
+    @else if $icon == linearrow {
+        //$size:floor($width/$sqrt_2 - 2*$hegith);
+        &:before, &:after{
+            content: '';
+            display:block;
+            position: absolute;
+            transition: all .2s ease;
+            width:round($width/1.41421356237 - 2*$height);
+            height:$height;
+            @content;
+        }
+        @if $direction == 'up' {
+            &:before{
+                top:50%;
+                left:0;
+                transform: translate(0, -50%) rotate(45deg);
+            }
+            &:after{
+                top:50%;
+                right:0;
+                transform: translate(0, -50%) rotate(-45deg);
+            }
+        }
+        @else if $direction == 'down' {
+            &:before{
+                top:50%;
+                left:0;
+                transform: translate(0, -50%) rotate(-45deg);
+            }
+            &:after{
+                top:50%;
+                right:0;
+                transform: translate(0, -50%) rotate(45deg);
+            }
+        }
+        @else if $direction == 'left' {
+            &:before{
+                top:0;
+                left:50%;
+                transform: translate(-50%, round(($width/1.41421356237 - 2*$height)/2)) rotate(-45deg);
+            }
+            &:after{
+                top:100%;
+                left:50%;
+                transform: translate(-50%, - round(($width/1.41421356237 - 2*$height)/2)) rotate(45deg);
+            }
+        }
+        @else if $direction == 'right' {
+            &:before{
+                top:0;
+                left:50%;
+                transform: translate(-50%, round(($width/1.41421356237 - 2*$height)/2)) rotate(45deg);
+            }
+            &:after{
+                top:100%;
+                left:50%;
+                transform: translate(-50%, - round(($width/1.41421356237 - 2*$height)/2)) rotate(-45deg);
+            }
+        }
+        
+    }
+    @else {
+        @media (max-width:$icon+"px") { @content; }
+    }
+
+    @if $txt_position == 'left' {
+        width:auto;
+        padding-left:round($padding + $width);
+        &:before,&:after{
+            left:0;
+        }
+    }
+    @else if $txt_position == 'right' {
+        width:auto;
+        padding-right:round($padding + $width);
+        &:before,&:after{
+            left:auto;
+            right:0;
+        }
+    }
+    
+}
+
+$sqrt_2: 1.41421356237;
+@mixin cssIcon2($icon, $size: 20px, $thick: 2px, $color: $text_color01, $icosize: 100%, $display: inline-block, $position: relative,$direction: 'up',$interval: 8px,$align:middle,$width:auto,$height:auto) {
+
+    @if $icon == plus {
+        position: $position;
+        display: $display;
+        vertical-align: $align;
+        width:$size;
+        height:$size;
+        &:before, &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: $icosize;
+            height: $thick;
+            background-color: $color;
+        }
+        &:before {
+            transform: translate(-50%, -50%);
+        }
+
+        &:after {
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+    }
+    @else if $icon == close {
+        position: $position;
+        display: $display;
+        vertical-align: $align;
+        width:$size;
+        height:$size;
+        &:before, &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: $icosize;
+            height: $thick;
+            background-color: $color;
+        } 
+        &:before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        } 
+        &:after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    }
+    @else if $icon == arrow {
+        display: $display;
+        vertical-align: $align;
+        width:$size;
+        height:$size;
+        &:before {
+            content: '';
+            display: block;
+            @if ($direction == 'up'){
+                border-bottom: $size solid $color;
+                border-left: round($size/2) solid transparent;
+                border-right: round($size/2) solid transparent;
+            }
+            @else if ($direction == 'down'){
+                border-top: $size solid $color;
+                border-left: round($size/2) solid transparent;
+                border-right: round($size/2) solid transparent;
+            }
+            @else if ($direction == 'left'){
+                border-top: round($size/2) solid transparent;
+                border-bottom: round($size/2) solid transparent;
+                border-right: $size solid $color;
+            }
+            @else if ($direction == 'right'){
+                border-top: round($size/2) solid transparent;
+                border-bottom: round($size/2) solid transparent;
+                border-left: $size solid $color;
+            }
+        }
+    }
+    @else if $icon == linearrow  {
+        position: $position;
+        display: $display;
+        vertical-align: $align;
+        width: $width;
+        height: $height;
+        $size: floor($width/$sqrt_2 - 2*$thick);
+        $rate: 2*$height/$width;
+        $margin-top: round($rate*$size/(2*$sqrt_2));
+        @if ($direction == 'up' or $direction == 'down') {
+            &:before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: $size;
+                height: $size;
+                @if ($rate == 1) {
+                    transform: translate(-50%, -50%) rotate(45deg);
+                } @else {
+                    transform: translate(-50%, -50%) scale(1, $rate) rotate(45deg);
+                }
+                @if ($direction == 'up') {
+                    margin-top: $margin-top;
+                    border-top: $thick solid $color;
+                    border-left: $thick solid $color;
+                } @else if ($direction == 'down') {
+                    margin-top: - $margin-top;
+                    border-right: $thick solid $color;
+                    border-bottom: $thick solid $color;
+                }
+            }
+        } @else if ($direction == 'left' or $direction == 'right') {
+            $size: floor($height/$sqrt_2 - 2*$thick);
+            $rate: 2*$width/$height;
+            $margin-left: round($rate*$size/(2*$sqrt_2));
+            &:before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%; 
+                width: $size;
+                height: $size;
+                @if ($rate == 1) {
+                    transform: translate(-50%, -50%) rotate(45deg);
+                } @else {
+                    transform: translate(-50%, -50%) scale($rate, 1) rotate(45deg);
+                }
+                @if ($direction == 'left') {
+                    margin-left: $margin-left;
+                    border-left: $thick solid $color;
+                    border-bottom: $thick solid $color;
+                } @else if ($direction == 'right') {
+                    margin-left: - $margin-left;
+                    border-top: $thick solid $color;
+                    border-right: $thick solid $color;
+                }
+            }
+        }
+    }
+    @else if $icon == longarrow {
+        position: $position;
+        display: $display;
+        vertical-align: $align;
+        width:$width;
+        height:$height;
+        &:before {
+            content: '';
+            position: absolute;
+            border-top: $thick solid $color;
+            border-left: $thick solid $color;
+            @if ($direction == 'up' or $direction == 'down') {
+                $size: round($width/$sqrt_2 - $thick);
+                left: 50%;
+                width: $size;
+                height: $size;
+                @if ($direction == 'up') {
+                    top: round($width/2);
+                    transform: translate(-50%, -50%) rotate(45deg);
+                } @else if ($direction == 'down') {
+                    bottom: round($width/2);
+                    transform: translate(-50%, 50%) rotate(-135deg);
+                }
+            } @else if ($direction == 'left' or $direction == 'right') {
+                $size: round($height/$sqrt_2 - $thick);
+                top: 50%;
+                width: $size;
+                height: $size;
+                @if ($direction == 'left') {
+                    left: round($height/2);
+                    transform: translate(-50%, -50%) rotate(-45deg);
+                } @else if ($direction == 'right') {
+                    right: round($height/2);
+                    transform: translate(50%, -50%) rotate(135deg);
+                }
+            }
+        }
+        &:after{
+            content: '';
+            position: absolute;
+            background-color: $color;
+            @if ($direction == 'up' or $direction == 'down') {
+                @if ($direction == 'up') {
+                    top: round($thick/$sqrt_2);
+                } @else if ($direction == 'down') {
+                    bottom: round($thick/$sqrt_2);
+                }
+                left: 50%;
+                width: $thick;
+                height: $height - round($thick/$sqrt_2);
+                transform: translate(-50%, 0);
+            } @else if ($direction == 'left' or $direction == 'right') {
+                top: 50%;
+                @if ($direction == 'left') {
+                    left: round($thick/$sqrt_2);
+                } @else if ($direction == 'right') {
+                    right: round($thick/$sqrt_2);
+                }
+                width: $width - round($thick/$sqrt_2);
+                height: $thick;
+                transform: translate(0, -50%);
+            }
+        }
+    }
+    @else {
+        
+    }
+}

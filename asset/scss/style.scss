@@ -1,5 +1,5 @@
+@import "mixins/utilities";
 $url_font : '../../fonts/';
-
 @font-face {
 	font-family: 'NotoSans';
 	font-weight: 400;
@@ -199,6 +199,20 @@ body{font-family: 'NotoSans';}
         // }
     }
 
+
+
+
+
+
+
+
+    /* tab */
+    .tab-content > .tab-pane.ui-active{
+        display: block;
+    }
+    .tab-content > .tab-pane {
+        display: none;
+    }
     .ui-tab{
         border-bottom: 1px solid #333;
         border-left: 1px solid #333;
@@ -240,9 +254,107 @@ body{font-family: 'NotoSans';}
 
 
 
+    /* scroll tab */
+    .scroll-tab{
+        margin: 0 40px;
+        width: 473px !important;
+        .tab-control{
+            display: block;
+            position: relative;
+            width: 50px;
+            height: 35px;
+            position: absolute;
+            top: 0;
+            background: transparent;
+            overflow: hidden;
+            border: 0 none;
+            outline: none;
+            &.prev-tab{
+                left: -50px;
+            }
+            &.next-tab{
+                right: -50px;
+            }
+        }
+    }
 
 
 
+
+    /* selectbox */
+    .selectwrap{
+        margin-top: 20px;
+    }
+    .custom-selectbox{
+        width: 500px;
+        .ui-label{
+            a {
+                display:block;
+                border:1px solid #333;
+                line-height:43px;
+                height: 43px;
+                padding: 0 0 0 20px;
+                position: relative;
+                color: #333;
+                font-weight: 700;
+                &:after{
+                    content: '';
+                    display: block;
+                    width: 10px;
+                    height: 10px;
+                    transform: rotate(135deg);
+                    border-top: 1px solid #000;
+                    border-right: 1px solid #000;
+                    position: absolute;
+                    top: 50%;
+                    right: 20px;
+                    margin-top: -10px;
+                }
+            }
+        }
+        &.ui-active{
+            .ui-label{
+                a {
+                    &:after{
+                        transform: rotate(-45deg);
+                        margin-top: -4px;
+                    }
+                }
+            }
+        }
+        &.ui-bottom{
+            .ui-selectbox{
+                top: auto;
+                bottom: 100%;
+                border-top: 1px solid #000;
+                border-bottom: 0 none;
+            }
+        }
+        .ui-selectbox {
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            z-index: 99;
+            background: #fff;
+            border:1px solid #000;
+            border-top: 0 none;
+            a {
+                display: block;
+                height: 43px;
+                line-height: 43px;
+                padding-left: 20px;
+            }
+        }
+        &.disabled, &.readonly{
+            opacity: .5;
+            a{
+                cursor: default;
+                font-weight: 400;
+            }
+        }
+    }
 
 
 

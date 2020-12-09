@@ -7,50 +7,76 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<meta http-equiv="Pragma" content="no-cache">
-	<title>hmall 스크립트가이드</title>
+	<title>Framework Guide</title>
 	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="../base.css">
-	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
-	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+
+	<link rel="stylesheet" href="../styles/default.css">
+	<link rel="stylesheet" href="../styles/railscasts.css">
+	<link rel="stylesheet" href="../../dist/css/style.css">
+	<script src="../highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
 	
-	<script src="../shCore.js"></script>
-	<script src="../shBrushXml.js"></script>
-	<script src="../shBrushCss.js"></script>
-	<script src="../shBrushJScript.js"></script>
-	<script type="text/javascript">SyntaxHighlighter.all();</script>
-	
-	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
-	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
-	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
-	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
-	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
-	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
-	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script>
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script>
+	<script src="../../m/js/co/common.js"></script>
+	<script src="../../dist/js/style.js"></script>
 </head>
 <style>
-.custom-selectbox{position: relative;}
-.custom-selectbox select{width: 0;font-size: 0;opacity: 0;height: 0;position: absolute;top: -9999em;left: -9999em;}
-.custom-selectbox .ui-label a{display:block;border:1px solid #000;line-height:43px;height: 43px;padding: 0 0 0 20px;position: relative;}
-.custom-selectbox .ui-label a:after{content: '';display: block;width: 10px;height: 10px;transform: rotate(135deg);border-top: 1px solid #000;border-right: 1px solid #000;position: absolute;top: 50%;right: 20px;margin-top: -10px;}
-.custom-selectbox.ui-active .ui-label a:after{transform: rotate(-45deg);margin-top: -4px;}
-.custom-selectbox .ui-selectbox{display: none;position: absolute;left: 0;right: 0;top: 100%;z-index: 99;background: #fff;border:1px solid #000;border-top: 0 none;}
-.custom-selectbox .ui-selectbox a{display: block;height: 43px;line-height: 43px;padding-left: 20px;}
-.custom-selectbox.ui-bottom .ui-selectbox{top: auto;bottom: 100%;border-top: 1px solid #000;border-bottom: 0 none;}
-.custom-selectbox.disabled, .custom-selectbox.readonly{opacity: .5;}
-.custom-selectbox.disabled a, .custom-selectbox.readonly a{cursor: default;}
-
+.custom-selectbox{
+	position: relative;
+}
+.custom-selectbox select{
+	width: 0;
+	font-size: 0;
+	opacity: 0;
+	height: 0;
+	position: absolute;
+	top: -9999em;
+	left: -9999em;
+}
+.custom-selectbox .ui-selectbox{
+	display: none;
+}
 </style>
 <body>
-<div id="wrap" class="coding_guide">
-	<h1 class="h1_guide">Custom selectbox</h1>
-	<h2 class="h2_guide">selector</h2>
-	<div class="d_desc">
-		<p class="decs">[data-modules-selectbox]</p>
-	</div>
-	<h2 class="h2_guide">function</h2>
-	<div class="d_desc">
-		<p class="decs">$(element).selectbox()</p>
-	</div>
+<div id="wrap" class="coding_guide custom-style">
+	<h1 class="h1_guide">Custom selectbox</h1><br>
+	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본 -->
+	&lt;div class="custom-selectbox" data-modules-selectbox>
+		&lt;select>
+			&lt;option value="aa1">내용1&lt;/option>
+			&lt;option value="aa2">내용2&lt;/option>
+			&lt;option value="aa3">내용3&lt;/option>
+		&lt;/select>
+	&lt;/div>
+	</code></pre>
+
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	$(Element).selectbox();
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+.custom-selectbox{
+	position: relative;
+}
+.custom-selectbox select{
+	width: 0;
+	font-size: 0;
+	opacity: 0;
+	height: 0;
+	position: absolute;
+	top: -9999em;
+	left: -9999em;
+}
+.custom-selectbox .ui-selectbox{
+	display: none;
+}
+	</code></pre>
 	<h2 class="h2_guide">options</h2>
 	<div class="d_desc">
 		- 없음
@@ -84,9 +110,13 @@
 	<div class="d_desc">
 		- 없음
 	</div>
-
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
 	<div class="code_in">
-		<div class="custom-selectbox" id="resfffff" data-modules-selectbox="mouseenter:true;">
+		<div class="custom-selectbox" data-modules-selectbox="mouseenter:true;">
 			<select id="tests">
 				<option value="aa1">마우스오버1</option>
 				<option value="aa2">마우스오버2</option>
@@ -95,69 +125,27 @@
 				<option value="aa5">마우스오버5</option>
 			</select>
 		</div>
-		<div class="custom-selectbox" id="resfffff" data-modules-selectbox>
+		<div class="custom-selectbox" data-modules-selectbox>
 			<select id="tests">
 				<option value="aa1">내용1</option>
 				<option value="aa2">내용2</option>
 				<option value="aa3">내용3</option>
-				<option value="aa4">내용14</option>
-				<option value="aa5">내용15</option>
-			</select>
-		</div>
-		<div class="custom-selectbox" data-modules-selectbox>
-			<select>
-				<option>내용df1</option>
-				<option>내용sdfsd2</option>
-				<option>내용fds3</option>
-				<option>내용fds3</option>
-				<option>내용fds3</option>
-				<option>내용14</option>
-				<option>내용ffds15</option>
-			</select>
-		</div>
-		<div class="custom-selectbox" data-modules-selectbox>
-			<select>
-				<option value="1">내fsdfsd용1</option>
-				<option value="2">내dsf용2</option>
-				<option value="3">내dsf용3</option>
-				<option value="4">내용14</option>
-				<option value="5">내sdf용15</option>
+				<option value="aa4">내용4</option>
+				<option value="aa5">내용5</option>
 			</select>
 		</div>
 		<div class="custom-selectbox disabled" data-modules-selectbox>
 			<select>
-				<option value="1">disabled</option>
+				<option value="1">비활성화 셀렉트 박스</option>
 			</select>
 		</div>
 		<div class="custom-selectbox readonly" data-modules-selectbox>
 			<select>
-				<option value="1">readonly</option>
+				<option value="1">읽기전용 셀렉트박스</option>
 			</select>
-		</div>
-		<button id="refrsh">refrsh</button>
-		<button id="slected">slected [내용3]</button>
-		
+		</div>		
 	</div>
-	<pre class="brush: xml;" data-hilight="code"></pre>
-
+	<br><br><br><br><br><br><br><br><br>
 </div>
-<script>
-	$('select').on('change', function(){
-		console.log($(this).val())
-	})
-
-	$('#refrsh').on('click', function(){
-		$('#resfffff').selectbox('refresh')
-	});
-
-	$('#slected').on('click', function(){
-		$('#resfffff').selectbox().selected('내용3')
-	});
-	var code = $('.code_in')
-		code.each(function(n){
-			var $this = $(this);
-			$this.siblings('[data-hilight="code"]').html($this.html());
-		})
-</script>
 </body>
 </html>
