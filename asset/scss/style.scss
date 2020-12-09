@@ -1,3 +1,32 @@
+$url_font : '../../fonts/';
+
+@font-face {
+	font-family: 'NotoSans';
+	font-weight: 400;
+	src: url($url_font+'notokr-regular.eot');
+	src: url($url_font+'notokr-regular.eot?#iefix') format('embedded-opentype'),
+		 url($url_font+'notokr-regular.woff') format('woff'),
+		 url($url_font+'notokr-regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'NotoSans';
+	font-weight: 500;
+	src: url($url_font+'notokr-medium.eot');
+	src: url($url_font+'notokr-medium.eot?#iefix') format('embedded-opentype'),
+		 url($url_font+'notokr-medium.woff') format('woff'),
+		 url($url_font+'notokr-medium.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'NotoSans';
+	font-weight: 700;
+	src: url($url_font+'notokr-bold.eot');
+	src: url($url_font+'notokr-bold.eot?#iefix') format('embedded-opentype'),
+		 url($url_font+'notokr-bold.woff') format('woff'),
+		 url($url_font+'notokr-bold.woff2') format('woff2');
+}
+body{font-family: 'NotoSans';}
 /* common */
 .ctr-btn{
     margin: 10px 0 20px;
@@ -145,6 +174,63 @@
     }
 
 
+    /* custom toggle */
+    [data-modules-customtoggle]{
+        display: inline-block;
+        padding: 10px 20px;
+        background: #333;
+        border: 0 none;
+        color: #fff;
+        border:1px solid transparent;
+        &.ui-active{
+            color: #333;
+            background: #fff;
+            border:1px solid #999;
+        }
+    }
+    .parent-wrap {
+        // .toggle-body{
+        //     display: block !important;
+        //     x-height: 0;
+        //     overflow: hidden;
+        // }
+        // &.ui-active .toggle-body{
+        //     max-height: 10000px;
+        // }
+    }
+
+    .ui-tab{
+        border-bottom: 1px solid #333;
+        border-left: 1px solid #333;
+        font-size: 0;
+        [role="presentation"]{
+            display: inline-flex;
+            font-size: 16px;
+            border-top: 1px solid #333;
+            border-right: 1px solid #333;
+            a{
+                display: block;
+                padding: 5px 20px;
+                color: #999;
+                background: #e6e6e6;
+            }
+            &.ui-active{
+                a{
+                    text-decoration: underline;
+                    font-weight: 700;
+                    color: #333;
+                    background: #fff;
+                }
+            }
+        }
+    }
+    .tab-content{
+        border:1px solid #333;
+        .tab-pane{
+            padding: 20px;
+            min-height: 300px;
+        }
+    }
 
 
 

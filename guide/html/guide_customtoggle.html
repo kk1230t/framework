@@ -7,57 +7,85 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<meta http-equiv="Pragma" content="no-cache">
-	<title>hmall 스크립트가이드</title>
+	<title>Framework Guide</title>
 	<link rel="shortcut icon" type="image/x-icon" href="//imagedev.hmall.com/m/img/co/favicon/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="../base.css">
-	<link rel="stylesheet" type="text/css" href="../shCoreDefault.css">
-	<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+
+	<link rel="stylesheet" href="../styles/default.css">
+	<link rel="stylesheet" href="../styles/railscasts.css">
+	<link rel="stylesheet" href="../../dist/css/style.css">
+	<script src="../highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
 	
-	<script src="../shCore.js"></script>
-	<script src="../shBrushXml.js"></script>
-	<script src="../shBrushCss.js"></script>
-	<script src="../shBrushJScript.js"></script>
-	<script type="text/javascript">SyntaxHighlighter.all();</script>
-	
-	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script><!-- 공통 jQuery Plugin -->
-	<script src="//imagedev.hmall.com/m/js/co/jquery.easing.min.js"></script><!-- 공통 jQuery UI Effect -->
-	<script src="//imagedev.hmall.com/m/js/co/jquery-ui.1.12.1.min.js"></script><!-- 공통 jQuery UI js -->
-	<script src="//imagedev.hmall.com/m/js/co/jquery.touchFlow.js"></script><!-- 공통 UI에 사용하는 Touch Swipe -->
-	<script src="//imagedev.hmall.com/m/js/co/ukDetect.min.js"></script><!-- 공통 UI에 사용하는 Detect -->
-	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script><!-- 공통 Slick Slider Plugin -->
-	<script src="//imagedev.hmall.com/m/js/co/common.js"></script><!-- 공통 UI에 사용하는 js -->
+	<script src="//imagedev.hmall.com/m/js/co/jquery-3.4.1.min.js"></script>
+	<script src="//imagedev.hmall.com/m/js/co/slick.min.js"></script>
+	<script src="../../m/js/co/common.js"></script>
+	<script src="../../dist/js/style.js"></script>
 	<style>
-		.accordion-panel{
-			display: none;
+		[data-modules-customtoggle].ui-active{
+			background: #000;
+			color: #fff;
 		}
-		.accordion-panel.selected{
+		.parent-wrap.ui-active  .toggle-body{
 			display: block;
 		}
-		.solo a.ui-active{
-			font-size: 20px;
-		}
-		.multi a + div{
+		.parent-wrap .toggle-body{
 			display: none;
-		}
-		.multi.ui-active a{
-			font-size: 20px;
-		}
-		.multi.ui-active a + div{
-			display: block;
 		}
 	</style>
 </head>
 <body>
-<div id="wrap" class="coding_guide">
-	<h1 class="h1_guide">Customtoggle</h1>
-	<h2 class="h2_guide">selector</h2>
-	<div class="d_desc">
-		<p class="decs">[data-modules-customtoggle]</p>
-	</div>
-	<h2 class="h2_guide">function</h2>
-	<div class="d_desc">
-		<p class="decs">$(element).customtoggle()</p>
-	</div>
+<div id="wrap" class="coding_guide custom-style">
+	<h1 class="h1_guide">Customtoggle</h1><br>
+	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본(자신이 토글되는 경우) -->
+	&lt;button type="button" data-modules-customtoggle>커스텀 토글&lt;/button>
+
+	
+	&lt;!-- 커스텀 옵션 사용(부모요소 토글) -->
+	&lt;div class="parent-wrap">
+		&lt;div class="toggle-body">내용.....&lt;/div>
+		&lt;button type="button" data-modules-customtoggle="parent:.parent-wrap">커스텀 토글&lt;/button>
+	&lt;/div>
+	
+	
+	&lt;!-- 커스텀 옵션 사용(부모요소 토글, 텍스트 + 닫기버튼) -->
+	&lt;div class="parent-wrap">
+		&lt;div class="toggle-body">내용.....&lt;/div>
+		&lt;button type="button" data-modules-customtoggle="parent:.parent-wrap">
+			커스텀 토글
+			&lt;span data-text>더보기&lt;/span>
+		&lt;/button>
+		&lt;span data-close-btn>닫기&lt;/span>	
+	&lt;/div>
+	</code></pre>
+	
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	// 기본 옵션없이 호출
+	$(Element).customtoggle();
+
+
+	// 커스텀 옵션 사용
+	$(Element).customtoggle({
+		'parent':'.parent-wrap'
+	});
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+[data-modules-customtoggle].ui-active{
+	background: #000;
+	color: #fff;
+}
+.parent-wrap.ui-active  .toggle-body{
+	display: block;
+}
+.parent-wrap .toggle-body{
+	display: none;
+}
+	</code></pre>
 	<h2 class="h2_guide">options</h2>
 	<div class="d_desc table">
 		<table class="table table-bordered table-striped js-options-table">
@@ -77,40 +105,28 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>activeClass</td>
-					<td>string</td>
-					<td>ui-active</td>
-					<td>토글 시킬 클래스 이름</td>
-				</tr>
-				<tr>
-					<td>textCtr</td>
-					<td>selector</td>
-					<td>[data-text]</td>
-					<td>셀렉트 토글과 함께 텍스트 문구도 변경해야 할 경우 사용, 이 셀렉터는 기본 셀렉터 하위에 위치해야 합니다.</td>
-				</tr>
-				<tr>
 					<td>parent</td>
 					<td>selector</td>
 					<td>null</td>
 					<td>토글 시킬 셀렉터, 기본은 자신입니다.</td>
 				</tr>
 				<tr>
+					<td>activeClass</td>
+					<td>string</td>
+					<td>ui-active</td>
+					<td>토글 시킬 클래스 이름</td>
+				</tr>
+				<tr>
 					<td>openText</td>
 					<td>String</td>
 					<td>더보기</td>
-					<td>클래스 토글과 함께 변경할 문구가 있을 시, activeClass 클래스 요소가 활성화 되면 적용됩니다 ! 셀렉터 하위에 textCtr 요소가 있을 경우</td>
+					<td>클래스 토글과 함께 변경할 문구가 있을 시, activeClass 클래스 요소가 활성화 되면 적용됩니다 !</td>
 				</tr>
 				<tr>
 					<td>closeText</td>
 					<td>String</td>
 					<td>닫기</td>
-					<td>클래스 토글과 함께 변경할 문구가 있을 시, activeClass 클래스 요소가 제거되면 적용됩니다, ! 셀렉터 하위에 textCtr 요소가 있을 경우</td>
-				</tr>
-				<tr>
-					<td>closeBtn</td>
-					<td>selector</td>
-					<td>[data-close-btn]</td>
-					<td>커스텀토글 닫기 버튼</td>
+					<td>클래스 토글과 함께 변경할 문구가 있을 시, activeClass 클래스 요소가 제거되면 적용됩니다, !</td>
 				</tr>
 			</tbody>
 		</table>
@@ -157,32 +173,77 @@
 			</tbody>
 		</table>
 	</div>
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
 	<div class="code_in">
-		<div class="solo">
-			<a href="" data-modules-customtoggle>자신이 토글되는 경우  클릭!!!</a>
-		</div>
+		<!-- 기본(자신이 토글되는 경우) -->
+		<button type="button" data-modules-customtoggle>커스텀 토글 클릭!!</button>
 
-		<div class="multi">
-			<div>
-				<a href="" data-modules-customtoggle="parent:.multi">자신이 토글되는 경우  클릭!!!<span data-text>더보기</span></a>
-				<div>
-					컨텐츠 요소
+		<br><br>
+		<!-- 커스텀 옵션 사용(부모요소 토글) -->
+		<div class="parent-wrap">
+			<div class="toggle-body">
+				<div class="inset">
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
 				</div>
-			</div>			
+			</div>
+			<button type="button" data-modules-customtoggle="parent:.parent-wrap">커스텀 토글 클릭!!</button>
 		</div>
 		
+		<br><br>
+		<!-- 커스텀 옵션 사용(부모요소 토글, 텍스트 + 닫기버튼) -->
+		<div class="parent-wrap">
+			<div class="toggle-body">
+				<div class="inset">
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+				</div>
+			</div>
+			<button type="button" data-modules-customtoggle="parent:.parent-wrap">
+				커스텀 토글 클릭!!
+				<span data-text>더보기</span>
+			</button>
+			<span data-close-btn>닫기</span>	
+		</div>
 
-
+		<br><br><br><br><br><br>
 	</div>
-	<pre class="brush: xml;" data-hilight="code"></pre>
-	<script>
-		var code = $('.code_in')
-		code.each(function(n){
-			var $this = $(this);
-			$this.siblings('[data-hilight="code"]').html($this.html());
-		})
-		// console.log(code)
-	</script>
 </div>
 </body>
 </html>

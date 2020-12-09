@@ -1720,12 +1720,20 @@
                     _.$trigger
                         .addClass(_.options.animationClass)
                         .addClass(_.options.activeClass)
-                        .height(_.$trigger[0].scrollHeight)
-                        .one('bsTransitionEnd', function(e){
+                        .height(_.$trigger[0].scrollHeight);
+                        
+                    if( parseFloat(window.getComputedStyle(_.$trigger[0]).transitionDuration) > 0 ){
+                        _.$trigger.one('bsTransitionEnd', function(e){
                             _.$trigger.height('auto');
                             _.$trigger.removeClass(_.options.animationClass);
                             _.$element.removeClass(_.options.animationClass);
                         })
+                    }else{
+                        _.$trigger.height('auto');
+                        _.$trigger.removeClass(_.options.animationClass);
+                        _.$element.removeClass(_.options.animationClass);
+                    }
+                    
                 }else{
                     _.$element.addClass(_.options.activeClass);
                     _.$trigger.addClass(_.options.activeClass);
@@ -1742,14 +1750,22 @@
                     _.$trigger
                         .height(_.$trigger[0].offsetHeight)    
                         .addClass(_.options.animationClass)
-                        .height(0)                        
-                        .one('bsTransitionEnd', function(e){
+                        .height(0);
+                    if( parseFloat(window.getComputedStyle(_.$trigger[0]).transitionDuration) > 0 ){
+                        _.$trigger.one('bsTransitionEnd', function(e){
                             _.$trigger
                                 .height('')
                                 .removeClass(_.options.animationClass)
                                 .removeClass(_.options.activeClass)
                             _.$element.removeClass(_.options.animationClass);
                         })
+                    }else{
+                        _.$trigger
+                            .height('')
+                            .removeClass(_.options.animationClass)
+                            .removeClass(_.options.activeClass)
+                        _.$element.removeClass(_.options.animationClass);
+                    }
                 }else{
                     _.$element.removeClass(_.options.activeClass);
                     _.$trigger.removeClass(_.options.activeClass);
