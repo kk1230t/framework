@@ -118,7 +118,7 @@
 
 	<h2 class="h2_guide">script에서 호출</h2>
 	<pre class="ui-code"><code class="javascript">	
-	$(Element).selectbox();
+	$(Element).modal();
 	</code></pre>
 	<h2 class="h2_guide">최소한의 CSS</h2>
 	<pre class="ui-code"><code class="css">	
@@ -298,27 +298,28 @@
 			</tbody>
 		</table>
 	</div>
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
 	<div class="code_in">
-		<!-- Button trigger modal -->
-		<!-- <button type="button" class="btn btn-primary btn-lg" data-modules-modal="target:#myModal;">
-			Launch demo modal
-		</button> -->
-		<a href="#myModal" data-modules-modal>
-			Launch demo modal
+		<a href="#myModal" class="ui-test-btn" data-modules-modal>
+			모달 레이어 호출
 		</a>
 
 
-		<button type="button" class="btn btn-primary btn-lg" id="callCustomAlert">
+		<!-- <button type="button" class="ui-test-btn" id="callCustomAlert">
 			커스텀 얼럿 호출
-		</button>
+		</button> -->
 		
 		<!-- Modal -->
-		<div class="ui-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="ui-modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="ui-modal-dialog" role="document">
 				<div class="content">
 					modal....
-					
-					<button data-dismiss="modal">modal close</button>
+					 
+					<button data-dismiss="modal" class="close">modal close</button>
 				</div>
 			</div>
 		</div>
@@ -330,27 +331,8 @@
 				</div>
 			</div>
 		</div>
-		<button id="test" style="position: relative;z-index: 999999999999;">modal Toggle</button>
 	</div>
-	<pre class="brush: xml;" data-hilight="code"></pre>
 	<script>
-		var code = $('.code_in')
-		code.each(function(n){
-			var $this = $(this);
-			$this.siblings('[data-hilight="code"]').html($this.html());
-		})
-		// $('#myModal').modal().show();
-		$('#test').on('click', function(e){
-			$('#myModal').modal().toggle();
-		})
-		$('#myModal').on('show.hui.modal', function(){
-			console.log('모달 열림')
-		})
-		.on('hide.hui.modal', function(){
-			console.log('모달 닫힘')
-		})
-		// console.log(code)
-
 
 		$('#callCustomAlert').on('click', function(e){
 			UI.customAlert({

@@ -51,7 +51,8 @@
     "@progress/kendo-theme-default": "^4.19.0",
     "@progress/kendo-ui": "^2020.2.513",
     "axios": "^0.19.0",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "next-ui": "^0.9.0"
   },
   "main": "gulpfile.js"
 }
