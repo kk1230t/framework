@@ -3451,6 +3451,7 @@
                     relatedTarget: _.element.find('.ui-nav'+'.'+activeClass)
                 })
                 _.element.trigger(initEvent);
+                _.initActiveItem();
             },0)
         },
         activeItem : function(e){
@@ -3467,18 +3468,29 @@
         initActiveItem : function(){
             var _ = this;
             var index = _.element.find('.ui-nav'+'.'+activeClass).index();
-            _.goActive(index);
-            _.activeIndex = index;
+            if(index < 0) return;
+            if(_.options.btnControl){
+                index = parseInt(index / _.options.scrollToShow);
+                _.goActive(index * _.options.scrollToShow );
+                _.index = index;
+            }else{
+                _.goActive(index);
+                _.activeIndex = index;
+            }
+
+            
+            
         },
         goActive : function(n, eType){
             
             var _ = this;
-            var $this = _.element.find('.ui-nav').eq(n)
+            var $this = _.element.find('.ui-nav').eq(n);
+            var duration = 300;
             if(_.activeIndex != $this.index() && !_.btns){   
                 $this.activeItem(_.options.activeClass);
                 _.activeIndex = n;
             }else if(!_.btns && eType === undefined){
-                return;                
+                return;
             }
             if(typeof _.options.align === 'number'){
                 _.options.padding = $this.outerWidth() * _.options.align
@@ -3490,7 +3502,7 @@
                 }
             }
             var left = $this.position().left+_.element.scrollLeft()-_.options.padding;
-            _.element.stop().animate({scrollLeft:left},300)
+            _.element.stop().animate({scrollLeft:left},duration)
         }
     })
     ui.plugin(ScrollItems);
@@ -3838,7 +3850,6 @@
 				_.currentImgLoaded(mode);
 			});
 			win.on('load', function(e){
-				_.footerFixed();
 				_.initLibray();				
             })
 
@@ -3872,40 +3883,10 @@
 
             // 상품상세 동영상 플로팅 
             $(document)
-            .on('dblclick', '#videoFloat .vdarea', function(e){
-                var $this = $(this);
-                $this.replaceClass('off', 'on');
-                var video = $this.find('video')[0];
-                if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                } else if (video.mozRequestFullScreen) {
-                    video.mozRequestFullScreen();
-                } else if (video.webkitRequestFullscreen) {
-                    video.webkitRequestFullscreen();
-                } else if (video.msRequestFullscreen) {
-                    video.msRequestFullscreen();
-                }
-                _.fullScreenEl = {
-                    el : $this,
-                    disableClass : ['on', 'off']
-                }
-            })
-            .on('click', '#videoFloat .btn-close', function(e){
-                var $target = $("#videoFloat");
-                $target.remove();
-                _.element.removeClass('in_video_float')
-                _._fixedTab();
-            })
             .on('click', '[data-btn-top]', function(e){
                 e.preventDefault();
                 $(document).scrollTop(0);
             })
-            // document.addEventListener("fullscreenchange", function(e) {
-            //     if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-            //         _.fullScreenEl.el.replaceClass(_.fullScreenEl.disableClass[0], _.fullScreenEl.disableClass[1]);
-            //         _.fullScreenEl = {};
-            //     }
-            // });
 
             // 커스텀 데이터 레이어팝업 호출
             doc.on('click', '[data-fn-layer]', function(e){
@@ -3941,16 +3922,6 @@
             target.removeClass(_.options.activeClass);
             core.ui.hideDim();
         },
-		controllLayers : function(elm, layer){
-			var _ = this;
-			var el = elm;
-			var target = layer;
-			if(el.hasClass(_.options.activeClass)){
-				_["hide"+target](target);
-			}else{
-				_["show"+target](target);
-			}	
-		},
 		closeLayers : function(elm, layer){
 
 			var _ = this;
@@ -3960,10 +3931,6 @@
 			$('[data-callayer='+target+']').removeClass(_.options.activeClass);
 			
 		},
-		goToTop : function(){
-			var top = doc.scrollTop();
-			$(".topLink")[core.tog(top > 60)]("show");
-        },
         _fixedTab : function(){
             var _ = this;
             var el = _.element.find('#stickyTab');
@@ -3986,31 +3953,6 @@
 			var selector = $('a[href="'+window.location.hash+'"]');
 			if (selector.data('modulesTab') ==='tab') selector.tab('show');
 		},
-
-		setMinHeight : function(){
-			var _ = this;
-			var height = win.height(),
-				lnb = _.options.header.find('.logo-wrap'),
-				footer = $('#footer').parent(),
-				container = $('#yuhs-container').parent(),
-				posTop = (footer.length) ? footer.offset().top + footer.height() : null,
-				minusHeight = (footer.find('.fixed-list').length !== 0) ? footer.find('.fixed-list').height() : 0;
-		},
-
-		footerFixed : function(){
-			var _ = this;
-			var winHeight = win.height(),
-				footer = $('.wrap_footer'),
-				bodyHeight = (footer.hasClass('fixed_footer'))? footer.outerHeight()+$('body').outerHeight():$('body').outerHeight();
-				// console.log(_.mediaInfo)
-			if(_.mediaInfo !== 'mobile' && winHeight > bodyHeight){
-				footer.addClass('fixed_footer');
-			}else if(footer.hasClass('fixed_footer')){
-				footer.removeClass('fixed_footer');
-			}
-
-		},
-
 		initLibray : function(){
 			var _ = this;
             var LibrayLists = LIBRAYLISTS;
@@ -4042,7 +3984,6 @@
             
             return _;
         },
-        
         initLibrary : function(){
 			var _ = this;
 			_.initLibray();
@@ -4078,7 +4019,6 @@
 				}
 			});
 		},
-
 		currentImgLoaded : function(mode){
 			var d = mode,
 				lists = [].slice.call(document.querySelectorAll('.current_img'));
@@ -4091,28 +4031,6 @@
 				el.setAttribute('src', src)
 			});
 		},
-
-		setFooterPadding : function(){
-			var _ = this;
-			var mobileBanner = _.element.find('#mobileBanner'),
-				wrapper = _.element.find('#wrap'),
-				mobileMenu = _.element.find('#mobileMenu'),
-				mobileBtn = _.element.find('#contents .sticky_btn');
-
-			if(mobileBanner.length !== 0 /*&& window.getComputedStyle(mobileBanner[0]).display !== 'none'*/){
-				wrapper.addClass('inner_banner');
-				mobileBanner.one('click', '.close', function(){
-					mobileBanner.remove();
-					wrapper.removeClass('inner_banner');
-				})
-			}
-			if(mobileMenu.length !== 0 /*&& window.getComputedStyle(mobileMenu[0]).display !== 'none'*/){
-				wrapper.addClass('inner_mobilemenu');
-			}
-			if(mobileBtn.length !== 0 /*&& window.getComputedStyle(mobileBtn[0]).display !== 'none'*/){
-				wrapper.addClass('inner_stickybtn');
-			}
-        },
         listsPaging : function(lists, startIndex, pd){
             var _ = this;
             var list = _.element.find('#prdLists');
@@ -4232,16 +4150,7 @@
                 .addClass(_.options.activeClass)
                 core.ui.showDim('toggleMenu');
             }
-        },
-        hidetoggleMenu : function(){
-            var _ = this;
-            var selector = $('[data-fn-layer].'+_.options.activeClass);
-            var menu = $('[data-layer-sidemenu]');
-            selector.removeClass(_.options.activeClass);
-            menu.removeClass(_.options.activeClass);
-            core.ui.hideDim();
         }
-        
     })
     ui.plugin(commonUi);
 	document.addEventListener('DOMContentLoaded', function(){

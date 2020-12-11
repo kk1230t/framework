@@ -93,12 +93,12 @@ gulp.task('images', () => {
 gulp.task('js', () => {
   return gulp.src([ src_js_folder + '**/*.js' ]/*, { since: gulp.lastRun('js') }*/)
     .pipe(plumber())
-    .pipe(webpack({
-      mode: 'development',  //development, production, none
-      externals: {
-        jquery: 'jQuery'
-      }
-    }))
+    // .pipe(webpack({
+    //   mode: 'development',  //development, production, none
+    //   externals: {
+    //     jquery: 'jQuery'
+    //   }
+    // }))
     .pipe(sourcemaps.init())
     .pipe(babel({
       "presets": [
@@ -109,8 +109,8 @@ gulp.task('js', () => {
         }]
       ]
     }))
-    .pipe(concat('common.js'))
-    // .pipe(uglify())
+    .pipe(concat('style.js'))
+    .pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(dist_js_folder))
     .pipe(gulpConnect.reload());
@@ -127,7 +127,7 @@ gulp.task('sprite', function () {
 
 
 
-gulp.task('build', gulp.series('clear', 'sass', 'sprite'));
+gulp.task('build', gulp.series('clear', 'sass', 'sprite', 'js'));
 
 gulp.task('dev', 
   gulp.parallel(
