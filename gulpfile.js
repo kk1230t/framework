@@ -109,7 +109,7 @@ gulp.task('js', () => {
         }]
       ]
     }))
-    .pipe(concat('style.js'))
+    // .pipe(concat('style.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(dist_js_folder))
