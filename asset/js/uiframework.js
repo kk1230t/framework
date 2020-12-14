@@ -3490,9 +3490,12 @@
             
             var _ = this;
             var $this = _.element.find('.ui-nav').eq(n);
-            var duration = 300;
+            var duration = 300,
+                scrollEvent = $.Event('scrollEnd'+namespace, {
+                    relatedTarget: $this
+                });
             if(_.activeIndex != $this.index() && !_.btns){   
-                $this.activeItem(_.options.activeClass);
+                // $this.activeItem(_.options.activeClass);
                 _.activeIndex = n;
             }else if(!_.btns && eType === undefined){
                 return;
@@ -3507,7 +3510,9 @@
                 }
             }
             var left = $this.position().left+_.element.scrollLeft()-_.options.padding;
-            _.element.stop().animate({scrollLeft:left},duration)
+            _.element.stop().animate({scrollLeft:left},duration, function(){
+                _.element.trigger(scrollEvent);
+            })
         }
     })
     ui.plugin(ScrollItems);
@@ -3649,9 +3654,6 @@
     })
     ui.plugin(ImageViewer);
 })(window[LIB_NAME], jQuery);
-
-
-
 
 
 /**
