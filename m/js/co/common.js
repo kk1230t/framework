@@ -4574,7 +4574,7 @@ $.fn.navScroller = function(option){
         }
         _self.resetWidth();
         onClickHandler();
-        _self.select(_selectedIndex)
+        // _self.select(_selectedIndex)
     }
 
     var onClickHandler = function(e){
