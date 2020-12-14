@@ -1711,7 +1711,12 @@
                     // .removeClass(_.options.activeClass)
                     // .removeClass(_.options.activeClass)
                     // _.hide(openTrigger.prev(), openTrigger)
-                    openTrigger.prev().collapse('toggle')
+                    if(openTrigger.prev().data('collapse') !== undefined){
+                        openTrigger.prev().collapse('toggle')
+                    }else{
+                        openTrigger.prev().find('[data-modules-collapse]').collapse('toggle')
+                    }
+                    
                 }
                 if(_.options.animate){
                     _.$element
