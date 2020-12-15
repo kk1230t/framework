@@ -6,6 +6,15 @@
 
 ## 사용 방법
 
+### *. 사전 작업
+
+#### nodejs 설치
+ <a href="https://nodejs.org/ko/" target="_blank">https://nodejs.org/ko/</a>
+
+#### gulp.js 설치
+ <a href="https://gulpjs.com/" target="_blank">https://gulpjs.com/</a>
+
+
 ### 1. 체크아웃
 ```
 git clone https://github.com/kk1230t/framework.git
