@@ -3656,6 +3656,9 @@
 })(window[LIB_NAME], jQuery);
 
 
+
+
+
 /**
  * @name commonUi
  * @selector $('body')
@@ -4123,7 +4126,10 @@
                 var $this = $(item)
                 var colors = $this.data('background').split('|');
                 var index = parseInt(Math.random() * colors.length)
-                if($this.css('background-color') === 'rgba(0, 0, 0, 0)') $this.css('background', colors[index])
+                if($this.css('background-color') === 'rgba(0, 0, 0, 0)'){
+                    $this.css('background', colors[index]);
+                    console.log(i);
+                } 
                 
             });
         },
