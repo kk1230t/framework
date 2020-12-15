@@ -23,7 +23,7 @@ npm install
 
 
 ## 예제
-<a href="https://kk1230t.github.io/framework/" target="_blank"><strong>Run this example</strong></a>
+<a href="https://kk1230t.github.io/framework/" target="_blank"><strong>예제 보기</strong></a>
 
 
 ## 기본 사용방법
