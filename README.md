@@ -1,12 +1,7 @@
 
 ## UI Framework
-[![npm version](https://badge.fury.io/js/react-native-scrollable-tab-view.svg)](https://badge.fury.io/js/react-native-scrollable-tab-view)
-https://github.com/ptomasroos/react-native-scrollable-tab-view
-This is probably my favorite navigation pattern on Android, I wish it
-were more common on iOS! This is a very simple JavaScript-only
-implementation of it for React Native. For more information about how
-the animations behind this work, check out the Rebound section of the
-[React Native Animation Guide](https://facebook.github.io/react-native/docs/animations.html)
+웹 인터페이스 개발을 위한 UI Framework입니다.
+보편적인 웹 개발에서 필요한 UI 모듈 대부분을 포함하고 있습니다.
 
 
 ## Add it to your project
