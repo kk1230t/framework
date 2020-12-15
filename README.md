@@ -26,18 +26,18 @@ npm install
 <a href="https://kk1230t.github.io/framework/" target="_blank"><strong>예제 보기</strong></a>
 
 
-## 기본 사용방법
+## 기본
 
 ```html
-<div data-modules-sticky="padding:0;relativeTarget:#wrap;">
+<div data-modules-moduleName>
   마크업 내용...
 </div>
 ```
 
-## 커스텀 옵션 사용
+## 옵션 사용
 
 ```html
-<div data-modules-sticky="padding:0;relativeTarget:#wrap;">
+<div data-modules-moduleName="options:value1;options2:value2;">
   마크업 내용...
 </div>
 ```
