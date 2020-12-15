@@ -4,7 +4,7 @@
 보편적인 웹 개발에서 필요한 UI 모듈 대부분을 포함하고 있습니다.
 
 
-## 사용 방법
+## 로컬 서버 환경 설정
 
 ### *. 사전 작업
 
@@ -28,6 +28,11 @@ cd framework
 ### 3. Install all dependencies
 ```
 npm install
+```
+
+### 4. Start Local Server
+```
+npm run start
 ```
 
 
