@@ -4,33 +4,34 @@
 보편적인 웹 개발에서 필요한 UI 모듈 대부분을 포함하고 있습니다.
 
 
-## Add it to your project
+## 사용 방법
 
-1. Run `npm install react-native-scrollable-tab-view --save`
-2. `var ScrollableTabView = require('react-native-scrollable-tab-view');`
+### 1. 체크아웃
+```
+git clone https://github.com/kk1230t/framework.git
+```
 
-## Demo
+### 2. 저장폴더로 이동
+```
+cd framework
+```
+
+### 3. Install all dependencies
+```
+npm install
+```
+
+
+## 예제
 <a href="https://kk1230t.github.io/framework/" target="_blank"><strong>Run this example</strong></a>
 
-<a href="https://raw.githubusercontent.com/brentvatne/react-native-scrollable-tab-view/master/demo_images/demo.gif"><img src="https://raw.githubusercontent.com/brentvatne/react-native-scrollable-tab-view/master/demo_images/demo.gif" width="350"></a>
-<a href="https://raw.githubusercontent.com/brentvatne/react-native-scrollable-tab-view/master/demo_images/demo-fb.gif"><img src="https://raw.githubusercontent.com/brentvatne/react-native-scrollable-tab-view/master/demo_images/demo-fb.gif" width="350"></a>
 
 ## Basic usage
 
-```javascript
-var ScrollableTabView = require('react-native-scrollable-tab-view');
-
-var App = React.createClass({
-  render() {
-    return (
-      <ScrollableTabView>
-        <ReactPage tabLabel="React" />
-        <FlowPage tabLabel="Flow" />
-        <JestPage tabLabel="Jest" />
-      </ScrollableTabView>
-    );
-  }
-});
+```html
+<div data-modules-sticky="padding:0;relativeTarget:#wrap;">
+  마크업 내용...
+</div>
 ```
 
 ## Injecting a custom tab bar
