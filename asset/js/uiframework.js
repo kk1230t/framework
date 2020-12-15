@@ -4128,7 +4128,6 @@
                 var index = parseInt(Math.random() * colors.length)
                 if($this.css('background-color') === 'rgba(0, 0, 0, 0)'){
                     $this.css('background', colors[index]);
-                    console.log(i);
                 } 
                 
             });
