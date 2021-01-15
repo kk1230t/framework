@@ -18,7 +18,8 @@ ul,ol,li{list-style:none;}
 
 .titH1{padding:10px; border-bottom:1px dashed #f2f2f2;text-align:center}
 /* .titH1 span{display:inline-block;width:184px;height:33px;background: url('../images/logo_y.png') no-repeat 0 0;text-indent:-9999px} */
-.titH1 span{display:inline-block;width:200px;height:50px;background: url('../images/HYCU_SIGNATURE_KOR.png') no-repeat 0 0;text-indent:-9999px;background-size: 200px;}
+/* .titH1 span{display:inline-block;width:200px;height:50px;background: url('../images/HYCU_SIGNATURE_KOR.png') no-repeat 0 0;text-indent:-9999px;background-size: 200px;} */
+.titH1 span{display:inline-block;width:200px;height:50px;line-height: 50px;}
 
 .titH1 ~ .status {padding:10px;border-bottom:1px solid #f2f2f2;}
 .titH1 ~ .status h2{font-size:14px;padding-bottom:10px;}
