@@ -4176,3 +4176,36 @@
 /* 
 ============================================================== UI 컴포넌트 End
 */
+
+/**
+ * @name validator
+ * @selector [data-modules-validator]'
+ */
+
+;(function(core, $, undefined){
+    "use strict";
+    var win = $(window),
+    forEach = Array.prototype.forEach,
+    Default = {},
+    name = "validator",
+    namespace = ".validator",
+    activeClass = 'ui-active',
+    isApp = core.detect.isApp,
+    ui = core.ui,
+    Widget = ui.Widget,
+    Validator = Widget.extend({
+		name : name,
+		init : function(element, config){
+			var _ = this;
+			var options = _.options = $.extend({}, Default, config);
+			Widget.fn.init.call(_, element, options);
+            _.element = $(element);
+            _._bindEvents();
+		},
+		_bindEvents : function(){
+            var _ = this;
+
+        }
+    })
+    ui.plugin(ImageViewer);
+})(window[LIB_NAME], jQuery);

@@ -74,7 +74,7 @@ gulp.task("sass", () => {
     .pipe(plumber())
     .pipe(sass())
     .pipe(autoprefixer({overrideBrowserslist : targetBrowsers}))
-    .pipe(minifyCss())
+    // .pipe(minifyCss())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(dist_scss_folder))
     .pipe(gulpConnect.reload());

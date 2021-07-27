@@ -1,4 +1,5 @@
-@import "mixins/utilities";
+@import "./asset/scss/core/mixins";
+@import "./asset/scss/core/varialbles";
 $url_font : '../../fonts/';
 @font-face {
 	font-family: 'NotoSans';
@@ -67,7 +68,7 @@ body{font-family: 'NotoSans';}
             background: #d1c3b6;
             color: #333;
         }
-    }
+    }    
 }
 
 .custom-style{
@@ -475,7 +476,24 @@ body{font-family: 'NotoSans';}
             text-align: center;
         }
     }
+}
 
 
 
+
+
+
+
+
+
+.test_div{
+    width: 100%;
+    height: 400px;
+    background: #f00;
+    @include respondTo(tablet){
+        background: #00f;
+    }
+    @include respondTo(mobile){
+        background: #ff0;
+    }
 }
