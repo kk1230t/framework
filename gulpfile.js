@@ -209,6 +209,7 @@ function test(src){
     .pipe(ejs())  
     .pipe(rename({ extname: '.html' }))
     .pipe(gulp.dest(dist_folder + 'ejs/'))
+    .pipe(gulpConnect.reload());
 }
 
 
@@ -239,8 +240,7 @@ gulp.task('watch', () => {
   gulp.watch(src_folder + 'ejs/**/*.ejs').on('change', function(done){
 
     var aa = test(done)
-    console.log(aa)
-    // browserSync.reload();
+    // console.log(aa)
   });
   
   
