@@ -51,7 +51,8 @@
     "gulp-watch-sass": "^1.4.1",
     "gulp.spritesmith": "^6.11.0",
     "sass": "^1.36.0",
-    "webpack-stream": "^5.2.1"
+    "webpack-stream": "^5.2.1",
+    "yargs": "^17.0.1"
   },
   "dependencies": {
     "@progress/kendo-theme-default": "^4.19.0",

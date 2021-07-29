@@ -37,6 +37,7 @@ const gulp                      = require('gulp'),
       rollup                    = require('gulp-rollup'),
       ejs                       = require("gulp-ejs"),
       rename                    = require("gulp-rename"),
+      argv                      = require('yargs').argv,
       //sassPartialsImported = require('gulp-sass-partials-imported'),
 
 
@@ -64,7 +65,7 @@ let scssFiles = [
     sourceMap: dist_scss_folder
   }
 ]
-
+argv.src = null
 String.prototype.replaceAll = function(org, dest) {
   return this.split(org).join(dest);
 }
@@ -147,10 +148,13 @@ gulp.task('js_rollup', () => {
 
 
 gulp.task('ejs', () => {
-  return gulp.src([ src_folder + 'ejs/**/*.ejs' ]/*, { since: gulp.lastRun('js') }*/)
+  var src = (argv.src !== null) ? argv.src.replaceAll('\\', '/') : src_folder + 'ejs/**/*.ejs';
+  console.log(src)
+  return gulp.src([ src ])
     .pipe(ejs())
     .pipe(rename({ extname: '.html' }))
     .pipe(gulp.dest(dist_folder + 'ejs/'))
+    .pipe(gulpConnect.reload());
 });
 
 // gulp.task('ejs_build', function() {
@@ -202,9 +206,7 @@ gulp.task('connect', function () {
 });
 
 function test(src){
-
   var src = src.replaceAll('\\', '/')
-  console.log(src);
   return gulp.src([ src ])
     .pipe(ejs())  
     .pipe(rename({ extname: '.html' }))
@@ -237,11 +239,17 @@ gulp.task('watch', () => {
     gulp.series('js_rollup');
   });
 
-  gulp.watch(src_folder + 'ejs/**/*.ejs').on('change', function(done){
-
-    var aa = test(done)
-    // console.log(aa)
-  });
+  gulp.watch(src_folder + 'ejs/**/*.ejs')
+  .on('change', function(done){
+    // test(done)
+    gulp.series('ejs')(done);
+    argv.src = done
+  })
+  // .on('error', function(error){
+  //   console.log('ddddd')
+  //   console.log(error)
+    
+  // });
   
   
   // arguments to a Gulp task
