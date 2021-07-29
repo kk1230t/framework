@@ -477,23 +477,3 @@ body{font-family: 'NotoSans';}
         }
     }
 }
-
-
-
-
-
-
-
-
-
-.test_div{
-    width: 100%;
-    height: 400px;
-    background: #f00;
-    @include respondTo(tablet){
-        background: #00f;
-    }
-    @include respondTo(mobile){
-        background: #ff0;
-    }
-}

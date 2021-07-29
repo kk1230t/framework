@@ -34,6 +34,9 @@ const gulp                      = require('gulp'),
       gulpConnect               = require('gulp-connect'),
       gulpConnectSsi            = require('gulp-connect-ssi'),
       spritesmith               = require('gulp.spritesmith'),
+      rollup                    = require('gulp-rollup'),
+      ejs                       = require("gulp-ejs"),
+      rename                    = require("gulp-rename"),
       //sassPartialsImported = require('gulp-sass-partials-imported'),
 
 
@@ -47,6 +50,8 @@ const gulp                      = require('gulp'),
       dist_image_folder             = dist_folder + '/images',
       dist_scss_folder              = dist_folder + 'css/',
       dist_js_folder                = dist_folder + 'js/',
+      src_js2_folder               = src_folder + 'js2/',
+      dist_js2_folder               = dist_folder + 'js2/',
       node_modules_folder       = './node_modules/',
       targetBrowsers = ['> 1%', 'last 2 versions', 'firefox >= 4', 'safari 7', 'safari 8', 'IE 10', 'IE 11'],
 
@@ -60,6 +65,9 @@ let scssFiles = [
   }
 ]
 
+String.prototype.replaceAll = function(org, dest) {
+  return this.split(org).join(dest);
+}
 
 
 gulp.task('clear', () => del([ dist_folder+"css/", dist_folder+"js/" ]));
@@ -117,6 +125,45 @@ gulp.task('js', () => {
     .pipe(gulpConnect.reload());
 });
 
+gulp.task('js_rollup', () => {
+  return gulp.src([ src_js2_folder + '**/*.js' ]/*, { since: gulp.lastRun('js') }*/)
+    .pipe(rollup({
+      input: src_js2_folder+'index.js',
+      format:"umd",
+      name:'bundle'
+    }))
+    .pipe(babel({
+      "presets": [
+        [ "@babel/preset-env", {
+          "targets": {
+            "browsers": [ "last 1 version", "ie >= 11" ]
+          }
+        }]
+      ]
+    }))
+    .pipe(gulp.dest(dist_js2_folder))
+});
+
+
+
+gulp.task('ejs', () => {
+  return gulp.src([ src_folder + 'ejs/**/*.ejs' ]/*, { since: gulp.lastRun('js') }*/)
+    .pipe(ejs())
+    .pipe(rename({ extname: '.html' }))
+    .pipe(gulp.dest(dist_folder + 'ejs/'))
+});
+
+// gulp.task('ejs_build', function() {
+//   console.log(src)
+//   return gulp.src([ src_folder + 'ejs/**/*.ejs' ]/*, { since: gulp.lastRun('js') }*/)
+//     .pipe(ejs())  
+//     .pipe(ejs())
+//     .pipe(rename({ extname: '.html' }))
+//     .pipe(gulp.dest(dist_folder + 'ejs/'))
+// });
+
+
+
 
 gulp.task('sprite', function () {
   const spriteData = gulp.src('/images/*.png').pipe(spritesmith({
@@ -128,7 +175,7 @@ gulp.task('sprite', function () {
 
 
 
-gulp.task('build', gulp.series('clear', 'sass', 'sprite', 'js'));
+gulp.task('build', gulp.series('clear', 'sass', 'sprite', 'js', 'js_rollup', 'ejs'));
 
 gulp.task('dev', 
   gulp.parallel(
@@ -154,7 +201,15 @@ gulp.task('connect', function () {
   });
 });
 
+function test(src){
 
+  var src = src.replaceAll('\\', '/')
+  console.log(src);
+  return gulp.src([ src ])
+    .pipe(ejs())  
+    .pipe(rename({ extname: '.html' }))
+    .pipe(gulp.dest(dist_folder + 'ejs/'))
+}
 
 
 gulp.task('watch', () => {
@@ -175,7 +230,23 @@ gulp.task('watch', () => {
     browserSync.reload();
     gulp.series('js')(done);
   });
+
+  gulp.watch(src_js2_folder + '**/*.js').on('change', function(done){
+    browserSync.reload();
+    gulp.series('js_rollup');
+  });
+
+  gulp.watch(src_folder + 'ejs/**/*.ejs').on('change', function(done){
+
+    var aa = test(done)
+    console.log(aa)
+    // browserSync.reload();
+  });
   
+  
+  // arguments to a Gulp task
+
+
 });
 
 gulp.task('default', gulp.series('build', gulp.parallel('connect', 'watch')));

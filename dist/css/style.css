@@ -351,15 +351,4 @@ body {
     font-size: 200px;
     text-align: center; }
 
-.test_div {
-  width: 100%;
-  height: 400px;
-  background: #f00; }
-  @media (max-width: 1024px) {
-    .test_div {
-      background: #00f; } }
-  @media (max-width: 767px) {
-    .test_div {
-      background: #ff0; } }
-
 /*# sourceMappingURL=style.css.map */

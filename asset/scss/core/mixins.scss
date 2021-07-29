@@ -17,10 +17,10 @@
 
 @mixin respondTo($media) {
     @if $media == mobile {
-        @media (max-width:$breakpoints-mobile+"px") { @content; }
+        @media (min-width: "0px") and (max-width: $breakpoints-mobile +"px") { @content; }
     }
     @else if $media == tablet {
-        @media (max-width:$breakpoints-tablet+"px") { @content; }
+        @media (min-width: ($breakpoints-mobile+1)+"px") and (max-width:  $breakpoints-tablet+"px") { @content; }
     }
     @else {
         @media (max-width:$media+"px") { @content; }
