@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+<div id="wrap" class="coding_guide">
+	<div class="test_di11111v">
+<script id="template_id" type="text/x-handlebars-template">
+    <div>
+        <h1></h1>
+        <p></p>
+    </div>
+</script>
+
+<script>
+    var template_html = $("#template_id").html();
+    var template = Handlebars.compile(template_html);
+    var item = {
+        key1: value1,
+        key2: value2
+    };
+    $("#parent_id").append(template(item));
+</script>
+		
+	</div>
+</div>
+</body>
+</html>
