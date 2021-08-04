@@ -38,7 +38,14 @@ const gulp                      = require('gulp'),
       ejs                       = require("gulp-ejs"),
       rename                    = require("gulp-rename"),
       argv                      = require('yargs').argv,
-      //sassPartialsImported = require('gulp-sass-partials-imported'),
+      handlebars                = require('gulp-handlebars'),
+      wrap                      = require('gulp-wrap'),
+      declare                   = require('gulp-declare'),
+      handlebarsCompile         = require('gulp-compile-handlebars'),
+      nunjucks                  = require('gulp-nunjucks-html'),
+      data                      = require('gulp-data'),
+      beautify                  = require('gulp-beautify'),
+      // sassPartialsImported = require('gulp-sass-partials-imported'),
 
 
       
@@ -66,6 +73,7 @@ let scssFiles = [
   }
 ]
 argv.src = null
+argv.njk_src = null
 String.prototype.replaceAll = function(org, dest) {
   return this.split(org).join(dest);
 }
@@ -149,7 +157,6 @@ gulp.task('js_rollup', () => {
 
 gulp.task('ejs', () => {
   var src = (argv.src !== null) ? argv.src.replaceAll('\\', '/') : src_folder + 'ejs/**/*.ejs';
-  console.log(src)
   return gulp.src([ src ])
     .pipe(ejs())
     .pipe(rename({ extname: '.html' }))
@@ -157,14 +164,47 @@ gulp.task('ejs', () => {
     .pipe(gulpConnect.reload());
 });
 
-// gulp.task('ejs_build', function() {
-//   console.log(src)
-//   return gulp.src([ src_folder + 'ejs/**/*.ejs' ]/*, { since: gulp.lastRun('js') }*/)
-//     .pipe(ejs())  
-//     .pipe(ejs())
-//     .pipe(rename({ extname: '.html' }))
-//     .pipe(gulp.dest(dist_folder + 'ejs/'))
-// });
+gulp.task('hbs', function(){
+  return gulp.src(src_folder + 'hbs/**/*.hbs')
+    .pipe(handlebarsCompile())
+    .pipe(rename({ extname: '.html' }))
+    // .pipe(declare({
+    //   namespace: 'MyApp.templates',
+    //   noRedeclare: true
+    // }))
+    // .pipe(concat('templates.js'))
+    .pipe(gulp.dest(dist_folder + 'hbs/'))
+    .pipe(gulpConnect.reload());
+});
+
+
+gulp.task('njk_html', function(){
+  var src;
+  
+  if(argv.njk_src !== null && argv.njk_src.indexOf('pages') !== -1){
+    src = argv.njk_src;
+    console.log('page')
+  }else{
+    src = src_folder + 'njk/**/*.+(html|njk)'
+    console.log('all')
+  }
+  return gulp.src(src)
+    .pipe(data(function() {
+      return require(src_folder+'/data/data.json')
+    }))
+    .pipe(nunjucks({
+      searchPaths: [src_folder + 'njk/']
+    }))
+    .on('error', function(err) {
+      console.log(err)
+    })
+    .pipe(rename({ extname: '.html' }))
+    .pipe(beautify.html({ indent_size: 4 }))
+    .pipe(gulp.dest(dist_folder + 'njk/'))
+    .pipe(gulpConnect.reload());
+});
+
+
 
 
 
@@ -179,7 +219,7 @@ gulp.task('sprite', function () {
 
 
 
-gulp.task('build', gulp.series('clear', 'sass', 'sprite', 'js', 'js_rollup', 'ejs'));
+gulp.task('build', gulp.series('clear', 'sass', 'sprite', 'js', 'js_rollup', 'ejs', 'njk_html'));
 
 gulp.task('dev', 
   gulp.parallel(
@@ -236,7 +276,7 @@ gulp.task('watch', () => {
 
   gulp.watch(src_js2_folder + '**/*.js').on('change', function(done){
     browserSync.reload();
-    gulp.series('js_rollup');
+    gulp.series('js_rollup')(done);
   });
 
   gulp.watch(src_folder + 'ejs/**/*.ejs')
@@ -244,6 +284,13 @@ gulp.task('watch', () => {
     // test(done)
     gulp.series('ejs')(done);
     argv.src = done
+  })
+
+  gulp.watch(src_folder + 'njk/**/*.+(html|njk)')
+  .on('change', function(done){
+    var src = done.replaceAll('\\', '/');
+    argv.njk_src = src;
+    gulp.series('njk_html')(done);
   })
   // .on('error', function(error){
   //   console.log('ddddd')
