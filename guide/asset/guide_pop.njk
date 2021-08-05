@@ -1,3 +1,5 @@
+{% import "./template/common_macro.njk" as common_macro %}
+
 {% 
     set title = 'Ui Framework' 
 %}
@@ -5,8 +7,8 @@
 {% extends "./template/layout.njk" %}
 
 {% block content %}
-	<h1 class="h1_guide">Window popup</h1><br>
-	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	{{common_macro.h1_title("Window popup")}}
+	{{common_macro.h2_title("html문서 내 호출 및 기본 구조")}}
 	<pre class="ui-code"><code class="html">	
 	&lt;!-- 기본 -->
 	&lt;!-- Button trigger modal -->
@@ -18,7 +20,7 @@
 	&lt;/a>
 	</code></pre>
 
-	<h2 class="h2_guide">script에서 호출</h2>
+	{{common_macro.h2_title("script에서 호출")}}
 	<pre class="ui-code"><code class="javascript">	
 	UI.util.openPopup('guide_pop_test.html', {
 		'width' : 800,
@@ -26,7 +28,7 @@
 	})
 	</code></pre>
 
-	<h2 class="h2_guide">options</h2>
+	{{common_macro.h2_title("options")}}
 	<div class="d_desc table">
 		<table class="table table-bordered table-striped js-options-table">
 			<colgroup>
@@ -91,7 +93,7 @@
 			</tbody>
 		</table>
 	</div>
-	<h2 class="h2_guide">Method</h2>
+	{{common_macro.h2_title("Method")}}
 	<div class="d_desc table">
 		<table class="table table-bordered table-striped js-options-table">
 			<colgroup>

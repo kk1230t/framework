@@ -1,3 +1,5 @@
+{% import "./template/common_macro.njk" as common_macro %}
+
 {% 
     set title = 'Ui Framework' 
 %}
@@ -25,8 +27,8 @@
 {% endblock %}
 
 {% block content %}
-	<h1 class="h1_guide">Custom selectbox</h1><br>
-	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	{{common_macro.h1_title("Custom selectbox")}}
+	{{common_macro.h2_title("html문서 내 호출 및 기본 구조")}}
 	<pre class="ui-code"><code class="html">	
 	&lt;!-- 기본 -->
 	&lt;div class="custom-selectbox" data-modules-selectbox>
@@ -38,11 +40,11 @@
 	&lt;/div>
 	</code></pre>
 
-	<h2 class="h2_guide">script에서 호출</h2>
+	{{common_macro.h2_title("script에서 호출")}}
 	<pre class="ui-code"><code class="javascript">	
 	$(Element).selectbox();
 	</code></pre>
-	<h2 class="h2_guide">최소한의 CSS</h2>
+	{{common_macro.h2_title("최소한의 CSS")}}
 	<pre class="ui-code"><code class="css">	
 .custom-selectbox{
 	position: relative;
@@ -60,11 +62,11 @@
 	display: none;
 }
 	</code></pre>
-	<h2 class="h2_guide">options</h2>
+	{{common_macro.h2_title("options")}}
 	<div class="d_desc">
 		- 없음
 	</div>
-	<h2 class="h2_guide">Method</h2>
+	{{common_macro.h2_title("Method")}}
 	<div class="d_desc table">
 		<table class="table table-bordered table-striped js-options-table">
 			<colgroup>
@@ -89,11 +91,11 @@
 			</tbody>
 		</table>
 	</div>
-	<h2 class="h2_guide">Event</h2>
+	{{common_macro.h2_title("Event")}}
 	<div class="d_desc">
 		- 없음
 	</div>
-	<h2 class="h2_guide">Example</h2>
+	{{common_macro.h2_title("Example")}}
 	<div class="ctr-btn">
 		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
 		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>

@@ -1,3 +1,5 @@
+{% import "./template/common_macro.njk" as common_macro %}
+
 {% 
     set title = 'Ui Framework' 
 %}
@@ -81,9 +83,9 @@
 
 
 {% block content %}
-	<h1 class="h1_guide">Custom Alert</h1><br>
+	{{common_macro.h1_title("Custom Alert")}}
 
-	<h2 class="h2_guide">script에서 호출</h2>
+	{{common_macro.h1_title("script에서 호출")}}
 	<pre class="ui-code"><code class="javascript">	
 	UI.customAlert({
 		//  &lt;!-- type : alert, confirm -->
@@ -111,7 +113,7 @@
 		}
 	});
 	</code></pre>
-	<h2 class="h2_guide">Example</h2>
+	{{common_macro.h2_title("Example")}}
 	<div class="code_in">
 		<button type="button" class="ui-test-btn" id="callCustomAlert">
 			커스텀 얼럿 호출
