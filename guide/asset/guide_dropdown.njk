@@ -1,0 +1,160 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+
+{% block inline_style %}
+<style>
+
+	.ui-dropdown{
+		position: relative;
+		text-align: left;
+		display: inline-block;
+	}
+	.ui-dropdown .dropdown-menu{
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+	}
+	.ui-dropdown.ui-active .dropdown-menu{
+		display: block;
+	}
+
+</style>
+{% endblock %}
+
+{% block content %}
+	<h1 class="h1_guide">Dropdown</h1><br>
+	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본 -->
+	&lt;div class="ui-dropdown">
+		&lt;a id="drop1" href="#" data-modules-dropdown aria-expanded="false">&lt;span>드롭다운 클릭!&lt;/span>&lt;/a>
+		&lt;ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+			&lt;li>&lt;a href="#">내용1&lt;/a>&lt;/li>
+			&lt;li>&lt;a href="#">내용2&lt;/a>&lt;/li>
+		&lt;/ul>
+	&lt;/div>
+	</code></pre>
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	// 기본 호출
+	$(Element).dropdown();
+
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+.ui-dropdown{
+	position: relative;
+}
+.ui-dropdown .dropdown-menu{
+	display: none;
+}
+.ui-dropdown.ui-active .dropdown-menu{
+	display: block;
+}
+	</code></pre>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc">
+		- 없음
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).dropdown('toggle')</td>
+					<td>드롭다운박스 토글</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>show.hui.dropdown</td>
+					<td>show instance 메소드가 호출 될 때 즉시 발생</td>
+				</tr>
+				<tr>
+					<td>shown.hui.dropdown</td>
+					<td>노출 처리 css 전환이 완료 된 후 발생</td>
+				</tr>
+				<tr>
+					<td>hide.hui.dropdown</td>
+					<td>hide 메소드가 호출시 발생</td>
+				</tr>
+				<tr>
+					<td>hidden.hui.dropdown</td>
+					<td>숨김처리 css 전환이 완료된 후 발생</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
+	<div class="code_in">
+		<div class="ui-dropdown">
+			<a id="drop1" href="#" data-modules-dropdown aria-expanded="false"><span>Dropdown Toggle Click</span></a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+				<li><a href="#">menu1</a></li>
+				<li><a href="#">menu2</a></li>
+			</ul>
+		</div>
+
+		<div class="ui-dropdown">
+			<a id="drop1" class="readonly" href="#" data-modules-dropdown aria-expanded="false"><span>readonly example</span></a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+				<li><a href="#">menu1</a></li>
+				<li><a href="#">menu2</a></li>
+			</ul>
+		</div>
+
+		<div class="ui-dropdown">
+			<a id="drop1" class="disabled" href="#" data-modules-dropdown aria-expanded="false"><span>disabled example</span></a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+				<li><a href="#">menu1</a></li>
+				<li><a href="#">menu2</a></li>
+			</ul>
+		</div>
+	</div>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+<script>
+	$('.ui-dropdown').on('show.hui.dropdown', function(){
+		console.log('show')
+	})
+	$('.ui-dropdown').on('hide.hui.dropdown', function(){
+		console.log('hide')
+	})
+
+</script>
+{% endblock %}

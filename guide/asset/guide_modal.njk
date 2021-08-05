@@ -1,0 +1,349 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+{% block inline_style %}
+	<style>
+		.ui-modal {
+			position: fixed;
+			top: 0; 
+			right: 0; 
+			bottom: 0; 
+			left: 0; 
+			z-index: 1050; 
+			display: none; 
+			overflow: hidden; 
+			-webkit-overflow-scrolling: touch; 
+			outline: 0;	
+			text-align: center;
+		}
+		.ui-modal:before { 
+			display: inline-block; 
+			vertical-align: middle; 
+			content: ""; 
+			height: 100%;
+		}
+		.ui-modal.fade .ui-modal-dialog { 
+			transition: opacity .3s ease-out;
+		}
+		.ui-modal.in .ui-modal-dialog { 
+			opacity: 1;
+		}
+		.ui-modal-open {
+			overflow: hidden;
+		}
+		.ui-modal-open .modal { 
+			overflow-x: hidden; 
+			overflow-y: auto;
+		}
+		.ui-modal-dialog { 
+			display: inline-block; 
+			vertical-align: middle; 
+			text-align:left; 
+			width: 500px; 
+			margin: 10px; 
+			opacity: 0; 
+			position: relative;
+			background: #fff;
+			height: 200px;
+		}
+		.ui-modal-backdrop { 
+			position: fixed; 
+			top: 0; 
+			right: 0; 
+			bottom: 0; 
+			left: 0; 
+			z-index: 1040; 
+			background-color: #000;
+		}
+		.ui-modal-backdrop.fade.in { 
+			filter: alpha(opacity=50); 
+			opacity: .5;
+		}
+		.ui-modal-backdrop.in { 
+			filter: alpha(opacity=50); 
+			opacity: .5;
+		}
+		.ui-modal-scrollbar-measure {
+			position: absolute;
+			top: -9999px;
+			width: 50px;
+			height: 50px;
+			overflow: scroll;
+		}
+		.content{
+			width: 100%;
+		}
+	</style>
+{% endblock %}
+
+
+{% block content %}
+	<h1 class="h1_guide">Modal</h1><br>
+	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	
+	<pre class="ui-code"><code class="html">
+	&lt;!-- Mocal Call Button -->
+	&lt;a href="#myModal" data-modules-modal>Launch demo modal&lt;/a>
+
+	&lt;!-- Modal Content -->
+	&lt;div class="ui-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		&lt;div class="ui-modal-dialog" role="document">
+			&lt;div class="content">
+				modal 내용.....
+				
+				&lt;button data-dismiss="modal">닫기&lt;/button>
+			&lt;/div>
+		&lt;/div>
+	&lt;/div>
+	</code></pre>
+
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	$(Element).modal();
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+.ui-modal {
+	position: fixed;
+	top: 0; 
+	right: 0; 
+	bottom: 0; 
+	left: 0; 
+	z-index: 1050; 
+	display: none; 
+	overflow: hidden; 
+	-webkit-overflow-scrolling: touch; 
+	outline: 0;	
+	text-align: center;
+}
+.ui-modal:before { 
+	display: inline-block; 
+	vertical-align: middle; 
+	content: ""; 
+	height: 100%;
+}
+.ui-modal.fade .ui-modal-dialog { 
+	transition: opacity .3s ease-out;
+}
+.ui-modal.in .ui-modal-dialog { 
+	opacity: 1;
+}
+.ui-modal-open {
+	overflow: hidden;
+}
+.ui-modal-open .modal { 
+	overflow-x: hidden; 
+	overflow-y: auto;
+}
+.ui-modal-dialog { 
+	display: inline-block; 
+	vertical-align: middle; 
+	text-align:left; 
+	width: 500px; 
+	margin: 10px; 
+	opacity: 0; 
+	position: relative;
+	background: #fff;
+	height: 200px;
+}
+.ui-modal-backdrop { 
+	position: fixed; 
+	top: 0; 
+	right: 0; 
+	bottom: 0; 
+	left: 0; 
+	z-index: 1040; 
+	background-color: #000;
+}
+.ui-modal-backdrop.fade.in { 
+	filter: alpha(opacity=50); 
+	opacity: .5;
+}
+.ui-modal-backdrop.in { 
+	filter: alpha(opacity=50); 
+	opacity: .5;
+}
+.ui-modal-scrollbar-measure {
+	position: absolute;
+	top: -9999px;
+	width: 50px;
+	height: 50px;
+	overflow: scroll;
+}
+.content{
+	width: 100%;
+}
+	</code></pre>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>backdrop</td>
+					<td>Boolean</td>
+					<td>true</td>
+					<td>딤 클릭 시 닫힘 여부</td>
+				</tr>
+				<tr>
+					<td>keyboard</td>
+					<td>Boolean</td>
+					<td>true</td>
+					<td>ESC키로 모달 닫음</td>
+				</tr>
+				<tr>
+					<td>show</td>
+					<td>Boolean</td>
+					<td>true</td>
+					<td>모듈이 적용되면 모달을 보여줌</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).modal().show()</td>
+					<td>모달 호출</td>
+				</tr>
+				<tr>
+					<td>$(element).modal().hide()</td>
+					<td>모달 닫음</td>
+				</tr>
+				<tr>
+					<td>$(element).modal().toggle()</td>
+					<td>모달 토글</td>
+				</tr>
+				<tr>
+					<td>[data-dismiss="modal"]</td>
+					<td>모달 컨텐츠 내의 버튼에서 이속성이 들어가면 기본으로 닫힘 기능을 합니다.<br>예)&lt;button data-dismiss="modal">닫기&lt;/button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>type</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>show.hui.modal</td>
+					<td>show 메서드 호출시 즉시 발생</td>
+				</tr>
+				<tr>
+					<td>shown.hui.modal</td>
+					<td>모달이 사용자 화면에 표시될때 발생(애니메이션 효과 모달의 경우 애니메이션 전환 완료 후 발생)</td>
+				</tr>
+				<tr>
+					<td>hide.hui.modal</td>
+					<td>hide 메서드 호출시 즉시 발생</td>
+				</tr>
+				<tr>
+					<td>hidden.hui.modal</td>
+					<td>모달이 사용자화면에서 없어질때 발생 (애니메이션 효과 모달의 경우 애니메이션 전환 완료 후 발생)</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
+	<div class="code_in">
+		<a href="#myModal" class="ui-test-btn" data-modules-modal>
+			모달 레이어 호출
+		</a>
+
+
+		<!-- <button type="button" class="ui-test-btn" id="callCustomAlert">
+			커스텀 얼럿 호출
+		</button> -->
+		
+		<!-- Modal -->
+		<div class="ui-modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="ui-modal-dialog" role="document">
+				<div class="content">
+					modal....
+					 
+					<button data-dismiss="modal" class="close">modal close</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="ui-modal" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="ui-modal-dialog" role="document">
+				<div class="content">
+					modal....
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+
+		$('#callCustomAlert').on('click', function(e){
+			UI.customAlert({
+				//  <!-- type : alert, confirm -->
+				type : 'confirm',
+				//  <!-- 레이어팝업 타이틀 -->     
+				title : "임시 비밀 번호 발송",
+				//  <!-- 기본 구조는 <p></p> 이나 커스텀 가능 -->
+				message : "<p>커스텀 얼럿을 호출 했습니다.</p>",
+				//  <!-- 기본 버튼 [ 기본 적용 시 생략, 전달 타입 : 태그 or 텍스트] -->
+				defaultBtn : '<button type="button" id="customMsgSubmit" class="btn btn-info"><span>확인</span></button>',
+				//  <!-- 기본 창 사이즈 [ 기본 적용 시 생략]  -->   
+				size : "modal-sm",
+				//  <!-- 기본 취소 버튼 [ 기본 적용 시 생략, 전달 타입 : 태그 or 텍스트] -->
+				cancelBtn : '<button type="button" id="customMsgCancel" class="btn btn-info"><span>취소</span></button>',
+				//  <!-- 기본 콜백  return 값으로 false 전달 시 레이어 닫힘 기능 차단-->
+				defaultCallback : function(){
+					alert('확인 누름')
+				},
+				//  <!-- 취소 버튼 클릭 시 콜백 return 값으로 false 전달 시 레이어 닫힘 기능 차단 (type이 confirm 인 경우에만 유효함)-->
+				cancelCallback : function(){
+					alert('취소 누름')
+				},
+				dismissCallback : function(){
+					alert('그냥 닫음')
+				}
+			});
+    	});
+	</script>
+{% endblock %}

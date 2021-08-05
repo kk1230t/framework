@@ -1,0 +1,137 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+{% block inline_style %}
+<style>
+.tab-content > .tab-pane.ui-active{
+	display: block;
+}
+.tab-content > .tab-pane {
+  display: none;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+	<h1 class="h1_guide">Tab</h1><br>
+	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본 -->
+	<!-- Nav tabs -->
+	&lt;ul class="ui-tab" role="tablist">
+		&lt;li role="presentation" class="ui-active">&lt;a href="#home" aria-controls="home" role="tab" data-modules-tab>Tab1&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#profile" aria-controls="profile" role="tab" data-modules-tab>Tab2&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#messages" aria-controls="messages" role="tab" data-modules-tab>Tab3&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab4&lt;/a>&lt;/li>
+	&lt;/ul>
+	
+	&lt;!-- Tab panes -->
+	&lt;div class="tab-content">
+		&lt;div role="tabpanel" class="tab-pane ui-active" id="home">tabContent1&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="profile">tabContent2&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="messages">tabContent3&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings">tabContent4&lt;/div>
+	&lt;/div>
+	</code></pre>
+	
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	// 기본
+	$(Element).tab();
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+.tab-content > .tab-pane.ui-active{
+	display: block;
+}
+.tab-content > .tab-pane {
+	display: none;
+}
+	</code></pre>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc">
+		- 없음
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).tab('show')</td>
+					<td>해당하는 텝 컨텐츠 활성화</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>show.hui.tab</td>
+					<td>show instance 메소드가 호출 될 때 즉시 발생</td>
+				</tr>
+				<tr>
+					<td>shown.hui.tab</td>
+					<td>노출 처리 css 전환이 완료 된 후 발생</td>
+				</tr>
+				<tr>
+					<td>hide.hui.tab</td>
+					<td>hide 메소드가 호출시 발생</td>
+				</tr>
+				<tr>
+					<td>hidden.hui.tab</td>
+					<td>숨김처리 css 전환이 완료된 후 발생</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
+	<div class="code_in">
+		<div>
+			<!-- Nav tabs -->
+			<ul class="ui-tab" role="tablist">
+			  <li role="presentation" class="ui-active"><a href="#home" aria-controls="home" role="tab" data-modules-tab>Tab1</a></li>
+			  <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-modules-tab>Tab2</a></li>
+			  <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-modules-tab>Tab3</a></li>
+			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-modules-tab>Tab4</a></li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div role="tabpanel" class="tab-pane ui-active" id="home">tabContent1</div>
+			  <div role="tabpanel" class="tab-pane" id="profile">tabContent2</div>
+			  <div role="tabpanel" class="tab-pane" id="messages">tabContent3</div>
+			  <div role="tabpanel" class="tab-pane" id="settings">tabContent4</div>
+			</div>
+		</div>
+	</div>
+	<br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

@@ -205,6 +205,33 @@ gulp.task('njk_html', function(){
 });
 
 
+gulp.task('njk_guide_html', function(){
+  var src;
+  
+  if(argv.njk_guide_src.indexOf('template') !== -1){
+    src = './guide/asset/*.njk'
+    console.log('all')
+  }else{
+    src = argv.njk_guide_src;
+    console.log('pages')
+  }
+  return gulp.src(src)
+    .pipe(data(function() {
+      return require(src_folder+'/data/data.json')
+    }))
+    .pipe(nunjucks({
+      searchPaths: ['./guide/asset/']
+    }))
+    .on('error', function(err) {
+      console.log(err)
+    })
+    .pipe(rename({ extname: '.html' }))
+    .pipe(beautify.html({ indent_size: 4 }))
+    .pipe(gulp.dest('./guide/html/'))
+    .pipe(gulpConnect.reload());
+});
+
+
 
 
 
@@ -292,11 +319,16 @@ gulp.task('watch', () => {
     argv.njk_src = src;
     gulp.series('njk_html')(done);
   })
-  // .on('error', function(error){
-  //   console.log('ddddd')
-  //   console.log(error)
-    
-  // });
+
+
+
+
+  gulp.watch('./guide/asset/**/*.njk')
+  .on('change', function(done){
+    var src = done.replaceAll('\\', '/');
+    argv.njk_guide_src = src;
+    gulp.series('njk_guide_html')(done);
+  })
   
   
   // arguments to a Gulp task

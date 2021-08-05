@@ -1,0 +1,20 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+{% block content %}
+	<input type="text" class="aaa">
+	<input type="text" class="aaa">
+	<input type="text" class="aaa">
+	<input type="text" class="aaa">
+<script>
+	var cleave = new Cleave('.aaa', {
+		blocks: [2, 3, 3, 4],
+		delimiter: '·',
+		// numeral: true,
+    uppercase: true
+});
+</script>
+{% endblock %}

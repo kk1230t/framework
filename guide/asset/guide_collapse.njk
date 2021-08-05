@@ -1,0 +1,194 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+{# {% from "./template/common_macro.njk" import h1_title %} #}
+{% import "./template/common_macro.njk" as common_macro %}
+
+
+
+{% block inline_style %}
+	<style>
+		.accordion-panel{
+			display: none;
+		}
+		.accordion-panel.selected{
+			display: block;
+		}
+	</style>
+{% endblock %}
+
+
+
+{% block content %}
+	{{common_macro.h1_title("Collapse")}}
+	{{common_macro.h2_title("html문서 내 호출 및 기본 구조")}}
+	
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본 -->
+	&lt;div data-modules-ollapse>
+		&lt;div class="sticky-inner">
+			마크업 내용...
+		&lt;/div>
+	&lt;/div>
+	&lt;a href="javascript:;" data-modules-collapse class="accordion-trigger" aria-expanded="false">내용보기 클릭!&lt;/a>
+	&lt;div class="accordion-panel" role="region">
+		내용이 들어갑니다!!!
+	&lt;/div>
+
+	&lt;!-- 커스텀 옵션 사용 -->
+	&lt;div class="acc_parent">
+		&lt;a href="javascript:;" data-modules-collapse="parent:.acc_parent" class="accordion-trigger" aria-expanded="false">내용보기 클릭!&lt;/a>
+		&lt;div class="accordion-panel" role="region">
+			내용이 들어갑니다!!!
+		&lt;/div>
+
+		&lt;a href="javascript:;" data-modules-collapse="parent:.acc_parent" class="accordion-trigger" aria-expanded="false">내용보기 클릭!&lt;/a>
+		&lt;div class="accordion-panel" role="region">
+			내용이 들어갑니다!!!
+		&lt;/div>
+	&lt;/div>
+	</code></pre>
+
+	{{common_macro.h2_title("script에서 호출")}}
+	<pre class="ui-code"><code class="javascript">	
+	// 기본 옵션없이 호출
+	$(Element).collapse();
+
+
+	// 커스텀 옵션 사용
+	$(Element).collapse({
+		parent:".acc_parent",
+	});
+	</code></pre>
+	{{common_macro.h2_title("최소한의 CSS")}}
+	<pre class="ui-code"><code class="css">	
+.accordion-panel{
+	display: none;
+}
+.accordion-panel.selected{
+	display: block;
+}
+	</code></pre>
+	{{common_macro.h2_title("options")}}
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>parent</td>
+					<td>selector</td>
+					<td>null</td>
+					<td>그룹핑 할 부모요소</td>
+				</tr>
+				<tr>
+					<td>targetClass</td>
+					<td>selector</td>
+					<td>accordion-panel</td>
+					<td>collapse 컨텐츠 클래스 이름</td>
+				</tr>
+				<tr>
+					<td>animate</td>
+					<td>boolean</td>
+					<td>false</td>
+					<td>애니메이션 부여 여부(css transition 사용)</td>
+				</tr>
+				<tr>
+					<td>animationClass</td>
+					<td>string</td>
+					<td>collapsani</td>
+					<td>애니메이션 중 부여될 클래스 이름</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+	{{common_macro.h2_title("Method")}}
+	<div class="d_desc">
+		<ul>
+			<li>없음</li>
+		</ul>
+	</div>
+	{{common_macro.h2_title("Event")}}
+	<div class="d_desc">
+		<ul>
+			<li>없음, show, hide 구현 예정</li>
+		</ul>
+	</div>
+	{{common_macro.h2_title("Example")}}
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
+	<div class="code_in">
+		<div>
+			<a href="javascript:;" data-modules-collapse class="accordion-trigger" aria-expanded="false"><span>내용보기 클릭! 애니메이션 없음!!</span></a>
+			<div class="accordion-panel" role="region">
+				<div class="inset">
+					내용보기 클릭에 대한 내용이 들어갑니다.<br>
+					내용보기 클릭에 대한 내용이 들어갑니다.<br>
+					내용보기 클릭에 대한 내용이 들어갑니다.<br>
+				</div>
+			</div>
+		</div>
+		<br><br><br><br>
+		<div>
+			<a href="javascript:;" data-modules-collapse="animate:true;" class="accordion-trigger" aria-expanded="false"><span>내용보기 클릭! 애니메이션 있음!!</span></a>
+			<div class="accordion-panel" role="region">
+				<div class="inset">
+					내용보기 클릭에 대한 내용이 들어갑니다.<br>
+					내용보기 클릭에 대한 내용이 들어갑니다.<br>
+					내용보기 클릭에 대한 내용이 들어갑니다.<br>
+				</div>
+			</div>
+		</div>
+		<br><br><br><br>
+		<div class="acc-parent">
+			<div>
+				<a href="javascript:;" data-modules-collapse="parent:.acc-parent;animate:true;" class="accordion-trigger selected" aria-expanded="false">내용보기 클릭!</a>
+				<div class="accordion-panel selected" role="region">
+					<div class="inset">
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+					</div>
+				</div>
+			</div>
+			<div>
+				<a href="javascript:;" data-modules-collapse="parent:.acc-parent;animate:true;" class="accordion-trigger" aria-expanded="false">내용보기 클릭!</a>
+				<div class="accordion-panel" role="region">
+					<div class="inset">
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+					</div>
+				</div>
+			</div>
+			<div>
+				<a href="javascript:;" data-modules-collapse="parent:.acc-parent;animate:true;" class="accordion-trigger" aria-expanded="false">내용보기 클릭!</a>
+				<div class="accordion-panel" role="region">
+					<div class="inset">
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+						내용보기 클릭에 대한 내용이 들어갑니다.<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br><br><br>
+{% endblock %}

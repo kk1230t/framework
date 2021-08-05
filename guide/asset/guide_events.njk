@@ -1,0 +1,70 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+{% block content %}
+	<div class="header_wrap">
+		<h1 class="h1_guide">Intro</h1>
+		<div class="d_desc">
+			<p class="decs">
+				Custom $(window) event 에 대한 내용입니다.
+			</p>
+		</div>
+	</div>
+	<h2 class="h2_guide">"changeSize" Event</h2>
+	<div class="d_desc">
+		<p class="decs">
+			UI.DEFAULT_SCREEN_SIZE 에서 지정한 해상도별 mode가 변경시 발생
+		</p>
+	</div>
+	<pre class="ui-code"><code class="javascript">
+	// 기본 해상도 분기
+	var DEFAULT_SCREEN_SIZE = [
+		{
+			mode: 'mobile',
+			min: 0,
+			max: 767
+		},
+		{
+			mode: 'tablet',
+			min: 768,
+			max: 1024
+		},
+		{
+			mode: 'web',
+			min: 1025,
+			max: 3840
+		}
+	];
+
+
+	/**
+	* @event 	이벤트 객체
+	* @mode 	현재 mode
+	*/
+	$(window).on('changeSize', function(event, mode){
+		console.log(mode);
+	})
+		</code></pre>
+	<h2 class="h2_guide">scrollstart, scrollend (mobile에서 주로사용)</h2>
+	<div class="d_desc">
+		<p class="decs">
+			UI.DEFAULT_SCREEN_SIZE 에서 지정한 해상도별 mode가 변경시 발생
+		</p>
+	</div>
+	<pre class="ui-code"><code class="javascript">
+	/**
+	* @event 	이벤트 객체
+	*/
+	$(window).on("scrollstart",function(event){
+
+	})
+
+	$(window).on("scrollend",function(event){
+
+	})
+		</code></pre>
+	<br><br><br>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+{% block content %}
+	<div class="header_wrap">
+		<h1 class="h1_guide">Intro</h1>
+		<div class="d_desc">
+			<p class="decs">
+				Framework 전역에서 사용 및 접근할수있는 객체에 대한 설명입니다. <br>
+				브라우저 정보, 해상도 정보 등의 데이터와 각종 유틸리티 함수등을 포함하고 있습니다.
+			</p>
+		</div>
+	</div>
+	<h2 class="h2_guide">선언</h2>
+	<div class="d_desc">
+		<p class="decs">
+			아래 예제와 같이 2가지 방식으로 선언할 수 있습니다.
+		</p>
+	</div>
+	<pre class="ui-code"><code class="javascript">
+	// 전역 네임스페이스에서 선연
+	var CoreUi = UI;
+	console.log(CoreUi) 	// {name: "UI", DEFAULT_SCREEN_SIZE: Array(3), version: "0.7.0", noop: ƒ, emptyFn: ƒ, …}
+
+	또는...
+
+	//즉시실행 함수에서 선언
+	;(function(core, $, undefined){
+
+		console.log(core);	// {name: "UI", DEFAULT_SCREEN_SIZE: Array(3), version: "0.7.0", noop: ƒ, emptyFn: ƒ, …}
+
+	})(window[LIB_NAME], jQuery);
+		</code></pre>
+	<h2 class="h2_guide">1. 전역객체에서 제공하는 데이터</h2>
+	<div class="h_wrap">
+		<h3 class="h22_guide">1) 프로퍼티</h3>
+		<div class="d_desc ">
+			<div class="d_desc table">
+				<table class="table table-bordered table-striped js-options-table">
+					<colgroup>
+						<col style="width: 400px;">
+						<col style="width: auto">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>property</th>
+							<th>description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>UI.DEFAULT_SCREEN_SIZE</td>
+							<td>script에서 사용하는 해상도별 분기 셋팅 Array 입니다.</td>
+						</tr>
+						<tr>
+							<td>UI.detect</td>
+							<td>사용하는 브라우저의 정보를 포함하고 있습니다. (브라우저 종류, 버전, 사용하는 OS 등..)</td>
+						</tr>
+						<tr>
+							<td>UI.prefix</td>
+							<td>event namespace 문자열 [.hui]</td>
+						</tr>
+						<tr>
+							<td>UI.userScreenControl</td>
+							<td>사용자가 화면을 컨트롤하는지 체크하는 Boolean 입니다.(scroll 제외 모듈 사용시 체크)</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<h3 class="h22_guide">2) 메서드</h3>
+		<div class="d_desc ">
+			<div class="d_desc table">
+				<table class="table table-bordered table-striped js-options-table">
+					<colgroup>
+						<col style="width: 400px;">
+						<col style="width: auto">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>Method</th>
+							<th>description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>UI.util</td>
+							<td>Framework util 메서드</td>
+						</tr>
+						<tr>
+							<td>UI.customAlert</td>
+							<td>커스텀얼럿 호출 메서드</td>
+						</tr>
+						<tr>
+							<td>UI.ui</td>
+							<td>ui 관련 메서드(딤 호출, 스크롤 제어, 제이쿼리 사용자함수 바인딩 메서드 등..)</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<h2 class="h2_guide">2. 커스텀 모듈 추가</h2>
+	<div class="d_desc">
+		<p class="decs">
+			커스텀 모듈을 작성하는 경우 아래와 같이 새로운 모듈을 작성 할수 있습니다.
+		</p>
+	</div>
+	<pre class="ui-code"><code class="javascript">
+/**
+* @name module 이름
+* @selector [data-modules-functions]'
+* @options module 옵션
+*/
+//즉시실행 함수선언
+;(function(core, $, undefined){
+	"use strict";		//strict 모드 선언
+	var Default = {},	// 기본옵션
+	name = "module 이름",
+	ui = core.ui,
+	Widget = ui.Widget,
+	module = Widget.extend({
+		name : name,
+		// 모듈 초기화시 init 메서드는 자동 실행
+		init: function (element, config){
+			var _ = this;
+			var options = _.options = $.extend({}, Default, config);
+			Widget.fn.init.call(_, element, options);
+		},
+		method1 : function(){
+			...
+		},
+		method2 : function(){
+			...
+		}
+	})
+	ui.plugin(module);	// jQuery 사옹자함수로 바인딩
+})(window[LIB_NAME], jQuery);
+			</code></pre>
+	<br><br><br>
+{% endblock %}

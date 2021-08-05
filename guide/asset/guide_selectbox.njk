@@ -1,0 +1,132 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+{% block inline_style %}
+<style>
+.custom-selectbox{
+	position: relative;
+}
+.custom-selectbox select{
+	width: 0;
+	font-size: 0;
+	opacity: 0;
+	height: 0;
+	position: absolute;
+	top: -9999em;
+	left: -9999em;
+}
+.custom-selectbox .ui-selectbox{
+	display: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+	<h1 class="h1_guide">Custom selectbox</h1><br>
+	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본 -->
+	&lt;div class="custom-selectbox" data-modules-selectbox>
+		&lt;select>
+			&lt;option value="aa1">내용1&lt;/option>
+			&lt;option value="aa2">내용2&lt;/option>
+			&lt;option value="aa3">내용3&lt;/option>
+		&lt;/select>
+	&lt;/div>
+	</code></pre>
+
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	$(Element).selectbox();
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+.custom-selectbox{
+	position: relative;
+}
+.custom-selectbox select{
+	width: 0;
+	font-size: 0;
+	opacity: 0;
+	height: 0;
+	position: absolute;
+	top: -9999em;
+	left: -9999em;
+}
+.custom-selectbox .ui-selectbox{
+	display: none;
+}
+	</code></pre>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc">
+		- 없음
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).selectbox('refresh')</td>
+					<td>셀렉트박스 리스트 새로고침</td>
+				</tr>
+				<tr>
+					<td>$(element).selectbox().selected('int or value or text')</td>
+					<td>전달된 값과 매칭되는 옵션 선택 활셩화 전달값 : index 또는 value 또는 option 텍스트 값</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc">
+		- 없음
+	</div>
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
+	<div class="code_in">
+		<div class="custom-selectbox" data-modules-selectbox="mouseenter:true;">
+			<select>
+				<option value="aa1">마우스오버1</option>
+				<option value="aa2">마우스오버2</option>
+				<option value="aa3">마우스오버3</option>
+				<option value="aa4">마우스오버4</option>
+				<option value="aa5">마우스오버5</option>
+			</select>
+		</div>
+		<div class="custom-selectbox" data-modules-selectbox>
+			<select id="tests">
+				<option value="aa1">내용1</option>
+				<option value="aa2">내용2</option>
+				<option value="aa3">내용3</option>
+				<option value="aa4">내용4</option>
+				<option value="aa5">내용5</option>
+			</select>
+		</div>
+		<div class="custom-selectbox disabled" data-modules-selectbox>
+			<select>
+				<option value="1">비활성화 셀렉트 박스</option>
+			</select>
+		</div>
+		<div class="custom-selectbox readonly" data-modules-selectbox>
+			<select>
+				<option value="1">읽기전용 셀렉트박스</option>
+			</select>
+		</div>		
+	</div>
+	<br><br><br><br><br><br><br><br><br>
+{% endblock %}

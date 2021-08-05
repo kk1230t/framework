@@ -1,0 +1,216 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+{% block inline_style %}
+<style>
+.ui-tab{
+	white-space: nowrap;
+}
+.tab-content > .tab-pane.ui-active{
+	display: block;
+}
+.tab-content > .tab-pane {
+	display: none;
+}
+.ui-tab li{display: inline-block;}
+
+.scroll-tab{
+	position: relative;
+	width: 464px;
+}
+.scroll-tab .inner-scroll{
+	overflow:hidden;
+}
+.scroll-tab .ui-tab{
+	margin: 0 auto;
+}
+.scroll-tab.next-disabled .next-tab,
+.scroll-tab.prev-disabled .prev-tab,
+.scroll-tab .scrolltab-btns{
+	display: none;
+}
+.scroll-tab.ui-active .scrolltab-btns{
+	display: block;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+	<h1 class="h1_guide">ScrollTab</h1><br>
+	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본 -->
+	&lt;ul class="ui-tab" role="tablist" data-modules-scrollTab>
+		&lt;li role="presentation" class="ui-active">&lt;a href="#home" aria-controls="home" role="tab" data-modules-tab>Tab1&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#profile" aria-controls="profile" role="tab" data-modules-tab>Tab2&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#messages" aria-controls="messages" role="tab" data-modules-tab>Tab3&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings1" aria-controls="settings" role="tab" data-modules-tab>Tab4&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings2" aria-controls="settings" role="tab" data-modules-tab>Tab5&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings3" aria-controls="settings" role="tab" data-modules-tab>Tab6&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings4" aria-controls="settings" role="tab" data-modules-tab>Tab7&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings5" aria-controls="settings" role="tab" data-modules-tab>Tab8&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings6" aria-controls="settings" role="tab" data-modules-tab>Tab9&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings7" aria-controls="settings" role="tab" data-modules-tab>Tab10&lt;/a>&lt;/li>
+		&lt;li role="presentation">&lt;a href="#settings8" aria-controls="settings" role="tab" data-modules-tab>Tab11&lt;/a>&lt;/li>
+	&lt;/ul>
+	
+	&lt;!-- Tab panes -->
+	&lt;div class="tab-content">
+		&lt;div role="tabpanel" class="tab-pane ui-active" id="home">tabContent1&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="profile">tabContent2&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="messages">tabContent3&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings1">tabContent4&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings2">tabContent5&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings3">tabContent6&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings4">tabContent7&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings5">tabContent8&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings6">tabContent9&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings7">tabContent10&lt;/div>
+		&lt;div role="tabpanel" class="tab-pane" id="settings8">tabContent11&lt;/div>
+	&lt;/div>
+	</code></pre>
+
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	// 기본 옵션없이 호출
+	$(Element).sticky();
+
+
+	// 커스텀 옵션 사용
+	$(Element).sticky({
+		padding:0,
+		relativeTarget : '#wrap'
+	});
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+.ui-tab{
+	white-space: nowrap;
+}
+.tab-content > .tab-pane.ui-active{
+	display: block;
+}
+.tab-content > .tab-pane {
+	display: none;
+}
+.ui-tab li{display: inline-block;}
+
+.scroll-tab{
+	position: relative;
+	width: 464px;
+}
+.scroll-tab .inner-scroll{
+	overflow:hidden;
+}
+.scroll-tab .ui-tab{
+	margin: 0 auto;
+}
+.scroll-tab.next-disabled .next-tab,
+.scroll-tab.prev-disabled .prev-tab,
+.scroll-tab .scrolltab-btns{
+	display: none;
+}
+.scroll-tab.ui-active .scrolltab-btns{
+	display: block;
+}
+	</code></pre>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>class</td>
+					<td>string</td>
+					<td>null</td>
+					<td>커스텀 추가 클래스</td>
+				</tr>
+				<tr>
+					<td>innerPadding</td>
+					<td>int</td>
+					<td>0</td>
+					<td>탭 안쪽 dim 영역 px값</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).scrollTab('refresh')</td>
+					<td>모듈새로고침</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		없음
+	</div>
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
+	<div class="code_in" style="text-align:center;">
+		<div>
+
+			<ul class="ui-tab" role="tablist" data-modules-scrollTab>
+				<li role="presentation" class="ui-active"><a href="#home" aria-controls="home" role="tab" data-modules-tab>Tab1</a></li>
+				<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-modules-tab>Tab2</a></li>
+				<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-modules-tab>Tab3</a></li>
+				<li role="presentation"><a href="#settings1" aria-controls="settings" role="tab" data-modules-tab>Tab4</a></li>
+				<li role="presentation"><a href="#settings2" aria-controls="settings" role="tab" data-modules-tab>Tab5</a></li>
+				<li role="presentation"><a href="#settings3" aria-controls="settings" role="tab" data-modules-tab>Tab6</a></li>
+				<li role="presentation"><a href="#settings4" aria-controls="settings" role="tab" data-modules-tab>Tab7</a></li>
+				<li role="presentation"><a href="#settings5" aria-controls="settings" role="tab" data-modules-tab>Tab8</a></li>
+				<li role="presentation"><a href="#settings6" aria-controls="settings" role="tab" data-modules-tab>Tab9</a></li>
+				<li role="presentation"><a href="#settings7" aria-controls="settings" role="tab" data-modules-tab>Tab10</a></li>
+				<li role="presentation"><a href="#settings8" aria-controls="settings" role="tab" data-modules-tab>Tab11</a></li>
+			</ul>
+			
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane ui-active" id="home">tabContent1</div>
+				<div role="tabpanel" class="tab-pane" id="profile">tabContent2</div>
+				<div role="tabpanel" class="tab-pane" id="messages">tabContent3</div>
+				<div role="tabpanel" class="tab-pane" id="settings1">tabContent4</div>
+				<div role="tabpanel" class="tab-pane" id="settings2">tabContent5</div>
+				<div role="tabpanel" class="tab-pane" id="settings3">tabContent6</div>
+				<div role="tabpanel" class="tab-pane" id="settings4">tabContent7</div>
+				<div role="tabpanel" class="tab-pane" id="settings5">tabContent8</div>
+				<div role="tabpanel" class="tab-pane" id="settings6">tabContent9</div>
+				<div role="tabpanel" class="tab-pane" id="settings7">tabContent10</div>
+				<div role="tabpanel" class="tab-pane" id="settings8">tabContent11</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

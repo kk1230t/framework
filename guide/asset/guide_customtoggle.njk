@@ -1,0 +1,231 @@
+{% 
+    set title = 'Ui Framework' 
+%}
+
+{% extends "./template/layout.njk" %}
+
+{% block inline_style %}
+	<style>
+		[data-modules-customtoggle].ui-active{
+			background: #000;
+			color: #fff;
+		}
+		.parent-wrap.ui-active  .toggle-body{
+			display: block;
+		}
+		.parent-wrap .toggle-body{
+			display: none;
+		}
+	</style>
+{% endblock %}
+
+
+{% block content %}
+	<h1 class="h1_guide">Customtoggle</h1><br>
+	<h2 class="h2_guide">html문서 내 호출 및 기본 구조</h2>
+	<pre class="ui-code"><code class="html">	
+	&lt;!-- 기본(자신이 토글되는 경우) -->
+	&lt;button type="button" data-modules-customtoggle>커스텀 토글&lt;/button>
+
+	
+	&lt;!-- 커스텀 옵션 사용(부모요소 토글) -->
+	&lt;div class="parent-wrap">
+		&lt;div class="toggle-body">내용.....&lt;/div>
+		&lt;button type="button" data-modules-customtoggle="parent:.parent-wrap">커스텀 토글&lt;/button>
+	&lt;/div>
+	
+	
+	&lt;!-- 커스텀 옵션 사용(부모요소 토글, 텍스트 + 닫기버튼) -->
+	&lt;div class="parent-wrap">
+		&lt;div class="toggle-body">내용.....&lt;/div>
+		&lt;button type="button" data-modules-customtoggle="parent:.parent-wrap">
+			커스텀 토글
+			&lt;span data-text>더보기&lt;/span>
+		&lt;/button>
+		&lt;span data-close-btn>닫기&lt;/span>	
+	&lt;/div>
+	</code></pre>
+	
+	<h2 class="h2_guide">script에서 호출</h2>
+	<pre class="ui-code"><code class="javascript">	
+	// 기본 옵션없이 호출
+	$(Element).customtoggle();
+
+
+	// 커스텀 옵션 사용
+	$(Element).customtoggle({
+		'parent':'.parent-wrap'
+	});
+	</code></pre>
+	<h2 class="h2_guide">최소한의 CSS</h2>
+	<pre class="ui-code"><code class="css">	
+[data-modules-customtoggle].ui-active{
+	background: #000;
+	color: #fff;
+}
+.parent-wrap.ui-active  .toggle-body{
+	display: block;
+}
+.parent-wrap .toggle-body{
+	display: none;
+}
+	</code></pre>
+	<h2 class="h2_guide">options</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: 200px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>default</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>parent</td>
+					<td>selector</td>
+					<td>null</td>
+					<td>토글 시킬 셀렉터, 기본은 자신입니다.</td>
+				</tr>
+				<tr>
+					<td>activeClass</td>
+					<td>string</td>
+					<td>ui-active</td>
+					<td>토글 시킬 클래스 이름</td>
+				</tr>
+				<tr>
+					<td>openText</td>
+					<td>String</td>
+					<td>더보기</td>
+					<td>클래스 토글과 함께 변경할 문구가 있을 시, activeClass 클래스 요소가 활성화 되면 적용됩니다 !</td>
+				</tr>
+				<tr>
+					<td>closeText</td>
+					<td>String</td>
+					<td>닫기</td>
+					<td>클래스 토글과 함께 변경할 문구가 있을 시, activeClass 클래스 요소가 제거되면 적용됩니다, !</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Method</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).customtoggle('toggle')</td>
+					<td>토글 메서드</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Event</h2>
+	<div class="d_desc table">
+		<table class="table table-bordered table-striped js-options-table">
+			<colgroup>
+				<col style="width: 400px;">
+				<col style="width: auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>$(element).on('toggle.customtoggle')</td>
+					<td>토글 이벤트</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2 class="h2_guide">Example</h2>
+	<div class="ctr-btn">
+		<button class="style-toggle-btn"><span data-text>기본스타일만 적용</span></button>
+		<span class="decs">* 모듈에 필요한 최소한의 스타일만 남기고 제거합니다.</span>
+	</div>
+	<div class="code_in">
+		<!-- 기본(자신이 토글되는 경우) -->
+		<button type="button" data-modules-customtoggle>커스텀 토글 클릭!!</button>
+
+		<br><br>
+		<!-- 커스텀 옵션 사용(부모요소 토글) -->
+		<div class="parent-wrap">
+			<div class="toggle-body">
+				<div class="inset">
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+				</div>
+			</div>
+			<button type="button" data-modules-customtoggle="parent:.parent-wrap">커스텀 토글 클릭!!</button>
+		</div>
+		
+		<br><br>
+		<!-- 커스텀 옵션 사용(부모요소 토글, 텍스트 + 닫기버튼) -->
+		<div class="parent-wrap">
+			<div class="toggle-body">
+				<div class="inset">
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+					내용.....<br>
+				</div>
+			</div>
+			<button type="button" data-modules-customtoggle="parent:.parent-wrap">
+				커스텀 토글 클릭!!
+				<span data-text>더보기</span>
+			</button>
+			<span data-close-btn>닫기</span>	
+		</div>
+
+		<br><br><br><br><br><br>
+	</div>
+{% endblock %}
