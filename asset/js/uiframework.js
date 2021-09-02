@@ -1087,6 +1087,50 @@
 })(window[LIB_NAME], jQuery);
 
 /**
+ * @util Math
+ */
+ ;(function(core, $, undefined){
+    "use strict";
+    core.addon('math', /** @lends UI.util */{
+        /**
+         * 소수 구하기 에라토스테네스의 체
+         * @param  {Number} 
+        */
+        primeNumber : function (number){
+            var num = number;
+            var sqrt;
+            if(num<=1) return false;
+
+            if(num % 2 === 0) return num === 2 ? true : false;
+
+            sqrt = parseInt(Math.sqrt(num));
+
+            for (let i = 3; i <= sqrt ; i+=2) {
+                if(num % i === 0) return false;
+            }
+            return true;
+        },
+        getPrimeNumbers : function (number){
+            var arr = [];
+            for (let i = 0; i <= number; i++) {
+                var check = core.math.primeNumber(i);
+                if(check) arr.push(i)
+            }
+            return arr;
+        },
+        greatestCommonDivisor : function(...num){
+            var numbers = num;
+
+            // if()
+
+            // function g() {
+                
+            // }
+        }
+    });
+})(window[LIB_NAME], jQuery);
+
+/**
  * 
  * @events 이벤트
  */

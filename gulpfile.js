@@ -138,8 +138,11 @@ gulp.task('js_rollup', () => {
   return gulp.src([ src_js2_folder + '**/*.js' ]/*, { since: gulp.lastRun('js') }*/)
     .pipe(rollup({
       input: src_js2_folder+'index.js',
-      format:"umd",
-      name:'bundle'
+      format:"umd", 
+      name:'bundle',
+      output: [
+        { sourcemap: false}
+      ]
     }))
     .pipe(babel({
       "presets": [
