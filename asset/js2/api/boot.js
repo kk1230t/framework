@@ -1,8 +1,8 @@
 import {getComponentName} from './component';
-import {apply, fastdom, hasAttr, inBrowser} from 'uikit-util';
+import {apply, fastdom, hasAttr, inBrowser} from 'Framework-util';
 
-export default function (UIkit) {
-    const {connect, disconnect} = UIkit;
+export default function (Framework) {
+    const {connect, disconnect} = Framework;
 
     if (!inBrowser || !window.MutationObserver) {
         return;
@@ -11,20 +11,17 @@ export default function (UIkit) {
     fastdom.read(init);
 
     function init() {
-
         if (document.body) {
             apply(document.body, connect);
         }
-
         (new MutationObserver(mutations => {
             const updates = [];
             mutations.forEach(mutation => {
-                // console.log(mutation)
                 applyMutation(mutation, updates)
             });
             updates.forEach(el => {
                 // console.log(el)
-                // UIkit.update(el)
+                Framework.update(el)
             });
         })).observe(document, {
             childList: true,
@@ -33,13 +30,13 @@ export default function (UIkit) {
             attributes: true
         });
 
-        UIkit._initialized = true;
+        Framework._initialized = true;
     }
 
     function applyMutation(mutation, updates) {
 
         const {target, type} = mutation;
-
+        // console.log(mutation);
         const update = type !== 'attributes'
             ? applyChildList(mutation)
             : applyAttribute(mutation);
@@ -47,6 +44,7 @@ export default function (UIkit) {
         if (update && !updates.some(element => element.contains(target))) {
             updates.push(target.contains ? target : target.parentNode); // IE 11 text node does not implement contains
         }
+
 
     }
 
@@ -58,16 +56,19 @@ export default function (UIkit) {
 
         const name = getComponentName(attributeName);
 
-        if (!name || !(name in UIkit)) {
+        
+
+        if (!name || !(name in Framework)) {
             return;
         }
 
         if (hasAttr(target, attributeName)) {
-            UIkit[name](target);
+            
+            Framework[name](target);
             return true;
         }
 
-        const component = UIkit.getComponent(target, name);
+        const component = Framework.getComponent(target, name);
 
         if (component) {
             component.$destroy();

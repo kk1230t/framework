@@ -1,4 +1,4 @@
-import {attr} from './attr.js';
+import {attr} from './attr';
 import {hasOwn, includes, isString, isUndefined, toNodes, last} from './lang.js';
 
 export function addClass(element, ...args) {
@@ -7,6 +7,10 @@ export function addClass(element, ...args) {
 
 export function removeClass(element, ...args) {
     apply(element, args, 'remove');
+}
+
+export function removeClasses(element, cls) {
+    attr(element, 'class', value => (value || '').replace(new RegExp(`\\b${cls}\\b`, 'g'), ''));
 }
 
 export function replaceClass(element, ...args) {
@@ -19,7 +23,6 @@ export function hasClass(element, cls) {
 }
 
 export function toggleClass(element, ...args) {
-    console.log(args)
     if (!args.length) {
         return;
     }

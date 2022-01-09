@@ -1,32 +1,32 @@
-import {$, apply, isString, mergeOptions, parents, toNode} from 'uikit-util';
+import {$, apply, isString, mergeOptions, parents, toNode} from '../util/index.js';
 
-export default function (UIkit) {
+export default function (Framework) {
 
-    const DATA = UIkit.data;
+    const DATA = Framework.data;
 
-    UIkit.use = function (plugin) {
-
+    Framework.use = function (plugin) {
+        
         if (plugin.installed) {
             return;
         }
-
+        // console.dir(plugin);
         plugin.call(null, this);
         plugin.installed = true;
 
         return this;
     };
 
-    UIkit.mixin = function (mixin, component) {
-        component = (isString(component) ? UIkit.component(component) : component) || this;
+    Framework.mixin = function (mixin, component) {
+        component = (isString(component) ? Framework.component(component) : component) || this;
         component.options = mergeOptions(component.options, mixin);
     };
 
-    UIkit.extend = function (options) {
+    Framework.extend = function (options) {
 
         options = options || {};
 
         const Super = this;
-        const Sub = function UIkitComponent(options) {
+        const Sub = function FrameworkComponent(options) {
             this._init(options);
         };
 
@@ -40,17 +40,15 @@ export default function (UIkit) {
         return Sub;
     };
 
-    UIkit.update = function (element, e) {
-
+    Framework.update = function (element, e) {
         element = element ? toNode(element) : document.body;
-
+        // console.log(element);
         parents(element).reverse().forEach(element => update(element[DATA], e));
         apply(element, element => update(element[DATA], e));
-
     };
 
     let container;
-    Object.defineProperty(UIkit, 'container', {
+    Object.defineProperty(Framework, 'container', {
 
         get() {
             return container || document.body;

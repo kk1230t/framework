@@ -3,21 +3,23 @@ import hooksAPI from './hooks';
 import stateAPI from './state';
 import instanceAPI from './instance';
 import componentAPI from './component';
-import * as util from 'uikit-util';
+import * as util from 'Framework-util';
 
-const UIkit = function (options) {
+const Framework = function (options) {
     this._init(options);
 };
-UIkit.util = util;
-UIkit.data = '__uikit__';
-UIkit.prefix = 'uk-';
-UIkit.options = {};
-UIkit.version = 1.0;
+Framework.util = util;
+Framework.data = '__frameworkui__';
+Framework.prefixName = 'fui';
+Framework.prefix = `${Framework.prefixName}-`;
+Framework.options = {};
+Framework.version = 1.0;
 
-globalAPI(UIkit);
-hooksAPI(UIkit);
-stateAPI(UIkit);
-componentAPI(UIkit);
-instanceAPI(UIkit);
+globalAPI(Framework);
+hooksAPI(Framework);
+stateAPI(Framework);
+instanceAPI(Framework);
+componentAPI(Framework);
 
-export default UIkit;
+
+export default Framework;

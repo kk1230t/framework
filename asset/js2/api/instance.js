@@ -1,14 +1,14 @@
-import {hyphenate, isEmpty, remove, within} from 'uikit-util';
+import {hyphenate, isEmpty, remove, within} from 'Framework-util';
 
-export default function (UIkit) {
+export default function (Framework) {
 
-    const DATA = UIkit.data;
+    const DATA = Framework.data;
 
-    UIkit.prototype.$create = function (component, element, data) {
-        return UIkit[component](element, data);
+    Framework.prototype.$create = function (component, element, data) {
+        return Framework[component](element, data);
     };
 
-    UIkit.prototype.$mount = function (el) {
+    Framework.prototype.$mount = function (el) {
 
         const {name} = this.$options;
 
@@ -29,12 +29,12 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype.$reset = function () {
+    Framework.prototype.$reset = function () {
         this._callDisconnected();
         this._callConnected();
     };
 
-    UIkit.prototype.$destroy = function (removeEl = false) {
+    Framework.prototype.$destroy = function (removeEl = false) {
 
         const {el, name} = this.$options;
 
@@ -59,20 +59,20 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype.$emit = function (e) {
+    Framework.prototype.$emit = function (e) {
         this._callUpdate(e);
     };
 
-    UIkit.prototype.$update = function (element = this.$el, e) {
-        UIkit.update(element, e);
+    Framework.prototype.$update = function (element = this.$el, e) {
+        Framework.update(element, e);
     };
 
-    UIkit.prototype.$getComponent = UIkit.getComponent;
+    Framework.prototype.$getComponent = Framework.getComponent;
 
     const names = {};
-    Object.defineProperties(UIkit.prototype, {
+    Object.defineProperties(Framework.prototype, {
 
-        $container: Object.getOwnPropertyDescriptor(UIkit, 'container'),
+        $container: Object.getOwnPropertyDescriptor(Framework, 'container'),
 
         $name: {
 
@@ -80,7 +80,7 @@ export default function (UIkit) {
                 const {name} = this.$options;
 
                 if (!names[name]) {
-                    names[name] = UIkit.prefix + hyphenate(name);
+                    names[name] = Framework.prefix + hyphenate(name);
                 }
 
                 return names[name];

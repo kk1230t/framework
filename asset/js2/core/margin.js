@@ -1,4 +1,4 @@
-import {includes, isRtl, isVisible, offsetPosition, toggleClass} from 'uikit-util';
+import {includes, isRtl, isVisible, offsetPosition, toggleClass} from 'Framework-util';
 
 export default {
 

@@ -1,10 +1,10 @@
-import {assign, camelize, data as getData, hasOwn, hyphenate, isArray, isEmpty, isFunction, isPlainObject, isString, isUndefined, mergeOptions, on, parseOptions, startsWith, toBoolean, toList, toNumber} from 'uikit-util';
+import {assign, camelize, data as getData, hasOwn, hyphenate, isArray, isEmpty, isFunction, isPlainObject, isString, isUndefined, mergeOptions, on, parseOptions, startsWith, toBoolean, toNumber} from 'Framework-util';
 
-export default function (UIkit) {
+export default function (Framework) {
 
     let uid = 0;
 
-    UIkit.prototype._init = function (options) {
+    Framework.prototype._init = function (options) {
 
         options = options || {};
         options.data = normalizeData(options, this.constructor.options);
@@ -24,7 +24,7 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype._initData = function () {
+    Framework.prototype._initData = function () {
 
         const {data = {}} = this.$options;
 
@@ -33,7 +33,7 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype._initMethods = function () {
+    Framework.prototype._initMethods = function () {
 
         const {methods} = this.$options;
 
@@ -44,7 +44,7 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype._initComputeds = function () {
+    Framework.prototype._initComputeds = function () {
 
         const {computed} = this.$options;
 
@@ -57,7 +57,7 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype._initProps = function (props) {
+    Framework.prototype._initProps = function (props) {
 
         let key;
 
@@ -77,12 +77,13 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype._initEvents = function () {
+    Framework.prototype._initEvents = function () {
 
         this._events = [];
 
         const {events} = this.$options;
 
+        console.log(events);
         if (events) {
 
             events.forEach(event => {
@@ -99,12 +100,12 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype._unbindEvents = function () {
+    Framework.prototype._unbindEvents = function () {
         this._events.forEach(unbind => unbind());
         delete this._events;
     };
 
-    UIkit.prototype._initObserver = function () {
+    Framework.prototype._initObserver = function () {
 
         let {attrs, props, el} = this.$options;
         if (this._observer || !props || attrs === false) {
@@ -205,12 +206,12 @@ export default function (UIkit) {
     }
 
     function registerEvent(component, event, key) {
-
         if (!isPlainObject(event)) {
             event = ({name: key, handler: event});
         }
 
         let {name, el, handler, capture, passive, delegate, filter, self} = event;
+        
         el = isFunction(el)
             ? el.call(component)
             : el || component.$el;
@@ -282,5 +283,15 @@ export default function (UIkit) {
         }
 
         return data;
+    }
+
+    function toList(value) {
+        return isArray(value)
+            ? value
+            : isString(value)
+                ? value.split(/,(?![^(]*\))/).map(value => isNumeric(value)
+                    ? toNumber(value)
+                    : toBoolean(value.trim()))
+                : [value];
     }
 }

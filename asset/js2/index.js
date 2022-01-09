@@ -1,35 +1,35 @@
-import * as util from './util/index.js';
-import { on } from './util/index.js';
-// import * as util from 'uikit-util';
-// import {addC33lass} from './util/index.js';
+import Framework from './api/index';
+import Core from './core/core';
+import boot from './api/boot';
+import {each} from './util/lang';
+import * as components from './core/index';
+import { ready, fastdom } from 'Framework-util';;
 
 
-const testBtn = document.querySelector('#testBtn');
+console.log(Core);
 
-console.log(Element.prototype)
-var el = document.querySelectorAll('.test')
-// console.log(el)
-util.addClass(el, ['aaaaa', 'bbbbder'])
-
-console.log(util.hasClass(el, 'aacdsfswerwe'))
-
-console.log(util)
-util.test();
-
-// testBtn.addEventListener('click', function(e){
-//     util.toggleClass(el, 'aaabbbdfa')
-// }, false)
+// register components
+console.log(components);
+each(components, (component, name) => {
+    return Framework.component(name, component)
+});
 
 
-// on(testBtn, 'click', function(){
-//     console.log(this)
-// })
-on(testBtn, 'click', (e)=>{
-    console.log(this)
+Framework.use(Core);
+
+boot(Framework);
+// console.log(each);
+console.dir(Framework);
+// console.log(Framework.util);
+fastdom.read(() => {
+    // console.log('fastdom');
+    console.log(document.querySelector('.fui-accordion'));
+});
+ready(() => {
+    console.log('ready');
+    console.log(document.querySelector('.fui-accordion'));
 })
-// window.addEventListener('scroll', function(e){
-//     console.log(this.scrollY)
-// })
-export default util;
 
-// window.frontui = util;
+
+
+export default Framework;

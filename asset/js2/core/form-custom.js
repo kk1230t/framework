@@ -1,5 +1,5 @@
 import Class from '../mixin/class';
-import {$, $$, closest, isInput, matches, query, selInput} from 'uikit-util';
+import {$, $$, closest, isInput, matches, query, selInput} from 'Framework-util';
 
 export default {
 

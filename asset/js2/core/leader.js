@@ -1,6 +1,6 @@
 import Class from '../mixin/class';
 import Media from '../mixin/media';
-import {attr, getCssVar, toggleClass, unwrap, wrapInner} from 'uikit-util';
+import {attr, getCssVar, toggleClass, unwrap, wrapInner} from 'Framework-util';
 
 export default {
 

@@ -1,5 +1,5 @@
 import Togglable from '../mixin/togglable';
-import {$$, attr, children, css, data, endsWith, findIndex, getIndex, hasClass, includes, matches, queryAll, toggleClass, toNodes, within} from 'uikit-util';
+import {$$, attr, children, css, data, endsWith, findIndex, getIndex, hasClass, includes, matches, queryAll, toggleClass, toNodes, within} from 'Framework-util';
 
 export default {
 

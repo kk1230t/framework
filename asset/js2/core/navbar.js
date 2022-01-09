@@ -1,6 +1,6 @@
 import Class from '../mixin/class';
 import FlexBug from '../mixin/flex-bug';
-import {$, $$, addClass, after, assign, css, height, includes, isRtl, isVisible, matches, noop, parents, Promise, query, remove, toFloat, toggleClass, Transition, within} from 'uikit-util';
+import {$, $$, addClass, after, assign, css, height, includes, isRtl, isVisible, matches, noop, parents, Promise, query, remove, toFloat, toggleClass, Transition, within} from 'Framework-util';
 
 export default {
 

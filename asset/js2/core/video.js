@@ -1,4 +1,4 @@
-import {css, hasAttr, isInView, isVisible, Player} from 'uikit-util';
+import {css, hasAttr, isInView, isVisible, Player} from 'Framework-util';
 
 export default {
 

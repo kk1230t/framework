@@ -1,6 +1,6 @@
 import Video from './video';
 import Class from '../mixin/class';
-import {css, Dimensions, parent} from 'uikit-util';
+import {css, Dimensions, parent} from 'Framework-util';
 
 export default {
 

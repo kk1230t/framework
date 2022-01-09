@@ -1,6 +1,6 @@
 import Switcher from './switcher';
 import Class from '../mixin/class';
-import {hasClass} from 'uikit-util';
+import {hasClass} from 'Framework-util';
 
 export default {
 

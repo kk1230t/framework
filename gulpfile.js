@@ -26,6 +26,9 @@ const gulp                      = require('gulp'),
       autoprefixer              = require('gulp-autoprefixer'),
       minifyCss                 = require('gulp-clean-css'),
       babel                     = require('gulp-babel'),
+      babel2                    = require('@rollup/plugin-babel'),
+      alias                     = require('@rollup/plugin-alias'),
+      resolve                   = require('@rollup/plugin-node-resolve'),
       webpack                   = require('webpack-stream'),
       uglify                    = require('gulp-uglify'),
       concat                    = require('gulp-concat'),
@@ -34,7 +37,8 @@ const gulp                      = require('gulp'),
       gulpConnect               = require('gulp-connect'),
       gulpConnectSsi            = require('gulp-connect-ssi'),
       spritesmith               = require('gulp.spritesmith'),
-      rollup                    = require('gulp-rollup'),
+      // rollup                    = require('gulp-rollup'),
+      rollup                    = require('rollup'),
       ejs                       = require("gulp-ejs"),
       rename                    = require("gulp-rename"),
       argv                      = require('yargs').argv,
@@ -111,12 +115,12 @@ gulp.task('images', () => {
 gulp.task('js', () => {
   return gulp.src([ src_js_folder + '**/*.js' ]/*, { since: gulp.lastRun('js') }*/)
     .pipe(plumber())
-    // .pipe(webpack({
-    //   mode: 'development',  //development, production, none
-    //   externals: {
-    //     jquery: 'jQuery'
-    //   }
-    // }))
+    .pipe(webpack({
+      mode: 'development',  //development, production, none
+      externals: {
+        jquery: 'jQuery'
+      }
+    }))
     .pipe(sourcemaps.init())
     .pipe(babel({
       "presets": [
@@ -127,34 +131,65 @@ gulp.task('js', () => {
         }]
       ]
     }))
-    // .pipe(concat('style.js'))
+    .pipe(concat('uiframework.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(dist_js_folder))
     .pipe(gulpConnect.reload());
 });
 
+// gulp.task('js_rollup', () => {
+//   return gulp.src([ src_js2_folder + '**/*.js' ]/*, { since: gulp.lastRun('js') }*/)
+//     .pipe(rollup({
+//       input: src_js2_folder+'index.js',
+//       format:"umd", 
+//       name:'bundle',
+//       output: [
+//         { sourcemap: true}
+//       ]
+//     }))
+//     .pipe(babel({
+//       "presets": [
+//         [ "@babel/preset-env", {
+//           "targets": {
+//             "browsers": [ "last 1 version", "ie >= 11" ]
+//           }
+//         }]
+//       ]
+//     }))
+//     .pipe(gulp.dest(dist_js2_folder))
+// });
+
 gulp.task('js_rollup', () => {
-  return gulp.src([ src_js2_folder + '**/*.js' ]/*, { since: gulp.lastRun('js') }*/)
-    .pipe(rollup({
+  return rollup
+    .rollup({
       input: src_js2_folder+'index.js',
-      format:"umd", 
-      name:'bundle',
-      output: [
-        { sourcemap: false}
+      format: 'umd',
+      plugins: [resolve.nodeResolve(), babel2.babel({
+          exclude: ['node_modules/**'],
+          babelHelpers: 'bundled',
+          presets: ['@babel/preset-env']
+        }),
+        alias({
+          entries: [
+            { find: 'Framework-util', replacement: `${src_js2_folder}/util/index.js` },
+          ]
+        })
       ]
-    }))
-    .pipe(babel({
-      "presets": [
-        [ "@babel/preset-env", {
-          "targets": {
-            "browsers": [ "last 1 version", "ie >= 11" ]
-          }
-        }]
-      ]
-    }))
-    .pipe(gulp.dest(dist_js2_folder))
+    })
+    .then(bundle => {
+      setTimeout(() => {
+        gulp.src(src_js2_folder+'index.js').pipe(gulpConnect.reload());
+      }, 0);
+      return bundle.write({
+        file: dist_js2_folder+'index.js',
+        format: 'umd',
+        name: 'Framework',
+        sourcemap: true,
+      });
+    });
 });
+
 
 
 

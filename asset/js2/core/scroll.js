@@ -1,4 +1,4 @@
-import {$, escape, scrollIntoView, trigger} from 'uikit-util';
+import {$, escape, scrollIntoView, trigger} from 'Framework-util';
 
 export default {
 

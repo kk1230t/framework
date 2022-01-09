@@ -1,38 +1,44 @@
-import {$$, assign, camelize, fastdom, hyphenate, isPlainObject, startsWith} from 'uikit-util';
+import {$$, assign, camelize, fastdom, hyphenate, isPlainObject, startsWith} from 'Framework-util';
 
-export default function (UIkit) {
+export default function (Framework) {
 
-    const DATA = UIkit.data;
+    const DATA = Framework.data;
 
     const components = {};
 
-    UIkit.component = function (name, options) {
+    Framework.component = function (name, options) {
 
         const id = hyphenate(name);
 
         name = camelize(id);
 
+
         if (!options) {
 
             if (isPlainObject(components[name])) {
-                components[name] = UIkit.extend(components[name]);
+                components[name] = Framework.extend(components[name]);
             }
 
             return components[name];
 
         }
 
-        UIkit[name] = function (element, data) {
+        
 
-            const component = UIkit.component(name);
-
+        // console.log(component);
+        Framework[name] = function (element, data) {
+            
+            const component = Framework.component(name);
             return component.options.functional
                 ? new component({data: isPlainObject(element) ? element : [...arguments]})
                 : !element ? init(element) : $$(element).map(init)[0];
 
+            
             function init(element) {
+                
+                const instance = Framework.getComponent(element, name);
 
-                const instance = UIkit.getComponent(element, name);
+                // console.log(new component({el: element, data}));
 
                 if (instance) {
                     if (!data) {
@@ -47,27 +53,28 @@ export default function (UIkit) {
             }
 
         };
-
+        
         const opt = isPlainObject(options) ? assign({}, options) : options.options;
 
         opt.name = name;
 
         if (opt.install) {
-            opt.install(UIkit, opt, name);
+            opt.install(Framework, opt, name);
         }
-
-        if (UIkit._initialized && !opt.functional) {
-            fastdom.read(() => UIkit[name](`[uk-${id}],[data-uk-${id}]`));
+        
+        if (Framework._initialized && !opt.functional) {
+            
+            fastdom.read(() => Framework[name](`[${Framework.prefixName}-${id}],[data-${Framework.prefixName}-${id}]`));
         }
 
         return components[name] = isPlainObject(options) ? opt : options;
     };
 
-    UIkit.getComponents = element => element && element[DATA] || {};
-    UIkit.getComponent = (element, name) => UIkit.getComponents(element)[name];
+    Framework.getComponents = element => element && element[DATA] || {};
+    Framework.getComponent = (element, name) => Framework.getComponents(element)[name];
 
-    UIkit.connect = node => {
-
+    Framework.connect = node => {
+        
         if (node[DATA]) {
             for (const name in node[DATA]) {
                 node[DATA][name]._callConnected();
@@ -75,18 +82,15 @@ export default function (UIkit) {
         }
 
         for (let i = 0; i < node.attributes.length; i++) {
-
             const name = getComponentName(node.attributes[i].name);
-
             if (name && name in components) {
-                UIkit[name](node);
+                Framework[name](node);
             }
-
         }
-
+        
     };
 
-    UIkit.disconnect = node => {
+    Framework.disconnect = node => {
         for (const name in node[DATA]) {
             node[DATA][name]._callDisconnected();
         }
@@ -95,7 +99,7 @@ export default function (UIkit) {
 }
 
 export function getComponentName(attribute) {
-    return startsWith(attribute, 'uk-') || startsWith(attribute, 'data-uk-')
-        ? camelize(attribute.replace('data-uk-', '').replace('uk-', ''))
+    return startsWith(attribute, `${Framework.prefixName}-`) || startsWith(attribute, `data-${Framework.prefixName}-`)
+        ? camelize(attribute.replace(`data-${Framework.prefixName}-`, '').replace(`${Framework.prefixName}-`, ''))
         : false;
 }

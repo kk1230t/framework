@@ -1,5 +1,5 @@
 import Class from '../mixin/class';
-import {closest, css, height, offset, toFloat, trigger} from 'uikit-util';
+import {closest, css, height, offset, toFloat, trigger} from 'Framework-util';
 
 export default {
 

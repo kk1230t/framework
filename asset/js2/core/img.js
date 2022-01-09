@@ -1,4 +1,4 @@
-import {createEvent, css, Dimensions, escape, getImage, includes, IntersectionObserver, isUndefined, noop, queryAll, startsWith, toFloat, toPx, trigger} from 'uikit-util';
+import {createEvent, css, Dimensions, escape, getImage, includes, IntersectionObserver, isUndefined, noop, queryAll, startsWith, toFloat, toPx, trigger} from 'Framework-util';
 
 export default {
 

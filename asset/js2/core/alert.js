@@ -1,6 +1,6 @@
 import Class from '../mixin/class';
 import Togglable from '../mixin/togglable';
-import {assign} from 'uikit-util';
+import {assign} from 'Framework-util';
 
 export default {
 

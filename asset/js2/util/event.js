@@ -1,12 +1,12 @@
-import {isIE} from './detect.js';
-import {within} from './filter.js';
-import {closest, findAll} from './selector.js';
+import {isIE} from './env';
+import {findAll} from './selector';
+import {closest, within} from './filter';
 import {isArray, isBoolean, isFunction, isString, toNode, toNodes} from './lang';
 
 export function on(...args) {
-
+    // console.log(args);
     let [targets, type, selector, listener, useCapture] = getArgs(args);
-    console.log(useCapture)
+
     targets = toEventTargets(targets);
 
     if (listener.length > 1) {
@@ -18,7 +18,7 @@ export function on(...args) {
     }
 
     if (selector) {
-        listener = delegate(targets, selector, listener);
+        listener = delegate(selector, listener);
     }
 
     useCapture = useCaptureFilter(useCapture);
@@ -72,30 +72,23 @@ export function createEvent(e, bubbles = true, cancelable = false, detail) {
 }
 
 function getArgs(args) {
-    console.log(args)
     if (isFunction(args[2])) {
         args.splice(2, 0, false);
     }
     return args;
 }
 
-function delegate(delegates, selector, listener) {
+function delegate(selector, listener) {
     return e => {
 
-        delegates.forEach(delegate => {
+        const current = selector[0] === '>'
+            ? findAll(selector, e.currentTarget).reverse().filter(element => within(e.target, element))[0]
+            : closest(e.target, selector);
 
-            const current = selector[0] === '>'
-                ? findAll(selector, delegate).reverse().filter(element => within(e.target, element))[0]
-                : closest(e.target, selector);
-
-            if (current) {
-                e.delegate = delegate;
-                e.current = current;
-
-                listener.call(this, e);
-            }
-
-        });
+        if (current) {
+            e.current = current;
+            listener.call(this, e);
+        }
 
     };
 }

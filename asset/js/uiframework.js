@@ -3820,10 +3820,10 @@
             el : '[data-modules-scrollItems]',
             name : "scrollItems"
         },
-        imageViewer : {
-            el : '[data-modules-imageViewer]',
-            name : "imageViewer"
-        }
+        // imageViewer : {
+        //     el : '[data-modules-imageViewer]',
+        //     name : "imageViewer"
+        // }
         
         // overflowText : {
         //     el : '[data-modules-overflowText]',
@@ -4236,20 +4236,27 @@
     activeClass = 'ui-active',
     isApp = core.detect.isApp,
     ui = core.ui,
-    Widget = ui.Widget,
-    Validator = Widget.extend({
-		name : name,
-		init : function(element, config){
-			var _ = this;
-			var options = _.options = $.extend({}, Default, config);
-			Widget.fn.init.call(_, element, options);
-            _.element = $(element);
-            _._bindEvents();
-		},
-		_bindEvents : function(){
-            var _ = this;
-
+    Widget = ui.Widget;
+    // var aa = window.scrollTop();
+    
+    window.addEventListener('load', function () {
+        var start = null;
+        var element = document.getElementById('SomeElementYouWantToAnimate');
+        console.log(element)
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            var progress = timestamp - start;
+            element.style.left = Math.min(progress / 2, 200) + 'px';
+            if (progress < 3000) {
+                window.requestAnimationFrame(step);
+            }
         }
+    
+        window.requestAnimationFrame(step);
+
+
+        
     })
-    ui.plugin(ImageViewer);
+
+
 })(window[LIB_NAME], jQuery);

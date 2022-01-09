@@ -1,21 +1,17 @@
-import {inBrowser} from './detect.js';
-import {removeAttr} from './attr.js';
-import {isDocument, isElement, isString, noop, startsWith, toNode, toNodes} from './lang';
+import {inBrowser} from './env';
+import {closest, index, matches, parent} from './filter';
+import {isDocument, isString, memoize, toNode, toNodes} from './lang';
 
-
-// 셀럭터를 찾아주는 함수?
 export function query(selector, context) {
-    return toNode(selector) || find(selector, getContext(selector, context));
+    return find(selector, getContext(selector, context));
 }
 
-// 셀럭터 전부를 찾아주는 함수?
 export function queryAll(selector, context) {
-    const nodes = toNodes(selector);
-    return nodes.length && nodes || findAll(selector, getContext(selector, context));
+    return findAll(selector, getContext(selector, context));
 }
 
 function getContext(selector, context = document) {
-    return isContextSelector(selector) || isDocument(context)
+    return isString(selector) && isContextSelector(selector) || isDocument(context)
         ? context
         : context.ownerDocument;
 }
@@ -31,18 +27,14 @@ export function findAll(selector, context) {
 function _query(selector, context = document, queryFn) {
 
     if (!selector || !isString(selector)) {
-        return null;
+        return selector;
     }
 
     selector = selector.replace(contextSanitizeRe, '$1 *');
 
-    let removes;
-
     if (isContextSelector(selector)) {
 
-        removes = [];
-
-        selector = splitSelector(selector).map((selector, i) => {
+        selector = splitSelector(selector).map(selector => {
 
             let ctx = context;
 
@@ -67,12 +59,7 @@ function _query(selector, context = document, queryFn) {
                 return null;
             }
 
-            if (!ctx.id) {
-                ctx.id = `uk-${Date.now()}${i}`;
-                removes.push(() => removeAttr(ctx, 'id'));
-            }
-
-            return `#${escape(ctx.id)} ${selector}`;
+            return `${domPath(ctx)} ${selector}`;
 
         }).filter(Boolean).join(',');
 
@@ -88,10 +75,6 @@ function _query(selector, context = document, queryFn) {
 
         return null;
 
-    } finally {
-
-        removes && removes.forEach(remove => remove());
-
     }
 
 }
@@ -99,49 +82,32 @@ function _query(selector, context = document, queryFn) {
 const contextSelectorRe = /(^|[^\\],)\s*[!>+~-]/;
 const contextSanitizeRe = /([!>+~-])(?=\s+[!>+~-]|\s*$)/g;
 
-function isContextSelector(selector) {
-    return isString(selector) && selector.match(contextSelectorRe);
-}
+const isContextSelector = memoize(selector => selector.match(contextSelectorRe));
 
 const selectorRe = /.*?[^\\](?:,|$)/g;
 
-function splitSelector(selector) {
-    return selector.match(selectorRe).map(selector => selector.replace(/,$/, '').trim());
-}
+const splitSelector = memoize(selector =>
+    selector.match(selectorRe).map(selector =>
+        selector.replace(/,$/, '').trim()
+    )
+);
 
-const elProto = inBrowser ? Element.prototype : {};
-const matchesFn = elProto.matches || elProto.webkitMatchesSelector || elProto.msMatchesSelector || noop;
-
-export function matches(element, selector) {
-    return toNodes(element).some(element => matchesFn.call(element, selector));
-}
-
-const closestFn = elProto.closest || function (selector) {
-    let ancestor = this;
-
-    do {
-
-        if (matches(ancestor, selector)) {
-            return ancestor;
+function domPath(element) {
+    const names = [];
+    while (element.parentNode) {
+        if (element.id) {
+            names.unshift(`#${escape(element.id)}`);
+            break;
+        } else {
+            let {tagName} = element;
+            if (tagName !== 'HTML') {
+                tagName += `:nth-child(${index(element) + 1})`;
+            }
+            names.unshift(tagName);
+            element = element.parentNode;
         }
-
-    } while ((ancestor = parent(ancestor)));
-};
-
-export function closest(element, selector) {
-
-    if (startsWith(selector, '>')) {
-        selector = selector.slice(1);
     }
-
-    return isElement(element)
-        ? closestFn.call(element, selector)
-        : toNodes(element).map(element => closest(element, selector)).filter(Boolean);
-}
-
-export function parent(element) {
-    element = toNode(element);
-    return element && isElement(element.parentNode) && element.parentNode;
+    return names.join(' > ');
 }
 
 const escapeFn = inBrowser && window.CSS && CSS.escape || function (css) { return css.replace(/([^\x7f-\uFFFF\w-])/g, match => `\\${match}`); };

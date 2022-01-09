@@ -1,5 +1,5 @@
 import FlexBug from '../mixin/flex-bug';
-import {$, boxModelAdjust, css, endsWith, height, isNumeric, isString, isVisible, offset, query, toFloat} from 'uikit-util';
+import {$, boxModelAdjust, css, endsWith, height, isNumeric, isString, isVisible, offset, query, toFloat} from 'Framework-util';
 
 export default {
 

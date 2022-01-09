@@ -1,4 +1,4 @@
-import {addClass, Dimensions, height, isVisible, width} from 'uikit-util';
+import {addClass, Dimensions, height, isVisible, width} from 'Framework-util';
 
 export default {
 

@@ -1,4 +1,4 @@
-import {css, fastdom, getEventPos, inBrowser, isTouch, on, once, pointerCancel, pointerDown, pointerUp, ready, toMs, trigger} from 'uikit-util';
+import {css, fastdom, getEventPos, inBrowser, isTouch, on, once, pointerCancel, pointerDown, pointerUp, ready, toMs, trigger} from 'Framework-util';
 
 export default function (UIkit) {
 

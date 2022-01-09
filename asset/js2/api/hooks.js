@@ -1,8 +1,8 @@
-import {assign, fastdom, hasOwn, includes, isEqual, isPlainObject} from 'uikit-util';
+import {assign, fastdom, hasOwn, includes, isEqual, isPlainObject} from '../util/index.js';
 
-export default function (UIkit) {
+export default function (Framework) {
 
-    UIkit.prototype._callHook = function (hook) {
+    Framework.prototype._callHook = function (hook) {
 
         const handlers = this.$options[hook];
 
@@ -11,7 +11,7 @@ export default function (UIkit) {
         }
     };
 
-    UIkit.prototype._callConnected = function () {
+    Framework.prototype._callConnected = function () {
 
         if (this._connected) {
             return;
@@ -33,7 +33,7 @@ export default function (UIkit) {
         this._callUpdate();
     };
 
-    UIkit.prototype._callDisconnected = function () {
+    Framework.prototype._callDisconnected = function () {
 
         if (!this._connected) {
             return;
@@ -53,7 +53,7 @@ export default function (UIkit) {
 
     };
 
-    UIkit.prototype._callUpdate = function (e = 'update') {
+    Framework.prototype._callUpdate = function (e = 'update') {
 
         const type = e.type || e;
 
@@ -95,7 +95,7 @@ export default function (UIkit) {
 
     };
 
-    UIkit.prototype._callWatches = function () {
+    Framework.prototype._callWatches = function () {
 
         const {_frames} = this;
 

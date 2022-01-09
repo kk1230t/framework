@@ -1,4 +1,4 @@
-import {$$, css, data, filter, isInView, Promise, toggleClass, trigger} from 'uikit-util';
+import {$$, css, data, filter, isInView, Promise, toggleClass, trigger} from 'Framework-util';
 
 export default {
 
