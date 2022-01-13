@@ -5,8 +5,10 @@
 
 {% extends "./template/layout_rollup.njk" %}
 
+
 {% block content %}
-	<ul fui-accordion="collapsible: false">
+
+	<ul fui-accordion="collapsible: true">
         <li>    
             <a class="uk-accordion-title" href="#">Item 1</a>
             <div class="uk-accordion-content">
@@ -26,4 +28,5 @@
             </div>
         </li>
     </ul>
+
 {% endblock %}

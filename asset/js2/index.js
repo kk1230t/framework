@@ -6,10 +6,7 @@ import * as components from './core/index';
 import { ready, fastdom } from 'Framework-util';;
 
 
-console.log(Core);
-
 // register components
-console.log(components);
 each(components, (component, name) => {
     return Framework.component(name, component)
 });
@@ -21,13 +18,12 @@ boot(Framework);
 // console.log(each);
 console.dir(Framework);
 // console.log(Framework.util);
-fastdom.read(() => {
-    // console.log('fastdom');
-    console.log(document.querySelector('.fui-accordion'));
-});
+// fastdom.read(() => {
+//     console.log('fastdom');
+//     console.log(document.querySelector('.fui-accordion'));
+// });
 ready(() => {
-    console.log('ready');
-    console.log(document.querySelector('.fui-accordion'));
+
 })
 
 

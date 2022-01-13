@@ -39,7 +39,7 @@ export default {
             },
 
             watch(items, prev) {
-
+                console.log(prev)
                 items.forEach(el => hide($(this.content, el), !hasClass(el, this.clsOpen)));
 
                 if (prev || hasClass(items, this.clsOpen)) {

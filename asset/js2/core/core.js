@@ -1,14 +1,14 @@
 import {css, fastdom, getEventPos, inBrowser, isTouch, on, once, pointerCancel, pointerDown, pointerUp, ready, toMs, trigger} from 'Framework-util';
 
-export default function (UIkit) {
+export default function (Framework) {
 
     inBrowser && ready(() => {
 
-        UIkit.update();
-        on(window, 'load resize', () => UIkit.update(null, 'resize'));
-        on(document, 'loadedmetadata load', ({target}) => UIkit.update(target, 'resize'), true);
+        Framework.update();
+        on(window, 'load resize', () => Framework.update(null, 'resize'));
+        on(document, 'loadedmetadata load', ({target}) => Framework.update(target, 'resize'), true);
 
-        // throttle `scroll` event (Safari triggers multiple `scroll` events per frame)
+
         let pending;
         on(window, 'scroll', e => {
 
@@ -18,7 +18,7 @@ export default function (UIkit) {
             pending = true;
             fastdom.write(() => pending = false);
 
-            UIkit.update(null, e.type);
+            Framework.update(null, e.type);
 
         }, {passive: true, capture: true});
 

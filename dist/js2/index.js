@@ -2738,23 +2738,73 @@
   Framework$1.prefix = "".concat(Framework$1.prefixName, "-");
   Framework$1.options = {};
   Framework$1.version = 1.0;
+  /**
+   * @메서드 추가 
+   * @use
+   * @mixin
+   * @extend
+   * @update
+   */
+
   globalAPI(Framework$1);
+  /**
+   * @프로토타입  메서드로 추가 
+   *             비공개 메서드로 추가되는것 같다.
+   * @_callConnected
+   * @_callDisconnected
+   * @_callUpdate
+   * @_callWatches
+   */
+
   hooksAPI(Framework$1);
+  /**
+   * @프로토타입  메서드로 추가 
+   *             상태 관련 프로토타입 메서드
+   * @_init
+   * @_initData
+   * @_initMethods
+   * @_initComputeds
+   * @_initProps
+   * @_initEvents
+   * @_unbindEvents
+   * @_initObserver
+   */
+
   stateAPI(Framework$1);
+  /**
+   * @공개    메서드
+   *          인스턴스 관련 메서드
+   * @$create
+   * @$mount
+   * @$reset
+   * @$destroy
+   * @$emit
+   * @$update
+   */
+
   instanceAPI(Framework$1);
+  /**
+   * @공개    메서드
+   *          컴포넌트 관련 메서드
+   * @component
+   * @getComponents
+   * @getComponent
+   * @connect
+   * @disconnect
+   */
+
   componentAPI(Framework$1);
 
-  function Core (UIkit) {
+  function Core (Framework) {
     inBrowser && ready(function () {
-      UIkit.update();
+      Framework.update();
       on(window, 'load resize', function () {
-        return UIkit.update(null, 'resize');
+        return Framework.update(null, 'resize');
       });
       on(document, 'loadedmetadata load', function (_ref) {
         var target = _ref.target;
-        return UIkit.update(target, 'resize');
-      }, true); // throttle `scroll` event (Safari triggers multiple `scroll` events per frame)
-
+        return Framework.update(target, 'resize');
+      }, true);
       var pending;
       on(window, 'scroll', function (e) {
         if (pending) {
@@ -2765,7 +2815,7 @@
         fastdom.write(function () {
           return pending = false;
         });
-        UIkit.update(null, e.type);
+        Framework.update(null, e.type);
       }, {
         passive: true,
         capture: true
@@ -3099,6 +3149,7 @@
         watch: function watch(items, prev) {
           var _this = this;
 
+          console.log(prev);
           items.forEach(function (el) {
             return hide($(_this.content, el), !hasClass(el, _this.clsOpen));
           });
@@ -3225,9 +3276,6 @@
     Accordion: accordion
   });
 
-  console.log(Core); // register components
-
-  console.log(components);
   each(components, function (component, name) {
     return Framework$1.component(name, component);
   });
@@ -3235,15 +3283,12 @@
   boot(Framework$1); // console.log(each);
 
   console.dir(Framework$1); // console.log(Framework.util);
+  // fastdom.read(() => {
+  //     console.log('fastdom');
+  //     console.log(document.querySelector('.fui-accordion'));
+  // });
 
-  fastdom.read(function () {
-    // console.log('fastdom');
-    console.log(document.querySelector('.fui-accordion'));
-  });
-  ready(function () {
-    console.log('ready');
-    console.log(document.querySelector('.fui-accordion'));
-  });
+  ready(function () {});
 
   return Framework$1;
 
