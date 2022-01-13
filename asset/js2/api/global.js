@@ -5,7 +5,6 @@ export default function (Framework) {
     const DATA = Framework.data;
 
     Framework.use = function (plugin) {
-        
         if (plugin.installed) {
             return;
         }
@@ -41,6 +40,7 @@ export default function (Framework) {
     };
 
     Framework.update = function (element, e) {
+        console.log(parents(element))
         element = element ? toNode(element) : document.body;
         // console.log(element);
         parents(element).reverse().forEach(element => update(element[DATA], e));

@@ -3,18 +3,18 @@ import {css, fastdom, getEventPos, inBrowser, isTouch, on, once, pointerCancel, 
 export default function (Framework) {
 
     inBrowser && ready(() => {
-
         Framework.update();
         on(window, 'load resize', () => Framework.update(null, 'resize'));
-        on(document, 'loadedmetadata load', ({target}) => Framework.update(target, 'resize'), true);
+        // on(document, 'loadedmetadata load', ({target}) => Framework.update(target, 'resize'), true);
 
 
         let pending;
         on(window, 'scroll', e => {
-
+            
             if (pending) {
                 return;
             }
+            
             pending = true;
             fastdom.write(() => pending = false);
 

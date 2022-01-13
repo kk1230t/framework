@@ -1935,6 +1935,7 @@
     };
 
     Framework.update = function (element, e) {
+      console.log(parents(element));
       element = element ? toNode(element) : document.body; // console.log(element);
 
       parents(element).reverse().forEach(function (element) {
@@ -2800,11 +2801,8 @@
       Framework.update();
       on(window, 'load resize', function () {
         return Framework.update(null, 'resize');
-      });
-      on(document, 'loadedmetadata load', function (_ref) {
-        var target = _ref.target;
-        return Framework.update(target, 'resize');
-      }, true);
+      }); // on(document, 'loadedmetadata load', ({target}) => Framework.update(target, 'resize'), true);
+
       var pending;
       on(window, 'scroll', function (e) {
         if (pending) {
@@ -2821,8 +2819,8 @@
         capture: true
       });
       var started = 0;
-      on(document, 'animationstart', function (_ref2) {
-        var target = _ref2.target;
+      on(document, 'animationstart', function (_ref) {
+        var target = _ref.target;
 
         if ((css(target, 'animationName') || '').match(/^uk-.*(left|right)/)) {
           started++;
