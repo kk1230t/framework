@@ -12,4 +12,6 @@ class HashTagAdapter {
     }
 }
 
+
+
 export default HashTagAdapter;
