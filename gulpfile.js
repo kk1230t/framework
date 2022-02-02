@@ -64,6 +64,8 @@ const gulp                      = require('gulp'),
       dist_js_folder                = dist_folder + 'js/',
       src_js2_folder               = src_folder + 'js2/',
       dist_js2_folder               = dist_folder + 'js2/',
+      src_framework_folder               = src_folder + 'js_fw/',
+      dist_framework_folder               = dist_folder + 'js_fw/',
       node_modules_folder       = './node_modules/',
       targetBrowsers = ['> 1%', 'last 2 versions', 'firefox >= 4', 'safari 7', 'safari 8', 'IE 10', 'IE 11'],
 
@@ -190,6 +192,36 @@ gulp.task('js_rollup', () => {
     });
 });
 
+gulp.task('js_ghilchaekim', () => {
+  return rollup
+    .rollup({
+      input: src_framework_folder+'index.js',
+      format: 'umd',
+      plugins: [resolve.nodeResolve(), babel2.babel({
+          exclude: ['node_modules/**'],
+          babelHelpers: 'bundled',
+          presets: ['@babel/preset-env']
+        }),
+        alias({
+          entries: [
+            { find: 'GC-util', replacement: `${src_framework_folder}/util/index.js` },
+          ]
+        })
+      ]
+    })
+    .then(bundle => {
+      setTimeout(() => {
+        gulp.src(src_framework_folder+'index.js').pipe(gulpConnect.reload());
+      }, 0);
+      return bundle.write({
+        file: dist_framework_folder+'GCui.js',
+        format: 'umd',
+        name: 'GCui',
+        sourcemap: true,
+      });
+    });
+});
+
 
 
 
@@ -284,7 +316,7 @@ gulp.task('sprite', function () {
 
 
 
-gulp.task('build', gulp.series('clear', 'sass', 'sprite', 'js', 'js_rollup', 'ejs', 'njk_html'));
+gulp.task('build', gulp.series('clear', 'sass', 'sprite', 'js', 'js_rollup', 'ejs', 'njk_html', 'js_ghilchaekim'));
 
 gulp.task('dev', 
   gulp.parallel(
@@ -343,6 +375,13 @@ gulp.task('watch', () => {
     browserSync.reload();
     gulp.series('js_rollup')(done);
   });
+
+  gulp.watch(src_framework_folder + '**/*.js').on('change', function(done){
+    browserSync.reload();
+    gulp.series('js_ghilchaekim')(done);
+  });
+
+  
 
   gulp.watch(src_folder + 'ejs/**/*.ejs')
   .on('change', function(done){

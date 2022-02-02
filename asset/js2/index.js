@@ -5,27 +5,19 @@ import {each} from './util/lang';
 import * as components from './core/index';
 import { ready, fastdom } from 'Framework-util';;
 
+boot(Framework);
 
 // register components
 each(components, (component, name) => {
+    console.log(name)
     return Framework.component(name, component)
 });
 
 
 Framework.use(Core);
 
-boot(Framework);
-// console.log(each);
-console.dir(Framework);
-// console.log(Framework.util);
-// fastdom.read(() => {
-//     console.log('fastdom');
-//     console.log(document.querySelector('.fui-accordion'));
-// });
-ready(() => {
-
-})
 
 
+// console.dir(Framework);
 
 export default Framework;

@@ -128,8 +128,7 @@ export default {
 
         {
 
-            read({height}, type) {
-
+            read({height, dir}, type) {
                 if (this.isActive && type !== 'update') {
                     this.hide();
                     height = this.$el.offsetHeight;

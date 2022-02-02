@@ -5,7 +5,7 @@ export default function (Framework) {
     let uid = 0;
 
     Framework.prototype._init = function (options) {
-
+        // console.log(options)
         options = options || {};
         options.data = normalizeData(options, this.constructor.options);
 
@@ -22,12 +22,12 @@ export default function (Framework) {
         if (options.el) {
             this.$mount(options.el);
         }
+        
     };
 
     Framework.prototype._initData = function () {
 
         const {data = {}} = this.$options;
-
         for (const key in data) {
             this.$props[key] = this[key] = data[key];
         }
@@ -83,16 +83,17 @@ export default function (Framework) {
 
         const {events} = this.$options;
 
-        console.log(events);
+        // console.log(events);
         if (events) {
 
             events.forEach(event => {
-
                 if (!hasOwn(event, 'handler')) {
+                    
                     for (const key in event) {
                         registerEvent(this, event[key], key);
                     }
                 } else {
+                    // console.log('nnnn')
                     registerEvent(this, event);
                 }
 

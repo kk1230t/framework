@@ -1,4 +1,5 @@
 export {default as Accordion} from './accordion';
+export {default as Abcd} from './abcd';
 // export {default as Alert} from './alert';
 // export {default as Cover} from './cover';
 // export {default as Drop, default as Dropdown} from './drop';
@@ -20,7 +21,7 @@ export {default as Accordion} from './accordion';
 // export {default as Scroll} from './scroll';
 // export {default as Scrollspy} from './scrollspy';
 // export {default as ScrollspyNav} from './scrollspy-nav';
-// export {default as Sticky} from './sticky';
+export {default as Sticky} from './sticky';
 // export {default as Svg} from './svg';
 // export {default as Switcher} from './switcher';
 // export {default as Tab} from './tab';
