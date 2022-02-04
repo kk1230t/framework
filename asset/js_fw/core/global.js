@@ -19,7 +19,7 @@ export default function (UICommon) {
     UICommon.extend = function (opts) {
         const options = opts || {};
         const Super = this;
-        const Sub = function GCuiComponent(options) {
+        const Sub = function G(options) {
             this._init(options)
         }
     

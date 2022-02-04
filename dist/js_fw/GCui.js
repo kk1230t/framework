@@ -2062,7 +2062,7 @@
       var options = opts || {};
       var Super = this;
 
-      var Sub = function GCuiComponent(options) {
+      var Sub = function G(options) {
         this._init(options);
       };
 
@@ -2279,6 +2279,7 @@
       var _this2 = this;
 
       var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'update';
+      console.log('update');
       var type = e.type || e;
 
       if (type === 'update' || type === 'resize') {
@@ -2626,7 +2627,7 @@
       abcd: String
     },
     data: {
-      target: "~.".concat(cssPrefix, "switcher"),
+      target: ".".concat(cssPrefix, "button"),
       activeClass: '1122221'
     },
     computed: {
@@ -2638,6 +2639,9 @@
           this.test();
         },
         immediate: true
+      },
+      length: function length() {
+        return document.querySelectorAll(this.target).length;
       }
     },
     events: [{

@@ -173,6 +173,7 @@ export default function (UICommon) {
     }
     
     UICommon.prototype._callUpdate = function (e = 'update') {
+        console.log('update')
         const type = e.type || e;
     
         if (type === 'update' || type === 'resize') {

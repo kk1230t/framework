@@ -1,4 +1,4 @@
-import {addClass, Dimensions, height, isVisible, width} from '../../util/index';
+import {$, addClass, Dimensions, height, isVisible, width} from '../../util/index';
 import {cssPrefix} from 'GC-data'
 export default {
 
@@ -7,7 +7,7 @@ export default {
     },
 
     data: {
-        target: `~.${cssPrefix}switcher`,
+        target: `.${cssPrefix}button`,
         activeClass: '1122221'
     },
 
@@ -21,6 +21,9 @@ export default {
             },
             immediate: true
             
+        },
+        length() {
+            return document.querySelectorAll(this.target).length
         }
     },
 
