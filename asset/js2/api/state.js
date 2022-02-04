@@ -182,9 +182,9 @@ export default function (Framework) {
             enumerable: true,
 
             get() {
-
+                
                 const {_computeds, $props, $el} = component;
-
+                console.log('dsdfsdf')
                 if (!hasOwn(_computeds, key)) {
                     _computeds[key] = (cb.get || cb).call(component, $props, $el);
                 }

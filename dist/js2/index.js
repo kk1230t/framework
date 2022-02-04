@@ -2087,6 +2087,7 @@
       }
 
       var initital = !hasOwn(_frames, '_watch');
+      console.log(this._computeds);
       _frames._watch = fastdom.read(function () {
         if (!_this3._connected) {
           return;
@@ -2441,6 +2442,7 @@
           var _computeds = component._computeds,
               $props = component.$props,
               $el = component.$el;
+          console.log('dsdfsdf');
 
           if (!hasOwn(_computeds, key)) {
             _computeds[key] = (cb.get || cb).call(component, $props, $el);
@@ -3115,122 +3117,6 @@
     };
   }
 
-  var accordion = {
-    mixins: [Class, Togglable],
-    props: {
-      targets: String,
-      active: null,
-      collapsible: Boolean,
-      multiple: Boolean,
-      toggle: String,
-      content: String,
-      transition: String,
-      offset: Number
-    },
-    data: {
-      targets: '> *',
-      active: false,
-      animation: [true],
-      collapsible: true,
-      multiple: false,
-      clsOpen: 'uk-open',
-      toggle: '> .uk-accordion-title',
-      content: '> .uk-accordion-content',
-      transition: 'ease',
-      offset: 0
-    },
-    computed: {
-      items: {
-        get: function get(_ref, $el) {
-          var targets = _ref.targets;
-          return $$(targets, $el);
-        },
-        watch: function watch(items, prev) {
-          var _this = this;
-
-          console.log(prev);
-          items.forEach(function (el) {
-            return hide$1($(_this.content, el), !hasClass(el, _this.clsOpen));
-          });
-
-          if (prev || hasClass(items, this.clsOpen)) {
-            return;
-          }
-
-          var active = this.active !== false && items[Number(this.active)] || !this.collapsible && items[0];
-
-          if (active) {
-            this.toggle(active, false);
-          }
-        },
-        immediate: true
-      }
-    },
-    events: [{
-      name: 'click',
-      delegate: function delegate() {
-        return "".concat(this.targets, " ").concat(this.$props.toggle);
-      },
-      handler: function handler(e) {
-        e.preventDefault();
-        this.toggle(index($$("".concat(this.targets, " ").concat(this.$props.toggle), this.$el), e.current));
-      }
-    }],
-    methods: {
-      toggle: function toggle(item, animate) {
-        var _this2 = this;
-
-        var items = [this.items[getIndex(item, this.items)]];
-        var activeItems = filter(this.items, ".".concat(this.clsOpen));
-
-        if (!this.multiple && !includes(activeItems, items[0])) {
-          items = items.concat(activeItems);
-        }
-
-        if (!this.collapsible && activeItems.length < 2 && !filter(items, ":not(.".concat(this.clsOpen, ")")).length) {
-          return;
-        }
-
-        items.forEach(function (el) {
-          return _this2.toggleElement(el, !hasClass(el, _this2.clsOpen), function (el, show) {
-            toggleClass(el, _this2.clsOpen, show);
-            var content = $("".concat(el._wrapper ? '> * ' : '').concat(_this2.content), el);
-
-            if (animate === false || !_this2.hasTransition) {
-              hide$1(content, !show);
-              return;
-            }
-
-            if (!el._wrapper) {
-              el._wrapper = wrapAll(content, "<div".concat(show ? ' hidden' : '', ">"));
-            }
-
-            hide$1(content, false);
-            return toggleHeight(_this2)(el._wrapper, show).then(function () {
-              hide$1(content, !show);
-              delete el._wrapper;
-              unwrap(content);
-
-              if (show) {
-                var toggle = $(_this2.$props.toggle, el);
-
-                if (!isInView(toggle)) {
-                  scrollIntoView(toggle, {
-                    offset: _this2.offset
-                  });
-                }
-              }
-            });
-          });
-        });
-      }
-    }
-  };
-
-  function hide$1(el, hide) {
-    attr(el, 'hidden', hide ? '' : null);
-  }
-
   var abcd = {
     mixins: [Class, Togglable],
     props: {
@@ -3264,7 +3150,7 @@
         watch: function watch(items, prev) {
           var _this = this;
 
-          console.log(prev);
+          // console.log(prev)
           items.forEach(function (el) {
             return hide($(_this.content, el), !hasClass(el, _this.clsOpen));
           });
@@ -3303,13 +3189,11 @@
     } */
     ],
     methods: {
-      test: function test(target) {
-        console.log(target);
+      test: function test(target) {// console.log(target);            
       }
     },
     update: {
-      write: function write() {
-        console.log('resize');
+      write: function write() {// console.log('resize')
       },
       events: ['checkStatus']
     }
@@ -3319,302 +3203,29 @@
     attr(el, 'hidden', hide ? '' : null);
   }
 
-  var Media = {
-    props: {
-      media: Boolean
-    },
-    data: {
-      media: false
-    },
-    computed: {
-      matchMedia: function matchMedia() {
-        var media = toMedia(this.media);
-        return !media || window.matchMedia(media).matches;
-      }
-    }
-  };
-
-  function toMedia(value) {
-    if (isString(value)) {
-      if (value[0] === '@') {
-        var name = "breakpoint-".concat(value.substr(1));
-        value = toFloat(getCssVar(name));
-      } else if (isNaN(value)) {
-        return value;
-      }
-    }
-
-    return value && !isNaN(value) ? "(min-width: ".concat(value, "px)") : false;
-  }
-
-  var sticky = {
-    mixins: [Class, Media],
-    props: {
-      top: null,
-      bottom: Boolean,
-      offset: String,
-      animation: String,
-      clsActive: String,
-      clsInactive: String,
-      clsFixed: String,
-      clsBelow: String,
-      selTarget: String,
-      widthElement: Boolean,
-      showOnUp: Boolean,
-      targetOffset: Number
-    },
-    data: {
-      top: 0,
-      bottom: false,
-      offset: 0,
-      animation: '',
-      clsActive: 'uk-active',
-      clsInactive: '',
-      clsFixed: 'uk-sticky-fixed',
-      clsBelow: 'uk-sticky-below',
-      selTarget: '',
-      widthElement: false,
-      showOnUp: false,
-      targetOffset: false
-    },
-    computed: {
-      offset: function offset(_ref) {
-        var _offset = _ref.offset;
-        return toPx(_offset);
-      },
-      selTarget: function selTarget(_ref2, $el) {
-        var _selTarget = _ref2.selTarget;
-        return _selTarget && $(_selTarget, $el) || $el;
-      },
-      widthElement: function widthElement(_ref3, $el) {
-        var _widthElement = _ref3.widthElement;
-        return query(_widthElement, $el) || this.placeholder;
-      },
-      isActive: {
-        get: function get() {
-          return hasClass(this.selTarget, this.clsActive);
-        },
-        set: function set(value) {
-          if (value && !this.isActive) {
-            replaceClass(this.selTarget, this.clsInactive, this.clsActive);
-            trigger(this.$el, 'active');
-          } else if (!value && !hasClass(this.selTarget, this.clsInactive)) {
-            replaceClass(this.selTarget, this.clsActive, this.clsInactive);
-            trigger(this.$el, 'inactive');
-          }
-        }
-      }
-    },
-    connected: function connected() {
-      this.placeholder = $('+ .uk-sticky-placeholder', this.$el) || $('<div class="uk-sticky-placeholder"></div>');
-      this.isFixed = false;
-      this.isActive = false;
-    },
-    disconnected: function disconnected() {
-      if (this.isFixed) {
-        this.hide();
-        removeClass(this.selTarget, this.clsInactive);
-      }
-
-      remove$1(this.placeholder);
-      this.placeholder = null;
-      this.widthElement = null;
-    },
-    events: [{
-      name: 'load hashchange popstate',
-      el: inBrowser && window,
-      handler: function handler() {
-        var _this = this;
-
-        if (!(this.targetOffset !== false && location.hash && window.pageYOffset > 0)) {
-          return;
-        }
-
-        var target = $(location.hash);
-
-        if (target) {
-          fastdom.read(function () {
-            var _offset2 = offset(target),
-                top = _offset2.top;
-
-            var elTop = offset(_this.$el).top;
-            var elHeight = _this.$el.offsetHeight;
-
-            if (_this.isFixed && elTop + elHeight >= top && elTop <= top + target.offsetHeight) {
-              scrollTop(window, top - elHeight - (isNumeric$1(_this.targetOffset) ? _this.targetOffset : 0) - _this.offset);
-            }
-          });
-        }
-      }
-    }],
-    update: [{
-      read: function read(_ref4, type) {
-        var height = _ref4.height;
-            _ref4.dir;
-
-        if (this.isActive && type !== 'update') {
-          this.hide();
-          height = this.$el.offsetHeight;
-          this.show();
-        }
-
-        height = !this.isActive ? this.$el.offsetHeight : height;
-        this.topOffset = offset(this.isFixed ? this.placeholder : this.$el).top;
-        this.bottomOffset = this.topOffset + height;
-        var bottom = parseProp('bottom', this);
-        this.top = Math.max(toFloat(parseProp('top', this)), this.topOffset) - this.offset;
-        this.bottom = bottom && bottom - this.$el.offsetHeight;
-        this.inactive = !this.matchMedia;
-        return {
-          lastScroll: false,
-          height: height,
-          margins: css(this.$el, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])
-        };
-      },
-      write: function write(_ref5) {
-        var height = _ref5.height,
-            margins = _ref5.margins;
-        var placeholder = this.placeholder;
-        css(placeholder, assign({
-          height: height
-        }, margins));
-
-        if (!within(placeholder, document)) {
-          after(this.$el, placeholder);
-          attr(placeholder, 'hidden', '');
-        }
-
-        this.isActive = !!this.isActive; // force self-assign
-      },
-      events: ['resize']
-    }, {
-      read: function read(_ref6) {
-        var _ref6$scroll = _ref6.scroll,
-            scroll = _ref6$scroll === void 0 ? 0 : _ref6$scroll;
-        this.width = offset(isVisible(this.widthElement) ? this.widthElement : this.$el).width;
-        this.scroll = window.pageYOffset;
-        return {
-          dir: scroll <= this.scroll ? 'down' : 'up',
-          scroll: this.scroll,
-          visible: isVisible(this.$el),
-          top: offsetPosition(this.placeholder)[0]
-        };
-      },
-      write: function write(data, type) {
-        var _this2 = this;
-
-        var _data$initTimestamp = data.initTimestamp,
-            initTimestamp = _data$initTimestamp === void 0 ? 0 : _data$initTimestamp,
-            dir = data.dir,
-            lastDir = data.lastDir,
-            lastScroll = data.lastScroll,
-            scroll = data.scroll,
-            top = data.top,
-            visible = data.visible;
-        var now = performance.now();
-        data.lastScroll = scroll;
-
-        if (scroll < 0 || scroll === lastScroll || !visible || this.disabled || this.showOnUp && type !== 'scroll') {
-          return;
-        }
-
-        if (now - initTimestamp > 300 || dir !== lastDir) {
-          data.initScroll = scroll;
-          data.initTimestamp = now;
-        }
-
-        data.lastDir = dir;
-
-        if (this.showOnUp && !this.isFixed && Math.abs(data.initScroll - scroll) <= 30 && Math.abs(lastScroll - scroll) <= 10) {
-          return;
-        }
-
-        if (this.inactive || scroll < this.top || this.showOnUp && (scroll <= this.top || dir === 'down' || dir === 'up' && !this.isFixed && scroll <= this.bottomOffset)) {
-          if (!this.isFixed) {
-            if (Animation.inProgress(this.$el) && top > scroll) {
-              Animation.cancel(this.$el);
-              this.hide();
-            }
-
-            return;
-          }
-
-          this.isFixed = false;
-
-          if (this.animation && scroll > this.topOffset) {
-            Animation.cancel(this.$el);
-            Animation.out(this.$el, this.animation).then(function () {
-              return _this2.hide();
-            }, noop);
-          } else {
-            this.hide();
-          }
-        } else if (this.isFixed) {
-          this.update();
-        } else if (this.animation) {
-          Animation.cancel(this.$el);
-          this.show();
-          Animation["in"](this.$el, this.animation)["catch"](noop);
-        } else {
-          this.show();
-        }
-      },
-      events: ['resize', 'scroll']
-    }],
-    methods: {
-      show: function show() {
-        this.isFixed = true;
-        this.update();
-        attr(this.placeholder, 'hidden', null);
-      },
-      hide: function hide() {
-        this.isActive = false;
-        removeClass(this.$el, this.clsFixed, this.clsBelow);
-        css(this.$el, {
-          position: '',
-          top: '',
-          width: ''
-        });
-        attr(this.placeholder, 'hidden', '');
-      },
-      update: function update() {
-        var active = this.top !== 0 || this.scroll > this.top;
-        var top = Math.max(0, this.offset);
-
-        if (isNumeric$1(this.bottom) && this.scroll > this.bottom - this.offset) {
-          top = this.bottom - this.scroll;
-        }
-
-        css(this.$el, {
-          position: 'fixed',
-          top: "".concat(top, "px"),
-          width: this.width
-        });
-        this.isActive = active;
-        toggleClass(this.$el, this.clsBelow, this.scroll > this.bottomOffset);
-        addClass(this.$el, this.clsFixed);
-      }
-    }
-  };
-
-  function parseProp(prop, _ref7) {
-    var $props = _ref7.$props,
-        $el = _ref7.$el,
-        propOffset = _ref7["".concat(prop, "Offset")];
-
-    var value = $props[prop];
-
-    if (!value) {
-      return;
-    }
-
-    if (isString(value) && value.match(/^-?\d/)) {
-      return propOffset + toPx(value);
-    } else {
-      return offset(value === true ? $el.parentNode : query(value, $el)).bottom;
-    }
-  }
-
+  // export {default as Accordion} from './accordion';
+  // export {default as Cover} from './cover';
+  // export {default as Drop, default as Dropdown} from './drop';
+  // export {default as FormCustom} from './form-custom';
+  // export {default as Gif} from './gif';
+  // export {default as Grid} from './grid';
+  // export {default as HeightMatch} from './height-match';
+  // export {default as HeightViewport} from './height-viewport';
+  // export {default as Icon} from './icon';
+  // export {default as Img} from './img';
+  // export {default as Leader} from './leader';
+  // export {default as Margin} from './margin';
+  // export {default as Modal} from './modal';
+  // export {default as Nav} from './nav';
+  // export {default as Navbar} from './navbar';
+  // export {default as Offcanvas} from './offcanvas';
+  // export {default as OverflowAuto} from './overflow-auto';
+  // export {default as Responsive} from './responsive';
+  // export {default as Scroll} from './scroll';
+  // export {default as Scrollspy} from './scrollspy';
+  // export {default as ScrollspyNav} from './scrollspy-nav';
+  // export {default as Sticky} from './sticky';
+  // export {default as Svg} from './svg';
   // export {default as Switcher} from './switcher';
   // export {default as Tab} from './tab';
   // export {default as Toggle} from './toggle';
@@ -3634,9 +3245,7 @@
 
   var components = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    Accordion: accordion,
-    Abcd: abcd,
-    Sticky: sticky
+    Abcd: abcd
   });
 
   boot(Framework$1); // register components

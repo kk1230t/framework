@@ -1,8 +1,8 @@
 import {apply, fastdom, hasAttr} from '../util/index';
 import {getComponentName} from './component';
 
-export default function (GCui) {
-    const {connect, disconnect} = GCui;
+export default function (UICommon) {
+    const {connect, disconnect} = UICommon;
     if (!window.MutationObserver) {
         console.log('not support MutationObserver')
         return;
@@ -19,7 +19,7 @@ export default function (GCui) {
                 applyMutation(mutation, updates);
             });
             updates.forEach(el => {
-                GCui.update(el);
+                UICommon.update(el);
             });
         })).observe(document, {
             childList: true,
@@ -28,7 +28,7 @@ export default function (GCui) {
             attributes: true
         });
     
-        GCui._initialized = true;
+        UICommon._initialized = true;
     });
 
 
@@ -57,17 +57,17 @@ export default function (GCui) {
     
         
     
-        if (!name || !(name in Framework)) {
+        if (!name || !(name in UICommon)) {
             return;
         }
     
         if (hasAttr(target, attributeName)) {
             
-            Framework[name](target);
+            UICommon[name](target);
             return true;
         }
-    
-        const component = Framework.getComponent(target, name);
+        console.log('apply')
+        const component = UICommon.getComponent(target, name);
     
         if (component) {
             component.$destroy();
@@ -85,7 +85,7 @@ export default function (GCui) {
         for (let i = 0; i < removedNodes.length; i++) {
             apply(removedNodes[i], disconnect);
         }
-    
+        console.log('apply2')
         return true;
     }
 }

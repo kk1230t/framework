@@ -1,4 +1,5 @@
 import {
+    camelize,
     fastdom,
     isPlainObject,
     isString,
@@ -7,12 +8,20 @@ import {
     includes,
     hasOwn,
     on,
-    assign
+    assign,
+    parseOptions,
+    isUndefined,
+    hyphenate,
+    startsWith,
+    toBoolean,
+    toNumber,
+    isEqual,
+    data as getData
 } from '../util/index';
 
 export default function (UICommon) {
     let uid = 0;
-
+    const prefix = UICommon.prefix;
     UICommon.prototype._init = function(opts) {
         const options = opts || {};
         options.data = normalizeData(options, this.constructor.options);
@@ -21,7 +30,7 @@ export default function (UICommon) {
         this.$el = null;
         this.$props = {};
         this._uid = uid++;
-        // console.log(this.options)
+        console.log(prefix);
         this._initData();
         this._initMethods();
         this._initComputeds();
@@ -37,7 +46,7 @@ export default function (UICommon) {
         const {data = {}} = this.$options;
         
         for (const key in data) {
-            _.$props[key] = data[key];
+            _.$props[key] = _[key] = data[key];
         }
     }
     
@@ -56,7 +65,6 @@ export default function (UICommon) {
     
         const _ = this;
         const {computed} = this.$options;
-    
         _._computeds = {};
     
         if (computed) {
@@ -66,6 +74,28 @@ export default function (UICommon) {
         }
     };
     
+    UICommon.prototype._initProps = function (props) {
+
+        let key;
+        
+        props = props || getProps(this.$options, this.$name);
+        console.log(props)
+        for (key in props) {
+            if (!isUndefined(props[key])) {
+                this.$props[key] = props[key];
+            }
+        }
+
+        const exclude = [this.$options.computed, this.$options.methods];
+        for (key in this.$props) {
+            
+            if (key in props && notIn(exclude, key)) {
+                    
+                this[key] = this.$props[key];
+            }
+        }
+    };
+
     UICommon.prototype._initEvents = function () {
         this._events = [];
         const _ = this;
@@ -83,6 +113,24 @@ export default function (UICommon) {
         }
     }
 
+    UICommon.prototype._unbindEvents = function () {
+        this._events.forEach(unbind => unbind());
+        delete this._events;
+    };
+
+    UICommon.prototype._initObservers = function () {
+        this._observers = [
+            initChildListObserver(this),
+            initPropsObserver(this)
+        ];
+    };
+
+    UICommon.prototype._disconnectObservers = function () {
+        this._observers.forEach(observer =>
+            observer && observer.disconnect()
+        );
+    };
+
     UICommon.prototype._callHook = function (hook) {
         const handlers = this.$options[hook];
         if (handlers) handlers.forEach(handlers => handlers.call(this));
@@ -95,20 +143,21 @@ export default function (UICommon) {
         this._computeds = {};
         this._frames = {reads: {}, writes: {}};
     
-        // this._initProps();
+        this._initProps();
     
         this._callHook('beforeConnect');
         this._connected = true;
     
         this._initEvents();
-        // this._initObserver();
+        if (window.MutationObserver) this._initObservers();
+        
     
         this._callHook('connected');
         this._callUpdate();
     }
     
     UICommon.prototype._callDisconnected = function () {
-        if (!this_connected) return;
+        if (!this._connected) return;
     
         this._callHook('beforeDisconnect');
     
@@ -126,7 +175,7 @@ export default function (UICommon) {
     UICommon.prototype._callUpdate = function (e = 'update') {
         const type = e.type || e;
     
-        if (includes(['update', 'resize'], type)) {
+        if (type === 'update' || type === 'resize') {
             this._callWatches();
         }
     
@@ -159,29 +208,29 @@ export default function (UICommon) {
     UICommon.prototype._callWatches = function () {
     
         const {_frames} = this;
-    
         if (_frames._watch) {
             return;
         }
-    
+
+        
+        
         const initital = !hasOwn(_frames, '_watch');
-    
         _frames._watch = fastdom.read(() => {
-    
+            
             if (!this._connected) {
                 return;
             }
+            
     
             const {$options: {computed}, _computeds} = this;
-    
             for (const key in computed) {
-    
+                // console.log(key)
                 const hasPrev = hasOwn(_computeds, key);
                 const prev = _computeds[key];
-    
                 delete _computeds[key];
-    
+
                 const {watch, immediate} = computed[key];
+                
                 if (watch && (
                     initital && immediate
                     || hasPrev && !isEqual(prev, this[key])
@@ -198,7 +247,75 @@ export default function (UICommon) {
     };
 }
 
+function getProps(opts, name) {
 
+    const data = {};
+    const {args = [], props = {}, el} = opts;
+
+    if (!props) {
+        return data;
+    }
+    
+    for (const key in props) {
+        
+        const prop = hyphenate(key);
+        let value = getData(el, prop);
+        if (isUndefined(value)) {
+            continue;
+        }
+
+        value = props[key] === Boolean && value === ''
+            ? true
+            : coerce(props[key], value);
+
+        if (prop === 'target' && (!value || startsWith(value, '_'))) {
+            continue;
+        }
+
+        data[key] = value;
+    }
+
+    
+
+    const options = parseOptions(getData(el, name), args);
+
+    for (const key in options) {
+        const prop = camelize(key);
+        if (props[prop] !== undefined) {
+            data[prop] = coerce(props[prop], options[key]);
+        }
+    }
+
+    return data;
+}
+
+function notIn(options, key) {
+    return options.every(arr => !arr || !hasOwn(arr, key));
+}
+
+
+function coerce(type, value) {
+
+    if (type === Boolean) {
+        return toBoolean(value);
+    } else if (type === Number) {
+        return toNumber(value);
+    } else if (type === 'list') {
+        return toList(value);
+    }
+
+    return type ? type(value) : value;
+}
+
+function toList(value) {
+    return isArray(value)
+        ? value
+        : isString(value)
+            ? value.split(/,(?![^(]*\))/).map(value => isNumeric(value)
+                ? toNumber(value)
+                : toBoolean(value.trim()))
+            : [value];
+}
 
 function registerEvent(component, event, key) {
     if (!isPlainObject(event)) {
@@ -250,31 +367,75 @@ function normalizeData({data, el}, {args, props = {}}) {
 }
 
 function registerComputed(component, key, cb) {
+    
     Object.defineProperty(component, key, {
 
         enumerable: true,
 
         get() {
-
+            
             const {_computeds, $props, $el} = component;
 
             if (!hasOwn(_computeds, key)) {
                 _computeds[key] = (cb.get || cb).call(component, $props, $el);
             }
-
             return _computeds[key];
         },
 
         set(value) {
-
+            
             const {_computeds} = component;
 
             _computeds[key] = cb.set ? cb.set.call(component, value) : value;
-
             if (isUndefined(_computeds[key])) {
                 delete _computeds[key];
             }
         }
 
     });
+}
+
+function initChildListObserver(component) {
+    const {el} = component.$options;
+
+    const observer = new MutationObserver(() => component.$emit());
+    observer.observe(el, {
+        childList: true,
+        subtree: true
+    });
+
+    return observer;
+}
+
+function initPropsObserver(component) {
+
+    const {$name, $options, $props} = component;
+    const {attrs, props, el} = $options;
+
+    if (!props || attrs === false) {
+        return;
+    }
+    
+    const attributes = isArray(attrs) ? attrs : Object.keys(props);
+    const filter = attributes.map(key => hyphenate(key)).concat($name);
+    
+    const observer = new MutationObserver(records => {
+        console.log(records)
+        const data = getProps($options, $name);
+        if (records.some(({attributeName}) => {
+            const prop = attributeName.replace('data-', '');
+            return (prop === $name ? attributes : [camelize(prop), camelize(attributeName)]).some(prop =>
+                !isUndefined(data[prop]) && data[prop] !== $props[prop]
+            );
+        })) {
+            component.$reset();
+        }
+    });
+    
+    observer.observe(el, {
+        attributes: true,
+        attributeFilter: filter.concat(filter.map(key => `data-${key}`))
+    });
+
+    return observer;
 }

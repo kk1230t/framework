@@ -61,6 +61,7 @@ export default function (Framework) {
             this._callWatches();
         }
 
+
         const updates = this.$options.update;
         const {reads, writes} = this._frames;
 
@@ -104,7 +105,7 @@ export default function (Framework) {
         }
 
         const initital = !hasOwn(_frames, '_watch');
-
+        console.log(this._computeds)
         _frames._watch = fastdom.read(() => {
 
             if (!this._connected) {

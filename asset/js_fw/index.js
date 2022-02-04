@@ -5,23 +5,23 @@ import {
     on,
     ready,
 } from './util/index';
-
+import {jsPrefix} from 'GC-data'
 import globalApi from './core/global';
 import initializeApi from './core/initialize';
 import instanceApi from './core/instance';
 import * as components from './components/index';
+import * as util from './util/index';
 import componentCore from './core/component';
 import setFramewrok from './core/start';
-
 
 
 const GCui = function (options) {
     this._init(options);
 };
-// GCui.util = util;
+GCui.util = util;
 GCui.data = 'uiComponents';
-GCui.prefixName = 'kui';
-GCui.prefix = `${GCui.prefixName}-`;
+GCui.prefixName = jsPrefix;
+GCui.prefix = `${jsPrefix}-`;
 GCui.options = {};
 GCui.version = 1.0;
 

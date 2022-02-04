@@ -1,15 +1,27 @@
+import {addClass, Dimensions, height, isVisible, width} from '../../util/index';
+import {cssPrefix} from 'GC-data'
 export default {
 
-    props: { },
+    props: {
+        abcd:String
+    },
 
     data: {
-        aaa: 'aaa',
-        bbb: 'bbb',
-        ccc: 'ccc'
+        target: `~.${cssPrefix}switcher`,
+        activeClass: '1122221'
     },
 
     computed: {
-
+        testaa: {
+            get() {
+                return 'aaa';
+            },
+            watch() {
+                this.test();
+            },
+            immediate: true
+            
+        }
     },
 
     events: [
@@ -19,8 +31,9 @@ export default {
 
             handler(e) {
                 e.preventDefault();
-                this.$emit('checkStatus');
-                console.log('dfsdfsdf')
+                // this.$emit('checkStatus');
+                console.log(this);
+                console.log(this.test)
                 
             }
         },
@@ -41,7 +54,8 @@ export default {
 
     methods: {
         test() {
-            alert('dddddd')
+            // alert('dddddd')
+            console.log('watch')
         }
     },
     update: {
@@ -59,7 +73,7 @@ export default {
         },
         write({test}) {
 
-            console.log('resizeWrite')
+            // console.log('resizeWrite')
             // console.log(test)
 
         },

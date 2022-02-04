@@ -39,7 +39,7 @@ export default {
             },
 
             watch(items, prev) {
-                console.log(prev)
+                // console.log(prev)
                 items.forEach(el => hide($(this.content, el), !hasClass(el, this.clsOpen)));
 
                 if (prev || hasClass(items, this.clsOpen)) {
@@ -97,7 +97,7 @@ export default {
     methods: {
 
         test(target) {
-            console.log(target);            
+            // console.log(target);            
         }
 
     },
@@ -106,7 +106,7 @@ export default {
 
         write() {
 
-            console.log('resize')
+            // console.log('resize')
 
         },
 

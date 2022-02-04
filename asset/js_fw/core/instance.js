@@ -23,6 +23,7 @@ export default function (UICommon) {
         }
     }
     UICommon.prototype.$reset = function () {
+        console.log('reset')
         this._callDisconnected();
         this._callConnected();
     }

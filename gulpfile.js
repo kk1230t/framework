@@ -205,6 +205,7 @@ gulp.task('js_ghilchaekim', () => {
         alias({
           entries: [
             { find: 'GC-util', replacement: `${src_framework_folder}/util/index.js` },
+            { find: 'GC-data', replacement: `${src_framework_folder}/data.js` },
           ]
         })
       ]
