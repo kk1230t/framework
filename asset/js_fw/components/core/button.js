@@ -1,14 +1,15 @@
-import {$, addClass, Dimensions, height, isVisible, width} from '../../util/index';
+import {$, addClass, removeClass, Dimensions, height, isVisible, width, toNodes} from '../../util/index';
 import {cssPrefix} from 'GC-data'
 export default {
 
     props: {
-        abcd:String
+        multiple:String
     },
 
     data: {
         target: `.${cssPrefix}button`,
-        activeClass: '1122221'
+        activeClass: `${cssPrefix}active`,
+        multiple:false
     },
 
     computed: {
@@ -17,41 +18,26 @@ export default {
                 return 'aaa';
             },
             watch() {
-                this.test();
+                // this.test();
             },
             immediate: true
             
         },
-        length() {
-            return document.querySelectorAll(this.target).length
+        targets() {
+            return this.$el.querySelectorAll(this.target);
         }
     },
 
     events: [
         {
-
             name: 'click',
-
+            delegate() {
+                return this.target;
+            },
             handler(e) {
                 e.preventDefault();
-                // this.$emit('checkStatus');
-                console.log(this);
-                console.log(this.test)
-                
+                this.toggleElement(e.current);
             }
-        },
-        {
-
-            name: 'scroll',
-
-            el: window,
-
-            handler() {
-
-                // this.$emit('resize');
-
-            }
-
         }
     ],
 
@@ -59,8 +45,21 @@ export default {
         test() {
             // alert('dddddd')
             console.log('watch')
+        },
+        toggleElement(target) {
+            // alert('dddddd')
+            // console.log(toNodes(this.l11ength));
+            toNodes(this.targets).map(el => {
+                if(el === target){
+                    addClass(el, this.activeClass);
+                    console.log()
+                }else{
+                    removeClass(el, this.activeClass)
+                }
+            })
         }
     },
+
     update: {
 
         read({test, aaaa}) {
