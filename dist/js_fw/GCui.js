@@ -2624,44 +2624,54 @@
 
   var button = {
     props: {
-      abcd: String
+      multiple: String
     },
     data: {
       target: ".".concat(cssPrefix, "button"),
-      activeClass: '1122221'
+      activeClass: "".concat(cssPrefix, "active"),
+      multiple: false
     },
     computed: {
       testaa: {
         get: function get() {
           return 'aaa';
         },
-        watch: function watch() {
-          this.test();
+        watch: function watch() {// this.test();
         },
         immediate: true
       },
-      length: function length() {
-        return document.querySelectorAll(this.target).length;
+      targets: function targets() {
+        return this.$el.querySelectorAll(this.target);
       }
     },
     events: [{
       name: 'click',
+      delegate: function delegate() {
+        return this.target;
+      },
       handler: function handler(e) {
-        e.preventDefault(); // this.$emit('checkStatus');
-
-        console.log(this);
-        console.log(this.test);
-      }
-    }, {
-      name: 'scroll',
-      el: window,
-      handler: function handler() {// this.$emit('resize');
+        e.preventDefault();
+        this.toggleElement(e.current);
       }
     }],
     methods: {
       test: function test() {
         // alert('dddddd')
         console.log('watch');
+      },
+      toggleElement: function toggleElement(target) {
+        var _this = this;
+
+        // alert('dddddd')
+        // console.log(toNodes(this.l11ength));
+        toNodes(this.targets).map(function (el) {
+          if (el === target) {
+            addClass(el, _this.activeClass);
+            console.log();
+          } else {
+            removeClass(el, _this.activeClass);
+          }
+        });
       }
     },
     update: {
