@@ -1,30 +1,20 @@
-import {$, addClass, removeClass, Dimensions, height, isVisible, width, toNodes} from '../../util/index';
+import {$, addClass, removeClass, toggleClass, hasClass, Dimensions, height, isVisible, width, toNodes, findAll} from '../../util/index';
 import {cssPrefix} from 'GC-data'
 export default {
 
     props: {
-        multiple:String
+        multiple:Boolean
     },
 
     data: {
-        target: `.${cssPrefix}button`,
+        toggle: `.${cssPrefix}button`,
         activeClass: `${cssPrefix}active`,
         multiple:false
     },
 
     computed: {
-        testaa: {
-            get() {
-                return 'aaa';
-            },
-            watch() {
-                // this.test();
-            },
-            immediate: true
-            
-        },
         targets() {
-            return this.$el.querySelectorAll(this.target);
+            return findAll(this.toggle, this.$el);
         }
     },
 
@@ -32,7 +22,7 @@ export default {
         {
             name: 'click',
             delegate() {
-                return this.target;
+                return this.toggle;
             },
             handler(e) {
                 e.preventDefault();
@@ -42,46 +32,17 @@ export default {
     ],
 
     methods: {
-        test() {
-            // alert('dddddd')
-            console.log('watch')
-        },
         toggleElement(target) {
-            // alert('dddddd')
-            // console.log(toNodes(this.l11ength));
-            toNodes(this.targets).map(el => {
-                if(el === target){
-                    addClass(el, this.activeClass);
-                    console.log()
-                }else{
-                    removeClass(el, this.activeClass)
-                }
-            })
-        }
-    },
-
-    update: {
-
-        read({test, aaaa}) {
-
-            // console.log('resizeRead')
-            // console.log(aaaa)
-            // console.log(test)
-            return {
-                test: 'dddd',
-                aaaa: 'dffadfsf'
+            // console.log(this.targets)
+            if(this.multiple) {
+                hasClass(target, this.activeClass) ? 
+                    removeClass(target, this.activeClass) 
+                    : addClass(target, this.activeClass);
+            }else{
+                this.targets.map(el => {
+                    toggleClass(el, this.activeClass, el === target);
+                })
             }
-
-        },
-        write({test}) {
-
-            // console.log('resizeWrite')
-            // console.log(test)
-
-        },
-
-        events: ['resize']
-
+        }
     }
-
 };

@@ -951,6 +951,8 @@
   }
 
   function on() {
+    var _console;
+
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
@@ -977,6 +979,8 @@
     if (selector) {
       listener = delegate(selector, listener);
     }
+
+    (_console = console).log.apply(_console, args);
 
     useCapture = useCaptureFilter(useCapture);
     type.split(' ').forEach(function (type) {
@@ -2108,7 +2112,7 @@
 
   function initializeApi (UICommon) {
     var uid = 0;
-    var prefix = UICommon.prefix;
+    UICommon.prefix;
 
     UICommon.prototype._init = function (opts) {
       var options = opts || {};
@@ -2116,8 +2120,7 @@
       this.$options = mergeOptions(this.constructor.options, options, this);
       this.$el = null;
       this.$props = {};
-      this._uid = uid++;
-      console.log(prefix);
+      this._uid = uid++; // console.log(prefix);
 
       this._initData();
 
@@ -2168,8 +2171,7 @@
 
     UICommon.prototype._initProps = function (props) {
       var key;
-      props = props || getProps(this.$options, this.$name);
-      console.log(props);
+      props = props || getProps(this.$options, this.$name); // console.log(props)
 
       for (key in props) {
         if (!isUndefined(props[key])) {
@@ -2624,30 +2626,22 @@
 
   var button = {
     props: {
-      multiple: String
+      multiple: Boolean
     },
     data: {
-      target: ".".concat(cssPrefix, "button"),
+      toggle: ".".concat(cssPrefix, "button"),
       activeClass: "".concat(cssPrefix, "active"),
       multiple: false
     },
     computed: {
-      testaa: {
-        get: function get() {
-          return 'aaa';
-        },
-        watch: function watch() {// this.test();
-        },
-        immediate: true
-      },
       targets: function targets() {
-        return this.$el.querySelectorAll(this.target);
+        return findAll(this.toggle, this.$el);
       }
     },
     events: [{
       name: 'click',
       delegate: function delegate() {
-        return this.target;
+        return this.toggle;
       },
       handler: function handler(e) {
         e.preventDefault();
@@ -2655,23 +2649,52 @@
       }
     }],
     methods: {
-      test: function test() {
-        // alert('dddddd')
-        console.log('watch');
-      },
       toggleElement: function toggleElement(target) {
         var _this = this;
 
-        // alert('dddddd')
-        // console.log(toNodes(this.l11ength));
-        toNodes(this.targets).map(function (el) {
-          if (el === target) {
-            addClass(el, _this.activeClass);
-            console.log();
-          } else {
-            removeClass(el, _this.activeClass);
-          }
-        });
+        // console.log(this.targets)
+        if (this.multiple) {
+          hasClass(target, this.activeClass) ? removeClass(target, this.activeClass) : addClass(target, this.activeClass);
+        } else {
+          this.targets.map(function (el) {
+            toggleClass(el, _this.activeClass, el === target);
+          });
+        }
+      }
+    }
+  };
+
+  var tab = {
+    mixins: [button],
+    props: {},
+    data: {
+      target: 'a',
+      bbb: 'bbb',
+      ccc: 'ccc'
+    },
+    computed: {// targets() {
+      //     return queryAll('.kui-nav', this.$el);
+      // }
+    },
+    events: [{
+      name: 'click',
+      delegate: function delegate() {
+        return this.target;
+      },
+      handler: function handler(e) {
+        // console.log(e)
+        console.log(e);
+        e.preventDefault();
+      }
+    }, {
+      name: 'scroll',
+      el: window,
+      handler: function handler() {// this.$emit('resize');
+      }
+    }],
+    methods: {
+      test: function test() {
+        alert('dddddd');
       }
     },
     update: {
@@ -2686,10 +2709,9 @@
           aaaa: 'dffadfsf'
         };
       },
-      write: function write(_ref2) {// console.log('resizeWrite')
-        // console.log(test)
-
+      write: function write(_ref2) {
         _ref2.test;
+        console.log('resizeWrite'); // console.log(test)
       },
       events: ['resize']
     }
@@ -2699,7 +2721,8 @@
 
   var components = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    Button: button
+    Button: button,
+    Tab: tab
   });
 
   function componentCore (GCui) {

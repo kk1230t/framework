@@ -1,27 +1,34 @@
-export default {
+import {$, addClass, removeClass, hasClass, toggleClass, Dimensions, height, isVisible, width, toNodes, queryAll, trigger} from '../../util/index';
+import button from "./button";
 
+export default {
+    mixins : [button],
     props: { },
 
     data: {
-        aaa: 'aaa',
+        target: 'a',
         bbb: 'bbb',
         ccc: 'ccc'
     },
 
     computed: {
-
+        // targets() {
+        //     return queryAll('.kui-nav', this.$el);
+        // }
     },
 
     events: [
         {
 
             name: 'click',
+            delegate() {
+                return this.target;
+            },
 
             handler(e) {
+                // console.log(e)
+                console.log(e)
                 e.preventDefault();
-                this.$emit('checkStatus');
-                console.log('dfsdfsdf')
-                
             }
         },
         {

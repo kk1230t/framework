@@ -11,6 +11,7 @@ export function queryAll(selector, context) {
 }
 
 function getContext(selector, context = document) {
+    
     return isString(selector) && isContextSelector(selector) || isDocument(context)
         ? context
         : context.ownerDocument;

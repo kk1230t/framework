@@ -30,7 +30,7 @@ export default function (UICommon) {
         this.$el = null;
         this.$props = {};
         this._uid = uid++;
-        console.log(prefix);
+        // console.log(prefix);
         this._initData();
         this._initMethods();
         this._initComputeds();
@@ -79,7 +79,7 @@ export default function (UICommon) {
         let key;
         
         props = props || getProps(this.$options, this.$name);
-        console.log(props)
+        // console.log(props)
         for (key in props) {
             if (!isUndefined(props[key])) {
                 this.$props[key] = props[key];

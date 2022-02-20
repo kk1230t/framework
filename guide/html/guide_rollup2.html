@@ -29,17 +29,37 @@
             <li><a href="">122222</a></li>
             <li class="uk-disabled"><a>122221212</a></li>
         </ul>
-        <div kui-button="abcd: ddddfsdf;">
-            <a href="" class="kui-button">버튼1</a>
-            <a href="" class="kui-button">버튼2</a>
-            <a href="" class="kui-button">버튼3</a>
-            <a href="" class="kui-button">버튼4</a>
-            <a href="" class="kui-button">버튼4</a>
-            <a href="" class="kui-button">버튼4</a>
-            <a href="" class="kui-button">버튼4</a>
-            <a href="" class="kui-button">버튼4</a>
+        <div kui-button="multiple: false;">
+            <a href="#" class="kui-button">버튼1</a>
+            <a href="#" class="kui-button">버튼2</a>
+            <a href="#" class="kui-button">버튼3</a>
+            <a href="#" class="kui-button">버튼4</a>
+            <a href="#" class="kui-button">버튼4</a>
+            <a href="#" class="kui-button">버튼4</a>
+            <a href="#" class="kui-button">버튼4</a>
+            <a href="#" class="kui-button">버튼4</a>
+        </div>
+        <div kui-tab>
+            <ul>
+                <li class="kui-button"><a href="#">텝1</a></li>
+                <li class="kui-button"><a href="#">텝2</a></li>
+                <li class="kui-button"><a href="#">텝3</a></li>
+                <li class="kui-button"><a href="#">텝4</a></li>
+            </ul>
+            <div class="kui-tab-conts">
+                <div id='cont1'>1</div>
+                <div id='cont2'>2</div>
+                <div id='cont3'>3</div>
+                <div id='cont4'>4</div>
+                <a href="#" class="kui-button">버튼12</a>
+            </div>
         </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <script>
+            document.querySelector('#cont1').addEventListener('click', function(e) {
+                console.log(e);
+            })
+        </script>
 
     </div>
 </body>
