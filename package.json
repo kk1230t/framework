@@ -77,6 +77,6 @@
     "npm": "^8.3.0",
     "rollup": "^2.63.0"
   },
-  "main": "gulpfilde.js"
+  "main": "gulpfile.js"
 }
 
