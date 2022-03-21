@@ -33,10 +33,9 @@ export default {
 
     methods: {
         toggleElement(target) {
-            // console.log(this.targets)
             if(this.multiple) {
-                hasClass(target, this.activeClass) ? 
-                    removeClass(target, this.activeClass) 
+                hasClass(target, this.activeClass)
+                    ? removeClass(target, this.activeClass) 
                     : addClass(target, this.activeClass);
             }else{
                 this.targets.map(el => {

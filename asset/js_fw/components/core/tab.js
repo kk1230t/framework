@@ -1,78 +1,37 @@
-import {$, addClass, removeClass, hasClass, toggleClass, Dimensions, height, isVisible, width, toNodes, queryAll, trigger} from '../../util/index';
+import {$, findAll, removeClass, hasClass, toggleClass, Dimensions, height, isVisible, width, toNodes, queryAll, trigger} from '../../util/index';
 import button from "./button";
+import {cssPrefix} from 'GC-data'
 
 export default {
     mixins : [button],
-    props: { },
-
+    props: { 
+        conts: String
+    },
     data: {
         target: 'a',
-        bbb: 'bbb',
-        ccc: 'ccc'
+        conts: '.kui-tab-conts > div',
+        activeClass: `${cssPrefix}active`
     },
-
     computed: {
-        // targets() {
-        //     return queryAll('.kui-nav', this.$el);
-        // }
+        tabConts() {
+            return findAll(this.conts, this.$el);
+        }
     },
-
     events: [
         {
-
             name: 'click',
             delegate() {
                 return this.target;
             },
-
             handler(e) {
-                // console.log(e)
-                console.log(e)
-                e.preventDefault();
+                if (e.current.hash !== '') this.show(e.current.hash.replace('#', ''));
             }
-        },
-        {
-
-            name: 'scroll',
-
-            el: window,
-
-            handler() {
-
-                // this.$emit('resize');
-
-            }
-
         }
     ],
-
     methods: {
-        test() {
-            alert('dddddd')
+        show(id) {
+            this.tabConts.map(el => toggleClass(el, this.activeClass, el.id === id));
+            trigger(this.$el, 'show', id);
         }
-    },
-    update: {
-
-        read({test, aaaa}) {
-
-            // console.log('resizeRead')
-            // console.log(aaaa)
-            // console.log(test)
-            return {
-                test: 'dddd',
-                aaaa: 'dffadfsf'
-            }
-
-        },
-        write({test}) {
-
-            console.log('resizeWrite')
-            // console.log(test)
-
-        },
-
-        events: ['resize']
-
     }
-
 };

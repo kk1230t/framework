@@ -173,7 +173,6 @@ export default function (UICommon) {
     }
     
     UICommon.prototype._callUpdate = function (e = 'update') {
-        console.log('update')
         const type = e.type || e;
     
         if (type === 'update' || type === 'resize') {
@@ -421,7 +420,6 @@ function initPropsObserver(component) {
     const filter = attributes.map(key => hyphenate(key)).concat($name);
     
     const observer = new MutationObserver(records => {
-        console.log(records)
         const data = getProps($options, $name);
         if (records.some(({attributeName}) => {
             const prop = attributeName.replace('data-', '');

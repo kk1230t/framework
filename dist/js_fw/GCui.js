@@ -951,8 +951,6 @@
   }
 
   function on() {
-    var _console;
-
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
@@ -978,9 +976,8 @@
 
     if (selector) {
       listener = delegate(selector, listener);
-    }
+    } // console.log(...args)
 
-    (_console = console).log.apply(_console, args);
 
     useCapture = useCaptureFilter(useCapture);
     type.split(' ').forEach(function (type) {
@@ -2281,7 +2278,6 @@
       var _this2 = this;
 
       var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'update';
-      console.log('update');
       var type = e.type || e;
 
       if (type === 'update' || type === 'resize') {
@@ -2532,7 +2528,6 @@
       return hyphenate(key);
     }).concat($name);
     var observer = new MutationObserver(function (records) {
-      console.log(records);
       var data = getProps($options, $name);
 
       if (records.some(function (_ref4) {
@@ -2652,7 +2647,6 @@
       toggleElement: function toggleElement(target) {
         var _this = this;
 
-        // console.log(this.targets)
         if (this.multiple) {
           hasClass(target, this.activeClass) ? removeClass(target, this.activeClass) : addClass(target, this.activeClass);
         } else {
@@ -2666,14 +2660,49 @@
 
   var tab = {
     mixins: [button],
-    props: {},
+    props: {
+      conts: String
+    },
     data: {
       target: 'a',
-      bbb: 'bbb',
-      ccc: 'ccc'
+      conts: '.kui-tab-conts > div',
+      activeClass: "".concat(cssPrefix, "active")
+    },
+    computed: {
+      tabConts: function tabConts() {
+        return findAll(this.conts, this.$el);
+      }
+    },
+    events: [{
+      name: 'click',
+      delegate: function delegate() {
+        return this.target;
+      },
+      handler: function handler(e) {
+        if (e.current.hash !== '') this.show(e.current.hash.replace('#', ''));
+      }
+    }],
+    methods: {
+      show: function show(id) {
+        var _this = this;
+
+        this.tabConts.map(function (el) {
+          return toggleClass(el, _this.activeClass, el.id === id);
+        });
+        trigger(this.$el, 'show', id);
+      }
+    }
+  };
+
+  var toggle = {
+    props: {},
+    data: {
+      target: ".".concat(cssPrefix, "toggle"),
+      cont: ".".concat(cssPrefix, "toggle-cont"),
+      activeClass: "".concat(cssPrefix, "active")
     },
     computed: {// targets() {
-      //     return queryAll('.kui-nav', this.$el);
+      //     return findAll(this.toggle, this.$el);
       // }
     },
     events: [{
@@ -2682,38 +2711,14 @@
         return this.target;
       },
       handler: function handler(e) {
-        // console.log(e)
-        console.log(e);
         e.preventDefault();
-      }
-    }, {
-      name: 'scroll',
-      el: window,
-      handler: function handler() {// this.$emit('resize');
+        this.toggleElement(e.current);
       }
     }],
     methods: {
-      test: function test() {
-        alert('dddddd');
+      toggleElement: function toggleElement(target) {
+        console.log(target);
       }
-    },
-    update: {
-      read: function read(_ref) {
-        _ref.test;
-            _ref.aaaa;
-        // console.log('resizeRead')
-        // console.log(aaaa)
-        // console.log(test)
-        return {
-          test: 'dddd',
-          aaaa: 'dffadfsf'
-        };
-      },
-      write: function write(_ref2) {
-        _ref2.test;
-        console.log('resizeWrite'); // console.log(test)
-      },
-      events: ['resize']
     }
   };
 
@@ -2722,7 +2727,8 @@
   var components = /*#__PURE__*/Object.freeze({
     __proto__: null,
     Button: button,
-    Tab: tab
+    Tab: tab,
+    Toggle: toggle
   });
 
   function componentCore (GCui) {
@@ -2876,7 +2882,6 @@
         return true;
       }
 
-      console.log('apply');
       var component = UICommon.getComponent(target, name);
 
       if (component) {
@@ -2897,7 +2902,6 @@
         apply(removedNodes[_i], disconnect);
       }
 
-      console.log('apply2');
       return true;
     }
   }

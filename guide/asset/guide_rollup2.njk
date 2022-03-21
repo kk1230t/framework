@@ -46,10 +46,10 @@
     </div>
     <div kui-tab>
         <ul>
-            <li class="kui-button"><a href="#">텝1</a></li>
-            <li class="kui-button"><a href="#">텝2</a></li>
-            <li class="kui-button"><a href="#">텝3</a></li>
-            <li class="kui-button"><a href="#">텝4</a></li>
+            <li class="kui-button"><a href="#cont1">텝1</a></li>
+            <li class="kui-button"><a href="#cont2">텝2</a></li>
+            <li class="kui-button"><a href="#cont3">텝3</a></li>
+            <li class="kui-button"><a href="#cont4">텝4</a></li>
         </ul>
         <div class="kui-tab-conts">
             <div id='cont1'>1</div>
@@ -59,11 +59,17 @@
             <a href="#" class="kui-button">버튼12</a>
         </div>
     </div>
+    <div kui-toggle>
+        <a href="" class="kui-toggle">토글</a>
+    </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <script>
         document.querySelector('#cont1').addEventListener('click', function(e){
             console.log(e);
-        })
+        });
+        {# document.querySelector('[kui-tab]').addEventListener('show', function(e){
+            console.log(e)
+        }) #}
     </script>
 
 {% endblock %}

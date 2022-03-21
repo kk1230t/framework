@@ -66,7 +66,6 @@ export default function (UICommon) {
             UICommon[name](target);
             return true;
         }
-        console.log('apply')
         const component = UICommon.getComponent(target, name);
     
         if (component) {
@@ -85,7 +84,6 @@ export default function (UICommon) {
         for (let i = 0; i < removedNodes.length; i++) {
             apply(removedNodes[i], disconnect);
         }
-        console.log('apply2')
         return true;
     }
 }

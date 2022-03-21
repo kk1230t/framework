@@ -20,7 +20,7 @@ export function on(...args) {
     if (selector) {
         listener = delegate(selector, listener);
     }
-    console.log(...args)
+    // console.log(...args)
 
     useCapture = useCaptureFilter(useCapture);
 
