@@ -6,6 +6,7 @@ export default {
 
     mixins: [Class, Togglable],
 
+    
     props: {
         targets: String,
         active: null,
