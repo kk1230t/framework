@@ -1,20 +1,32 @@
-import {$, findAll, removeClass, hasClass, toggleClass, Dimensions, height, isVisible, width, toNodes, queryAll, trigger} from '../../util/index';
-import button from "./button";
+import {$, findAll, removeClass, hasClass, toggleClass, Dimensions, height, isVisible, width, toNodes, queryAll, trigger, $$} from '../../util/index';
+import Button from "./button";
 import {cssPrefix} from 'GC-data'
 
 export default {
-    mixins : [button],
+    extends : Button,
     props: { 
-        conts: String
+        media: Boolean,
+        boundary: Boolean,
+        tabContents: String,
     },
     data: {
-        target: 'a',
-        conts: '.kui-tab-conts > div',
-        activeClass: `${cssPrefix}active`
+        target:`>ul.${cssPrefix}tab-nav>*>:first-child`,
+        clsContainer: `>ul.${cssPrefix}tab-nav>*`,
+        tabContents: `>.${cssPrefix}tab-contents>div`,
+        clsOpen: `${cssPrefix}active`,
+        isContainer:true,
+
     },
     computed: {
-        tabConts() {
-            return findAll(this.conts, this.$el);
+        tabContents: {
+            get({tabContents}, $el) {
+                return $$(tabContents, $el)
+            },
+            watch(tabContents) {
+                const n = this.index() < 0 ? 0 : this.index();
+                this.activeTab(tabContents[n]);
+            },
+            immediate: true,
         }
     },
     events: [
@@ -24,14 +36,15 @@ export default {
                 return this.target;
             },
             handler(e) {
-                if (e.current.hash !== '') this.show(e.current.hash.replace('#', ''));
+                const n = this.index();
+                this.activeTab(this.tabContents[n])
             }
         }
     ],
     methods: {
-        show(id) {
-            this.tabConts.map(el => toggleClass(el, this.activeClass, el.id === id));
-            trigger(this.$el, 'show', id);
+        activeTab(item) {
+            this.tabContents.map(el => toggleClass(el, this.clsOpen, el === item))
+            
         }
     }
 };

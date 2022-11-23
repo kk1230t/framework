@@ -15,6 +15,9 @@ import componentCore from './core/component';
 import setFramewrok from './core/start';
 
 
+
+
+
 const GCui = function (options) {
     this._init(options);
 };
@@ -48,6 +51,10 @@ setFramewrok(GCui);
 each(components, (component, name) => {
     return GCui.component(name, component)
 });
+
+
+
+
 
 GCui.use(function(GCui) {
     inBrowser && ready(() => {

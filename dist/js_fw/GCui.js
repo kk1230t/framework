@@ -2093,16 +2093,16 @@
         container = $(element);
       }
     });
+  }
 
-    function update(data, e) {
-      if (!data) {
-        return;
-      }
+  function update(data, e) {
+    if (!data) {
+      return;
+    }
 
-      for (var name in data) {
-        if (data[name]._connected) {
-          data[name]._callUpdate(e);
-        }
+    for (var name in data) {
+      if (data[name]._connected) {
+        data[name]._callUpdate(e);
       }
     }
   }
@@ -2619,58 +2619,361 @@
     });
   }
 
-  var button = {
+  var Class = {
+    connected: function connected() {
+      !hasClass(this.$el, this.$name) && addClass(this.$el, this.$name);
+    }
+  };
+
+  var Togglable = {
     props: {
-      multiple: Boolean
+      cls: Boolean,
+      animation: 'list',
+      duration: Number,
+      origin: String,
+      transition: String
     },
     data: {
-      toggle: ".".concat(cssPrefix, "button"),
-      activeClass: "".concat(cssPrefix, "active"),
-      multiple: false
+      cls: false,
+      animation: [false],
+      duration: 2000,
+      origin: false,
+      transition: 'linear',
+      clsEnter: 'uk-togglabe-enter',
+      clsLeave: 'uk-togglabe-leave',
+      initProps: {
+        overflow: '',
+        height: '',
+        paddingTop: '',
+        paddingBottom: '',
+        marginTop: '',
+        marginBottom: ''
+      },
+      hideProps: {
+        overflow: 'hidden',
+        height: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginTop: 0,
+        marginBottom: 0
+      }
     },
     computed: {
-      targets: function targets() {
-        return findAll(this.toggle, this.$el);
+      hasAnimation: function hasAnimation(_ref) {
+        var animation = _ref.animation;
+        return !!animation[0];
+      },
+      hasTransition: function hasTransition(_ref2) {
+        var animation = _ref2.animation;
+        return this.hasAnimation && animation[0] === true;
+      }
+    },
+    methods: {
+      toggleElement: function toggleElement(targets, toggle, animate) {
+        var _this = this;
+
+        return new Promise$1(function (resolve) {
+          return Promise$1.all(toNodes(targets).map(function (el) {
+            var show = isBoolean(toggle) ? toggle : !_this.isToggled(el);
+
+            if (!trigger(el, "before".concat(show ? 'show' : 'hide'), [_this])) {
+              return Promise$1.reject();
+            }
+
+            var promise = (isFunction(animate) ? animate : animate === false || !_this.hasAnimation ? _this._toggle : _this.hasTransition ? toggleHeight(_this) : toggleAnimation(_this))(el, show) || Promise$1.resolve();
+            var cls = show ? _this.clsEnter : _this.clsLeave;
+            addClass(el, cls);
+            trigger(el, show ? 'show' : 'hide', [_this]);
+
+            var done = function done() {
+              removeClass(el, cls);
+              trigger(el, show ? 'shown' : 'hidden', [_this]);
+
+              _this.$update(el);
+            };
+
+            return promise ? promise.then(done, function () {
+              removeClass(el, cls);
+              return Promise$1.reject();
+            }) : done();
+          })).then(resolve, noop);
+        });
+      },
+      isToggled: function isToggled() {
+        var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.$el;
+
+        var _toNodes = toNodes(el);
+
+        var _toNodes2 = _slicedToArray(_toNodes, 1);
+
+        el = _toNodes2[0];
+        return hasClass(el, this.clsEnter) ? true : hasClass(el, this.clsLeave) ? false : this.cls ? hasClass(el, this.cls.split(' ')[0]) : isVisible(el);
+      },
+      _toggle: function _toggle(el, toggled) {
+        if (!el) {
+          return;
+        }
+
+        toggled = Boolean(toggled);
+        var changed;
+
+        if (this.cls) {
+          changed = includes(this.cls, ' ') || toggled !== hasClass(el, this.cls);
+          changed && toggleClass(el, this.cls, includes(this.cls, ' ') ? undefined : toggled);
+        } else {
+          changed = toggled === el.hidden;
+          changed && (el.hidden = !toggled);
+        }
+
+        $$('[autofocus]', el).some(function (el) {
+          return isVisible(el) ? el.focus() || true : el.blur();
+        });
+
+        if (changed) {
+          trigger(el, 'toggled', [toggled, this]);
+          this.$update(el);
+        }
+      }
+    }
+  };
+  function toggleHeight(_ref3) {
+    var isToggled = _ref3.isToggled,
+        duration = _ref3.duration,
+        initProps = _ref3.initProps,
+        hideProps = _ref3.hideProps,
+        transition = _ref3.transition,
+        _toggle = _ref3._toggle;
+    return function (el, show) {
+      var inProgress = Transition.inProgress(el);
+      var inner = el.hasChildNodes ? toFloat(css(el.firstElementChild, 'marginTop')) + toFloat(css(el.lastElementChild, 'marginBottom')) : 0;
+      var currentHeight = isVisible(el) ? height(el) + (inProgress ? 0 : inner) : 0;
+      Transition.cancel(el);
+
+      if (!isToggled(el)) {
+        _toggle(el, true);
+      }
+
+      height(el, ''); // Update child components first
+
+      fastdom.flush();
+      var endHeight = height(el) + (inProgress ? 0 : inner);
+      height(el, currentHeight);
+      return (show ? Transition.start(el, assign({}, initProps, {
+        overflow: 'hidden',
+        height: endHeight
+      }), Math.round(duration * (1 - currentHeight / endHeight)), transition) : Transition.start(el, hideProps, Math.round(duration * (currentHeight / endHeight)), transition).then(function () {
+        return _toggle(el, false);
+      })).then(function () {
+        return css(el, initProps);
+      });
+    };
+  }
+
+  function toggleAnimation(cmp) {
+    return function (el, show) {
+      Animation.cancel(el);
+      var animation = cmp.animation,
+          duration = cmp.duration,
+          _toggle = cmp._toggle;
+
+      if (show) {
+        _toggle(el, true);
+
+        return Animation["in"](el, animation[0], duration, cmp.origin);
+      }
+
+      return Animation.out(el, animation[1] || animation[0], duration, cmp.origin).then(function () {
+        return _toggle(el, false);
+      });
+    };
+  }
+
+  var accordion = {
+    mixins: [Class, Togglable],
+    props: {
+      targets: String,
+      active: null,
+      collapsible: Boolean,
+      multiple: Boolean,
+      toggle: String,
+      content: String,
+      transition: String,
+      offset: Number
+    },
+    data: {
+      targets: '> *',
+      active: false,
+      animation: [true],
+      collapsible: true,
+      multiple: false,
+      clsOpen: 'uk-open',
+      toggle: '> .uk-accordion-title',
+      content: '> .uk-accordion-content',
+      transition: 'ease',
+      offset: 0
+    },
+    computed: {
+      items: {
+        get: function get(_ref, $el) {
+          var targets = _ref.targets;
+          return $$(targets, $el);
+        },
+        watch: function watch(items, prev) {
+          var _this = this;
+
+          items.forEach(function (el) {
+            return hide($$1(_this.content, el), !hasClass(el, _this.clsOpen));
+          });
+
+          if (prev || hasClass(items, this.clsOpen)) {
+            return;
+          }
+
+          var active = this.active !== false && items[Number(this.active)] || !this.collapsible && items[0];
+
+          if (active) {
+            this.toggle(active, false);
+          }
+        },
+        immediate: true
+      },
+      toggles: function toggles(_ref2) {
+        var toggle = _ref2.toggle;
+        return this.items.map(function (item) {
+          return $$1(toggle, item);
+        });
       }
     },
     events: [{
       name: 'click',
       delegate: function delegate() {
-        return this.toggle;
+        return "".concat(this.targets, " ").concat(this.$props.toggle);
       },
       handler: function handler(e) {
         e.preventDefault();
-        this.toggleElement(e.current);
+        this.toggle(index(this.toggles, e.current));
       }
     }],
     methods: {
-      toggleElement: function toggleElement(target) {
-        var _this = this;
+      toggle: function toggle(item, animate) {
+        var _this2 = this;
 
-        if (this.multiple) {
-          hasClass(target, this.activeClass) ? removeClass(target, this.activeClass) : addClass(target, this.activeClass);
-        } else {
-          this.targets.map(function (el) {
-            toggleClass(el, _this.activeClass, el === target);
-          });
+        var items = [this.items[getIndex(item, this.items)]];
+        var activeItems = filter(this.items, ".".concat(this.clsOpen));
+
+        if (!this.multiple && !includes(activeItems, items[0])) {
+          items = items.concat(activeItems);
         }
+
+        if (!this.collapsible && activeItems.length < 2 && !filter(items, ":not(.".concat(this.clsOpen, ")")).length) {
+          return;
+        }
+
+        items.forEach(function (el) {
+          return _this2.toggleElement(el, !hasClass(el, _this2.clsOpen), function (el, show) {
+            toggleClass(el, _this2.clsOpen, show);
+            attr($$1(_this2.$props.toggle, el), 'aria-expanded', show);
+            var content = $$1("".concat(el._wrapper ? '> * ' : '').concat(_this2.content), el);
+
+            if (animate === false || !_this2.hasTransition) {
+              hide(content, !show);
+              return;
+            }
+
+            if (!el._wrapper) {
+              el._wrapper = wrapAll(content, "<div".concat(show ? ' hidden' : '', ">"));
+            }
+
+            hide(content, false);
+            return toggleHeight(_this2)(el._wrapper, show).then(function () {
+              hide(content, !show);
+              delete el._wrapper;
+              unwrap(content);
+
+              if (show) {
+                var toggle = $$1(_this2.$props.toggle, el);
+
+                if (!isInView(toggle)) {
+                  scrollIntoView(toggle, {
+                    offset: _this2.offset
+                  });
+                }
+              }
+            });
+          });
+        });
       }
     }
   };
 
-  var tab = {
-    mixins: [button],
+  function hide(el, hide) {
+    el && (el.hidden = hide);
+  }
+
+  var alert = {
+    mixins: [Class, Togglable],
+    args: 'animation',
     props: {
-      conts: String
+      close: String
     },
     data: {
-      target: 'a',
-      conts: '.kui-tab-conts > div',
-      activeClass: "".concat(cssPrefix, "active")
+      animation: [true],
+      selClose: '.uk-alert-close',
+      duration: 150,
+      hideProps: assign({
+        opacity: 0
+      }, Togglable.data.hideProps)
+    },
+    events: [{
+      name: 'click',
+      delegate: function delegate() {
+        return this.selClose;
+      },
+      handler: function handler(e) {
+        e.preventDefault();
+        this.close();
+      }
+    }],
+    methods: {
+      close: function close() {
+        var _this = this;
+
+        this.toggleElement(this.$el).then(function () {
+          return _this.$destroy(true);
+        });
+      }
+    }
+  };
+
+  var Button = {
+    mixins: [Togglable],
+    props: {
+      target: String,
+      clsContainer: String,
+      multiple: Boolean,
+      isContainer: Boolean
+    },
+    data: {
+      target: ".".concat(cssPrefix, "item"),
+      clsActive: "".concat(cssPrefix, "active"),
+      clsContainer: ".".concat(cssPrefix, "box"),
+      isContainer: false,
+      multiple: false
     },
     computed: {
-      tabConts: function tabConts() {
-        return findAll(this.conts, this.$el);
+      connects: {
+        get: function get(_ref, $el) {
+          var target = _ref.target,
+              clsContainer = _ref.clsContainer,
+              isContainer = _ref.isContainer;
+          var el = isContainer ? clsContainer : target;
+          return $$(el, $el);
+        },
+        watch: function watch(connects) {
+          var n = this.index() < 0 ? 0 : this.index();
+          this.toggle(connects[n]);
+        },
+        immediate: true
       }
     },
     events: [{
@@ -2679,17 +2982,83 @@
         return this.target;
       },
       handler: function handler(e) {
-        if (e.current.hash !== '') this.show(e.current.hash.replace('#', ''));
+        e.preventDefault();
+        this.toggle(e.current);
       }
     }],
     methods: {
-      show: function show(id) {
+      index: function index() {
         var _this = this;
 
-        this.tabConts.map(function (el) {
-          return toggleClass(el, _this.activeClass, el.id === id);
+        return findIndex(this.connects, function (el) {
+          return hasClass(el, _this.clsActive);
         });
-        trigger(this.$el, 'show', id);
+      },
+      toggle: function toggle(target) {
+        var _this2 = this;
+
+        var item = this.isContainer ? closest(target, this.clsContainer) : target;
+        var lists = [this.connects[getIndex(item, this.connects)]];
+        var activeItem = filter(this.connects, ".".concat(this.clsActive));
+
+        if (!this.multiple) {
+          if (hasClass(item, this.clsActive)) return false;
+          lists = lists.concat(activeItem);
+        }
+
+        lists.forEach(function (el) {
+          return _this2.toggleElement(el, !hasClass(el, _this2.clsActive), function (el, show) {
+            return toggleClass(el, _this2.clsActive, show);
+          });
+        });
+      }
+    }
+  };
+
+  var tab = {
+    "extends": Button,
+    props: {
+      media: Boolean,
+      boundary: Boolean,
+      tabContents: String
+    },
+    data: {
+      target: ">ul.".concat(cssPrefix, "tab-nav>*>:first-child"),
+      clsContainer: ">ul.".concat(cssPrefix, "tab-nav>*"),
+      tabContents: ">.".concat(cssPrefix, "tab-contents>div"),
+      clsOpen: "".concat(cssPrefix, "active"),
+      isContainer: true
+    },
+    computed: {
+      tabContents: {
+        get: function get(_ref, $el) {
+          var tabContents = _ref.tabContents;
+          return $$(tabContents, $el);
+        },
+        watch: function watch(tabContents) {
+          var n = this.index() < 0 ? 0 : this.index();
+          this.activeTab(tabContents[n]);
+        },
+        immediate: true
+      }
+    },
+    events: [{
+      name: 'click',
+      delegate: function delegate() {
+        return this.target;
+      },
+      handler: function handler(e) {
+        var n = this.index();
+        this.activeTab(this.tabContents[n]);
+      }
+    }],
+    methods: {
+      activeTab: function activeTab(item) {
+        var _this = this;
+
+        this.tabContents.map(function (el) {
+          return toggleClass(el, _this.clsOpen, el === item);
+        });
       }
     }
   };
@@ -2722,11 +3091,11 @@
     }
   };
 
-  // export {default as Accordion} from './core/accordion';
-
   var components = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    Button: button,
+    Accordion: accordion,
+    Alert: alert,
+    Button: Button,
     Tab: tab,
     Toggle: toggle
   });

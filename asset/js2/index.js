@@ -16,7 +16,7 @@ each(components, (component, name) => {
 
 Framework.use(Core);
 
-
+console.log()
 
 // console.dir(Framework);
 

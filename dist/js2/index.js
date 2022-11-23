@@ -2087,7 +2087,6 @@
       }
 
       var initital = !hasOwn(_frames, '_watch');
-      console.log(this._computeds);
       _frames._watch = fastdom.read(function () {
         if (!_this3._connected) {
           return;
@@ -2095,6 +2094,7 @@
 
         var computed = _this3.$options.computed,
             _computeds = _this3._computeds;
+        console.log(_this3._computeds);
 
         for (var key in computed) {
           var hasPrev = hasOwn(_computeds, key);
@@ -2441,8 +2441,7 @@
         get: function get() {
           var _computeds = component._computeds,
               $props = component.$props,
-              $el = component.$el;
-          console.log('dsdfsdf');
+              $el = component.$el; // console.log('dsdfsdf')
 
           if (!hasOwn(_computeds, key)) {
             _computeds[key] = (cb.get || cb).call(component, $props, $el);
@@ -3117,6 +3116,122 @@
     };
   }
 
+  var accordion = {
+    mixins: [Class, Togglable],
+    props: {
+      targets: String,
+      active: null,
+      collapsible: Boolean,
+      multiple: Boolean,
+      toggle: String,
+      content: String,
+      transition: String,
+      offset: Number
+    },
+    data: {
+      targets: '> *',
+      active: false,
+      animation: [true],
+      collapsible: true,
+      multiple: false,
+      clsOpen: 'uk-open',
+      toggle: '> .uk-accordion-title',
+      content: '> .uk-accordion-content',
+      transition: 'ease',
+      offset: 0
+    },
+    computed: {
+      items: {
+        get: function get(_ref, $el) {
+          var targets = _ref.targets;
+          return $$(targets, $el);
+        },
+        watch: function watch(items, prev) {
+          var _this = this;
+
+          console.log('sdfsdfsdf');
+          items.forEach(function (el) {
+            return hide$1($(_this.content, el), !hasClass(el, _this.clsOpen));
+          });
+
+          if (prev || hasClass(items, this.clsOpen)) {
+            return;
+          }
+
+          var active = this.active !== false && items[Number(this.active)] || !this.collapsible && items[0];
+
+          if (active) {
+            this.toggle(active, false);
+          }
+        },
+        immediate: true
+      }
+    },
+    events: [{
+      name: 'click',
+      delegate: function delegate() {
+        return "".concat(this.targets, " ").concat(this.$props.toggle);
+      },
+      handler: function handler(e) {
+        e.preventDefault();
+        this.toggle(index($$("".concat(this.targets, " ").concat(this.$props.toggle), this.$el), e.current));
+      }
+    }],
+    methods: {
+      toggle: function toggle(item, animate) {
+        var _this2 = this;
+
+        var items = [this.items[getIndex(item, this.items)]];
+        var activeItems = filter(this.items, ".".concat(this.clsOpen));
+
+        if (!this.multiple && !includes(activeItems, items[0])) {
+          items = items.concat(activeItems);
+        }
+
+        if (!this.collapsible && activeItems.length < 2 && !filter(items, ":not(.".concat(this.clsOpen, ")")).length) {
+          return;
+        }
+
+        items.forEach(function (el) {
+          return _this2.toggleElement(el, !hasClass(el, _this2.clsOpen), function (el, show) {
+            toggleClass(el, _this2.clsOpen, show);
+            var content = $("".concat(el._wrapper ? '> * ' : '').concat(_this2.content), el);
+
+            if (animate === false || !_this2.hasTransition) {
+              hide$1(content, !show);
+              return;
+            }
+
+            if (!el._wrapper) {
+              el._wrapper = wrapAll(content, "<div".concat(show ? ' hidden' : '', ">"));
+            }
+
+            hide$1(content, false);
+            return toggleHeight(_this2)(el._wrapper, show).then(function () {
+              hide$1(content, !show);
+              delete el._wrapper;
+              unwrap(content);
+
+              if (show) {
+                var toggle = $(_this2.$props.toggle, el);
+
+                if (!isInView(toggle)) {
+                  scrollIntoView(toggle, {
+                    offset: _this2.offset
+                  });
+                }
+              }
+            });
+          });
+        });
+      }
+    }
+  };
+
+  function hide$1(el, hide) {
+    attr(el, 'hidden', hide ? '' : null);
+  }
+
   var abcd = {
     mixins: [Class, Togglable],
     props: {
@@ -3175,6 +3290,7 @@
       },
       handler: function handler(e) {
         e.preventDefault();
+        console.log(e);
         this.$emit('checkStatus');
         this.test(index(e.current));
       }
@@ -3203,7 +3319,6 @@
     attr(el, 'hidden', hide ? '' : null);
   }
 
-  // export {default as Accordion} from './accordion';
   // export {default as Cover} from './cover';
   // export {default as Drop, default as Dropdown} from './drop';
   // export {default as FormCustom} from './form-custom';
@@ -3245,6 +3360,7 @@
 
   var components = /*#__PURE__*/Object.freeze({
     __proto__: null,
+    Accordion: accordion,
     Abcd: abcd
   });
 
@@ -3254,7 +3370,8 @@
     console.log(name);
     return Framework$1.component(name, component);
   });
-  Framework$1.use(Core); // console.dir(Framework);
+  Framework$1.use(Core);
+  console.log(); // console.dir(Framework);
 
   return Framework$1;
 

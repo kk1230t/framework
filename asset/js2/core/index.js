@@ -1,4 +1,4 @@
-// export {default as Accordion} from './accordion';
+export {default as Accordion} from './accordion';
 export {default as Abcd} from './abcd';
 // export {default as Alert} from './alert';
 // export {default as Cover} from './cover';

@@ -3,13 +3,12 @@ import {
     mergeOptions, 
     parents, 
     toNode
-} from '../util/index';
+} from '../util';
 
 export default function (UICommon) {
     const DATA = UICommon.data;
     UICommon.use = function (plugin) {
         if (plugin.installed) return;
-    
         plugin.call(null, this);
         plugin.installed = true;
     
@@ -48,18 +47,15 @@ export default function (UICommon) {
         }
     
     });
-    
-    function update(data, e) {
-    
-        if (!data) {
-            return;
+}
+
+function update(data, e) {
+    if (!data) {
+        return;
+    }
+    for (const name in data) {
+        if (data[name]._connected) {
+            data[name]._callUpdate(e);
         }
-    
-        for (const name in data) {
-            if (data[name]._connected) {
-                data[name]._callUpdate(e);
-            }
-        }
-    
     }
 }

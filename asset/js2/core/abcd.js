@@ -73,6 +73,7 @@ export default {
 
             handler(e) {
                 e.preventDefault();
+                console.log(e)
                 this.$emit('checkStatus');
                 this.test(index(e.current));
             }

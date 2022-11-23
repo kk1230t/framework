@@ -1,6 +1,6 @@
 import Class from '../mixin/class';
 import {default as Togglable, toggleHeight} from '../mixin/togglable';
-import {$, $$, attr, filter, getIndex, hasClass, includes, index, isInView, scrollIntoView, toggleClass, unwrap, wrapAll} from 'Framework-util';
+import {$, $$, attr, filter, getIndex, hasClass, includes, index, isInView, scrollIntoView, toggleClass, unwrap, wrapAll} from '../util';
 
 export default {
 
@@ -39,7 +39,7 @@ export default {
             },
 
             watch(items, prev) {
-                console.log(prev)
+                console.log('sdfsdfsdf')
                 items.forEach(el => hide($(this.content, el), !hasClass(el, this.clsOpen)));
 
                 if (prev || hasClass(items, this.clsOpen)) {

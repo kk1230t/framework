@@ -17,53 +17,76 @@
     <link rel="stylesheet" href="../../dist/css/style.css">
 
     <script src="../../dist/js_fw/GCui.js"></script>
+    <!-- <script src="../../dist/js3/GCui.js"></script> -->
 
 </head>
 
 <body>
+    <br>
+    <div></div>
+</body>
     <div id="wrap" class="coding_guide">
 
-
-        <ul kui-abcd kui-accordion>
-            <li class="uk-active"><a href="">111222</a></li>
-            <li><a href="">122222</a></li>
-            <li class="uk-disabled"><a>122221212</a></li>
+        <ul kui-accordion="collapsible: true">
+            <li>
+                <a class="uk-accordion-title" href="#">Item 1</a>
+                <div class="uk-accordion-content">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </li>
+            <li>
+                <a class="uk-accordion-title" href="#">Item 2</a>
+                <div class="uk-accordion-content">
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor reprehenderit.</p>
+                </div>
+            </li>
+            <li>
+                <a class="uk-accordion-title" href="#">Item 3</a>
+                <div class="uk-accordion-content">
+                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat proident.</p>
+                </div>
+            </li>
         </ul>
-        <div kui-button="multiple: false;">
-            <a href="#" class="kui-button">버튼1</a>
-            <a href="#" class="kui-button">버튼2</a>
-            <a href="#" class="kui-button">버튼3</a>
-            <a href="#" class="kui-button">버튼4</a>
-            <a href="#" class="kui-button">버튼4</a>
-            <a href="#" class="kui-button">버튼4</a>
-            <a href="#" class="kui-button">버튼4</a>
-            <a href="#" class="kui-button">버튼4</a>
+
+        <div kui-button>
+            <a href="#" class="kui-item">버튼1</a>
+            <a href="#" class="kui-item">버튼2</a>
+            <a href="#" class="kui-item">버튼3</a>
+            <a href="#" class="kui-item">버튼4</a>
+            <a href="#" class="kui-item">버튼4</a>
+            <a href="#" class="kui-item">버튼4</a>
+            <a href="#" class="kui-item">버튼4</a>
+            <a href="#" class="kui-item">버튼4</a>
         </div>
         <div kui-tab>
-            <ul>
-                <li class="kui-button"><a href="#cont1">텝1</a></li>
-                <li class="kui-button"><a href="#cont2">텝2</a></li>
-                <li class="kui-button"><a href="#cont3">텝3</a></li>
-                <li class="kui-button"><a href="#cont4">텝4</a></li>
+            <ul class="kui-tab-nav">
+                <li><a href="#cont1">텝1</a></li>
+                <li><a href="#cont2">텝2</a></li>
+                <li><a href="#cont3">텝3</a></li>
+                <li><a href="#cont4">텝4</a></li>
             </ul>
-            <div class="kui-tab-conts">
-                <div id='cont1'>1</div>
+            <div class="kui-tab-contents">
+                <div id='cont1'>
+                    <div kui-tab>
+                        <ul class="kui-tab-nav">
+                            <li><a href="#cont1">텝1</a></li>
+                            <li class="kui-active"><a href="#cont2">텝2</a></li>
+                            <li><a href="#cont3">텝3</a></li>
+                            <li><a href="#cont4">텝4</a></li>
+                        </ul>
+                        <div class="kui-tab-contents">
+                            <div id='cont1'>1</div>
+                            <div id='cont2'>2</div>
+                            <div id='cont3'>3</div>
+                            <div id='cont4'>4</div>
+                        </div>
+                    </div>
+                </div>
                 <div id='cont2'>2</div>
                 <div id='cont3'>3</div>
                 <div id='cont4'>4</div>
-                <a href="#" class="kui-button">버튼12</a>
             </div>
         </div>
-        <div kui-toggle>
-            <a href="" class="kui-toggle">토글</a>
-        </div>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <script>
-            document.querySelector('#cont1').addEventListener('click', function(e) {
-                console.log(e);
-            });
-        </script>
-
     </div>
 </body>
 

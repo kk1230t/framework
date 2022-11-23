@@ -70,7 +70,43 @@ body{font-family: 'NotoSans';}
         }
     }    
 }
-
+[kui-tab] {
+    border:1px solid red;
+    .kui{
+        &-tab-nav{
+            font-size: 0;
+            li{
+                display: inline-block;
+                &.kui-active{
+                    a{
+                        background-color: #fff;
+                        color: #000;
+                    }
+                }
+                a {
+                    display: block;
+                    width: 100px;
+                    height: 60px;
+                    line-height: 60px;
+                    text-align: center;
+                    background: #ccc;
+                    font-size: 16px;
+                    color: #666;
+                }
+            }
+        }
+        &-tab-contents{
+            padding: 30px;
+            border: 1px solid #000;
+            & > * {
+                display: none;
+                &.kui-active{
+                    display: block;
+                }
+            }
+        }
+    }
+}
 .custom-style{
     a{
         text-decoration: none;
@@ -169,6 +205,8 @@ body{font-family: 'NotoSans';}
             }  
         }
     }
+
+
     .accordion-panel{
         border: 1px solid #999;
         border-top: 0 none;

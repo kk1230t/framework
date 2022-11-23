@@ -105,15 +105,15 @@ export default function (Framework) {
         }
 
         const initital = !hasOwn(_frames, '_watch');
-        console.log(this._computeds)
+        
         _frames._watch = fastdom.read(() => {
 
             if (!this._connected) {
                 return;
             }
-
+            
             const {$options: {computed}, _computeds} = this;
-
+            console.log(this._computeds)
             for (const key in computed) {
 
                 const hasPrev = hasOwn(_computeds, key);
