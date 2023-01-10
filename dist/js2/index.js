@@ -3296,13 +3296,13 @@
       }
     }
     /* ,
-    {
-        el : window, 
-        name: 'resize',
-        handler(e) {
+     {
+         el : window, 
+         name: 'resize',
+         handler(e) {
            console.log('resizeEvent');
        }
-    } */
+     } */
     ],
     methods: {
       test: function test(target) {// console.log(target);            
