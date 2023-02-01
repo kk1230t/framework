@@ -1,5 +1,12 @@
 import {isFunction, isObject, isUndefined, toNode, toNodes} from './lang.js';
 
+/**
+ * 신규 속성 적용
+ * @param {Object} element 엘리먼트
+ * @param {String} name 속성 이름
+ * @param {String} value 속성 값
+ * @returns undefined
+ */
 export function attr(element, name, value) {
     if (isObject(name)) {
         
@@ -28,11 +35,21 @@ export function attr(element, name, value) {
     }
 }
 
+/**
+ * 전달된 속성 값이 존재하는가
+ * @param {Object} element 
+ * @param {String} name 확인할 속성 값
+ * @returns Boolean
+ */
 export function hasAttr(element, name) {
     return toNodes(element).some(element => element.hasAttribute(name));
 }
 
-
+/**
+ *  속성 제거
+ * @param {Object} element 
+ * @param {String} name 제거할 속성 명
+ */
 export function removeAttr(element, name) {
     element = toNodes(element);
     name.split(' ').forEach(name =>
