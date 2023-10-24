@@ -372,6 +372,14 @@
     };
   }
 
+  /**
+   * 신규 속성 적용
+   * @param {Object} element 엘리먼트
+   * @param {String} name 속성 이름
+   * @param {String} value 속성 값
+   * @returns undefined
+   */
+
   function attr(element, name, value) {
     if (isObject(name)) {
       for (var key in name) {
@@ -398,11 +406,24 @@
       });
     }
   }
+  /**
+   * 전달된 속성 값이 존재하는가
+   * @param {Object} element 
+   * @param {String} name 확인할 속성 값
+   * @returns Boolean
+   */
+
   function hasAttr(element, name) {
     return toNodes(element).some(function (element) {
       return element.hasAttribute(name);
     });
   }
+  /**
+   *  속성 제거
+   * @param {Object} element 
+   * @param {String} name 제거할 속성 명
+   */
+
   function removeAttr(element, name) {
     element = toNodes(element);
     name.split(' ').forEach(function (name) {
